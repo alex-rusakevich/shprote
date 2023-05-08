@@ -14,6 +14,8 @@ from shprote.config import load_config
 
 config = load_config()
 
+# Loading ignore characters. They're many enough
+# Thus they'll be cached
 ignored_characters = ""
 ignore_cache_path = os.path.join(tempfile.gettempdir(), "shprote-ignore.cache")
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
@@ -27,6 +29,7 @@ else:
 
 purificator_dict = dict.fromkeys(ignored_characters, " ")
 purificator_tr = str.maketrans(purificator_dict)
+# ==============================================
 
 app = Flask(__name__)
 
@@ -44,6 +47,13 @@ def levenshtein_massify(str_in: str) -> str:
         r"(\s[āàáǎaēéěèeōóǒòo])", r"'\1", str_in)  # Add ' before words starting with a, e and o
     str_in = re.sub(r"\s", "", str_in)  # Remove spaces
     return str_in
+
+
+@app.route("/")
+def check_server_working():
+    resp = Response(f"The server is working", 200)
+    resp.headers["Shprote-Is-Working"] = True
+    return resp
 
 
 @app.route("/api/check")
@@ -77,7 +87,11 @@ def check_pronunciation():
         result_ratio = (max_len - leven_dist) / max_len
         result_ratio = round(result_ratio * 100, 2)
 
-        return f"Total: {result_ratio}%, {leven_dist} mistake(s)"
+        resp = Response(
+            f"Total: {result_ratio}%, {leven_dist} mistake(s)", 200)
+        resp.headers["Shprote-Result-Total-Ratio"] = result_ratio
+        resp.headers["Shprote-Result-Total-Mistakes"] = leven_dist
+        return resp
     else:
         abort(gen_error(
             "LANGCODE_ERR", f"The language with code \"{lang_code}\" cannot be processed or does not exist", 400))
