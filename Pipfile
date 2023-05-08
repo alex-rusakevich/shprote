@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 levenshtein = "*"
 pinyin = "*"
+toml = "*"
+flask = "*"
 
 [dev-packages]
 autopep8 = "*"

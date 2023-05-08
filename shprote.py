@@ -1,12 +1,28 @@
 #!/usr/bin/env python
 import sys
-import pinyin
-import Levenshtein
 import re
+import os
 from unicodedata import category
 
-purificator_dict = dict.fromkeys([chr(i) for i in range(
-    sys.maxunicode + 1) if category(chr(i)).startswith("P")], " ")
+import pinyin
+import Levenshtein
+
+from shprote.config import load_config
+
+
+config = load_config()
+
+ignored_characters = ""
+if not (os.path.exists("ignore.cache") and os.path.isfile("ignore.cache")):
+    ignored_characters = "".join([chr(i) for i in range(
+        sys.maxunicode + 1) if category(chr(i)).startswith("P")])
+    with open("ignore.cache", "w", encoding="utf8") as cache_file:
+        cache_file.write(ignored_characters)
+else:
+    with open("ignore.cache", "r", encoding="utf8") as cache_file:
+        ignored_characters = cache_file.read()
+
+purificator_dict = dict.fromkeys(ignored_characters, " ")
 purificator_tr = str.maketrans(purificator_dict)
 
 
