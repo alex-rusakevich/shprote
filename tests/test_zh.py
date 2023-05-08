@@ -18,11 +18,15 @@ def test_root():
 
 
 def test_empty():
-    respone = app.test_client().get("/api/check", query_string={
-        "teacher": "》》？【】！；\t\r    ",
-        "teacher-type": "text",
-        "student": "你好",
-        "student-type": "text",
+    respone = app.test_client().get("/api/check", json={
+        "teacher": {
+            "data": "》》？【】！；\t\r    ",
+            "type": "text"
+        },
+        "student": {
+            "data": "你好",
+            "type": "text"
+        },
         "lang": "zh"
     })
     assert respone.status_code == 422
@@ -32,16 +36,22 @@ def test_empty():
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)
 def test_zh(teacher, student, exp_ratio, exp_mistakes):
-    respone = app.test_client().get("/api/check", query_string={
-        "teacher": teacher,
-        "teacher-type": "text",
-        "student": student,
-        "student-type": "text",
+    response = app.test_client().get("/api/check", json={
+        "teacher": {
+            "data": teacher,
+            "type": "text"
+        },
+        "student": {
+            "data": student,
+            "type": "text"
+        },
         "lang": "zh"
     })
 
-    resp_ratio = float(respone.headers["Shprote-Result-Total-Ratio"])
-    resp_mistakes = int(respone.headers["Shprote-Result-Total-Mistakes"])
+    resp_json = response.get_json(force=True)
+
+    resp_ratio = float(resp_json["total-ratio"])
+    resp_mistakes = int(resp_json["phon-mistakes"])
 
     assert exp_ratio == resp_ratio
     assert exp_mistakes == resp_mistakes

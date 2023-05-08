@@ -62,11 +62,13 @@ def check_server_working():
 
 @app.route("/api/check")
 def check_pronunciation():
-    teacher_data = request.args.get("teacher")
-    teacher_data_type = request.args.get("teacher-type")
-    student_data = request.args.get("student")
-    student_data_type = request.args.get("student-type")
-    lang_code = request.args.get("lang").lower()
+    request_json = request.get_json(force=True)
+
+    teacher_data = request_json["teacher"]["data"]
+    teacher_data_type = request_json["teacher"]["type"]
+    student_data = request_json["student"]["data"]
+    student_data_type = request_json["student"]["type"]
+    lang_code = request_json["lang"].lower()
 
     if lang_code == "zh":
         teacher_text = ""
@@ -94,11 +96,12 @@ def check_pronunciation():
         result_ratio = (max_len - leven_dist) / max_len
         result_ratio = round(result_ratio * 100, 2)
 
-        resp = Response(
-            f"Total: {result_ratio}%, {leven_dist} mistake(s). Teacher said: {teacher_text}, student said: {student_text}", 200)
-        resp.headers["Shprote-Result-Total-Ratio"] = result_ratio
-        resp.headers["Shprote-Result-Total-Mistakes"] = leven_dist
-        return resp
+        return {
+            "total-ratio": result_ratio,
+            "phon-mistakes": leven_dist,
+            "teacher-said": teacher_text,
+            "student-said": student_text
+        }
     else:
         abort(gen_error(
             "LANGCODE_ERR", f"The language with code \"{lang_code}\" cannot be processed or does not exist", 400))
