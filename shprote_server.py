@@ -49,6 +49,10 @@ def levenshtein_massify(str_in: str) -> str:
     return str_in
 
 
+def er_sound_mod(str_in: str) -> str:
+    return re.sub(r"儿(?!子)", "ɹ", str_in)
+
+
 @app.route("/")
 def check_server_working():
     resp = Response(f"The server is working", 200)
@@ -69,11 +73,14 @@ def check_pronunciation():
         student_text = ""
 
         if teacher_data_type == "text":
+            # Control R-like sounds (儿)
+            teacher_data = er_sound_mod(teacher_data)
             teacher_text = pinyin.get(
                 teacher_data, format='diacritical', delimiter=" ")
             teacher_text = levenshtein_massify(teacher_text)
 
         if student_data_type == "text":
+            student_data = er_sound_mod(student_data)
             student_text = pinyin.get(
                 student_data, format='diacritical', delimiter=" ")
             student_text = levenshtein_massify(student_text)
@@ -88,7 +95,7 @@ def check_pronunciation():
         result_ratio = round(result_ratio * 100, 2)
 
         resp = Response(
-            f"Total: {result_ratio}%, {leven_dist} mistake(s)", 200)
+            f"Total: {result_ratio}%, {leven_dist} mistake(s). Teacher said: {teacher_text}, student said: {student_text}", 200)
         resp.headers["Shprote-Result-Total-Ratio"] = result_ratio
         resp.headers["Shprote-Result-Total-Mistakes"] = leven_dist
         return resp
