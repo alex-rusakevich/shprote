@@ -13,12 +13,10 @@ test_data = (
 def test_root():
     respone = app.test_client().get()
     assert respone.status_code == 200
-    assert "Shprote-Is-Working" in respone.headers
-    assert bool(respone.headers["Shprote-Is-Working"])
 
 
 def test_empty():
-    respone = app.test_client().get("/api/check", json={
+    response = app.test_client().get("/api/check", json={
         "teacher": {
             "data": "》》？【】！；\t\r    ",
             "type": "text"
@@ -29,9 +27,8 @@ def test_empty():
         },
         "lang": "zh"
     })
-    assert respone.status_code == 422
-    assert "Shprote-Error-Type" in respone.headers
-    assert respone.headers["Shprote-Error-Type"] == "LEVENMASS_EMPTY_ERR"
+    assert response.status_code == 422
+    assert response.json["error-name"] == "LEVENMASS_EMPTY_ERR"
 
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)

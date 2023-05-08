@@ -7,7 +7,7 @@ from unicodedata import category
 
 import pinyin
 import Levenshtein
-from flask import Flask, request, abort, Response
+from flask import Flask, request, abort, make_response, jsonify, Response
 
 from shprote.config import load_config
 
@@ -19,11 +19,15 @@ config = load_config()
 ignored_characters = ""
 ignore_cache_path = os.path.join(tempfile.gettempdir(), "shprote-ignore.cache")
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
+    print("No chached ignore characters.")
     ignored_characters = "".join([chr(i) for i in range(
         sys.maxunicode + 1) if category(chr(i)).startswith("P")])
+
+    print(f"Writing cached ignore characters to '{ignore_cache_path}'...")
     with open(ignore_cache_path, "w", encoding="utf8") as cache_file:
         cache_file.write(ignored_characters)
 else:
+    print(f"Reading cached ignore characters from '{ignore_cache_path}'...")
     with open(ignore_cache_path, "r", encoding="utf8") as cache_file:
         ignored_characters = cache_file.read()
 
@@ -34,9 +38,11 @@ purificator_tr = str.maketrans(purificator_dict)
 app = Flask(__name__)
 
 
-def gen_error(err_name: str, err_text: str, err_code: int) -> Response:
-    resp = Response(f"{err_name}: {err_text}", err_code)
-    resp.headers["Shprote-Error-Type"] = err_name
+def gen_error(err_name: str, err_desc: str, err_code: int) -> dict:
+    resp = make_response(jsonify({
+        "error-name": err_name,
+        "error-desc": err_desc
+    }), err_code)
     return resp
 
 
@@ -56,7 +62,6 @@ def er_sound_mod(str_in: str) -> str:
 @app.route("/")
 def check_server_working():
     resp = Response(f"The server is working", 200)
-    resp.headers["Shprote-Is-Working"] = True
     return resp
 
 
