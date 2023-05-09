@@ -40,6 +40,11 @@
      <layout class="QGridLayout" name="UIgridLayout">
       <item row="0" column="1">
        <widget class="QPlainTextEdit" name="studentTextEdit">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="placeholderText">
          <string>Student's text</string>
         </property>
@@ -47,6 +52,11 @@
       </item>
       <item row="0" column="0">
        <widget class="QPlainTextEdit" name="teacherTextEdit">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="placeholderText">
          <string>Teacher's text</string>
         </property>
@@ -54,6 +64,11 @@
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QPlainTextEdit" name="resultTextEdit">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
