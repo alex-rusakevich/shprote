@@ -117,4 +117,4 @@ if __name__ == "__main__":
         "DISABLE_FLASK_RELOADER"] else config["server"]["debug"]
 
     app.run(debug=config["server"]["debug"], port=config["server"]
-            ["port"], host=config["server"]["host"], use_reloader=check_updated_files)
+            ["port"], host=config["server"]["host"], use_reloader=check_updated_files, threaded=True)
