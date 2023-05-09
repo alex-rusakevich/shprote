@@ -1,6 +1,6 @@
 import sys
 import signal
-from PyQt6 import QtWidgets, uic
+from PyQt6 import QtWidgets, uic, QtGui
 from PyQt6.QtWidgets import QMainWindow
 from PyQt6.QtCore import QTimer
 import subprocess
@@ -12,6 +12,7 @@ class UI(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/shprote.ui", self)
+        self.setWindowIcon(QtGui.QIcon('ui/favicon.png'))
 
         clear_button = self.clearButton
         clear_button.clicked.connect(self.clear_all)
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     ret = app.exec()
 
     print("UI has been closed. Terminating shprote server...", end=" ")
-    shprote_srv.terminate()
+    shprote_srv.kill()
     print("Success!")
 
     sys.exit(ret)
