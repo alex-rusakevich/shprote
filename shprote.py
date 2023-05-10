@@ -11,6 +11,9 @@ import requests
 
 from shprote.config import load_config
 from shprote import __version__ as __shprote_version__
+from shprote.log import get_logger
+
+logger = get_logger()
 
 
 class UI(QMainWindow):
@@ -69,6 +72,7 @@ ERROR!
 
 
 if __name__ == "__main__":
+    logger.info("UI started")
     os.environ["DISABLE_FLASK_RELOADER"] = "True"
 
     shprote_srv = subprocess.Popen([sys.executable, os.path.join(
@@ -88,8 +92,8 @@ if __name__ == "__main__":
 
     os.environ.pop("DISABLE_FLASK_RELOADER")
 
-    print("UI has been closed. Terminating shprote server...", end=" ")
+    logger.info("UI has been closed. Terminating shprote server...")
     shprote_srv.kill()
-    print("Success!")
+    logger.info("Successfully terminated shprote server")
 
     sys.exit(ret)

@@ -2,7 +2,6 @@
 import sys
 import re
 import os
-import tempfile
 from unicodedata import category
 
 import pinyin
@@ -10,8 +9,9 @@ import Levenshtein
 from flask import Flask, request, abort, make_response, jsonify, Response
 
 from shprote.config import load_config, DATA_DIR
+from shprote.log import get_logger
 
-
+logger = get_logger()
 config = load_config()
 
 # Loading ignore characters. They're many enough
@@ -19,15 +19,17 @@ config = load_config()
 ignored_characters = ""
 ignore_cache_path = os.path.join(DATA_DIR, "shprote-ignore.cache")
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
-    print("No chached ignore characters.")
+    logger.info("No chached ignore characters.")
     ignored_characters = "".join([chr(i) for i in range(
         sys.maxunicode + 1) if category(chr(i)).startswith("P")])
 
-    print(f"Writing cached ignore characters to '{ignore_cache_path}'...")
+    logger.info(
+        f"Writing cached ignore characters to '{ignore_cache_path}'...")
     with open(ignore_cache_path, "w", encoding="utf8") as cache_file:
         cache_file.write(ignored_characters)
 else:
-    print(f"Reading cached ignore characters from '{ignore_cache_path}'...")
+    logger.info(
+        f"Reading cached ignore characters from '{ignore_cache_path}'...")
     with open(ignore_cache_path, "r", encoding="utf8") as cache_file:
         ignored_characters = cache_file.read()
 
@@ -115,8 +117,9 @@ def check_pronunciation():
 
 
 if __name__ == "__main__":
+    logger.info("Starting the shprote server...")
     check_updated_files = False if "DISABLE_FLASK_RELOADER" in os.environ and os.environ[
-        "DISABLE_FLASK_RELOADER"] else config["server"]["debug"]
+        "DISABLE_FLASK_RELOADER"] else config["main"]["debug"]
 
-    app.run(debug=config["server"]["debug"], port=config["server"]
+    app.run(debug=config["main"]["debug"], port=config["server"]
             ["port"], host=config["server"]["host"], use_reloader=check_updated_files, threaded=True)
