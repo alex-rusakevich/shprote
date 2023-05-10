@@ -15,12 +15,7 @@ pyqt6 = "*"
 autopep8 = "*"
 pytest = "*"
 pyqt6-tools = "*"
+invoke = "*"
 
 [requires]
 python_version = "3.11"
-
-[scripts]
-test = "pytest"
-designer = "pyqt6-tools designer"
-ui = "shprote.py"
-srv = "shprote_server.py"
