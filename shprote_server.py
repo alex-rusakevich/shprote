@@ -9,7 +9,7 @@ import pinyin
 import Levenshtein
 from flask import Flask, request, abort, make_response, jsonify, Response
 
-from shprote.config import load_config
+from shprote.config import load_config, DATA_DIR
 
 
 config = load_config()
@@ -17,7 +17,7 @@ config = load_config()
 # Loading ignore characters. They're many enough
 # Thus they'll be cached
 ignored_characters = ""
-ignore_cache_path = os.path.join(tempfile.gettempdir(), "shprote-ignore.cache")
+ignore_cache_path = os.path.join(DATA_DIR, "shprote-ignore.cache")
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
     print("No chached ignore characters.")
     ignored_characters = "".join([chr(i) for i in range(
