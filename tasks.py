@@ -1,4 +1,5 @@
 from invoke import run, task
+from shprote import __version__ as __program_version__
 import os
 
 
@@ -38,3 +39,8 @@ def designer(context):
 def ddir(context):
     """ App's data dir in ~"""
     run("explorer %s" % os.path.join(os.path.expanduser("~"), ".shprote"))
+
+
+@task
+def tg(context):
+    run(f"git tag {__program_version__}")
