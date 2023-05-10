@@ -40,6 +40,7 @@ app = Flask(__name__)
 
 def gen_error(err_name: str, err_desc: str, err_code: int) -> dict:
     resp = make_response(jsonify({
+        "type": "error",
         "error-name": err_name,
         "error-desc": err_desc
     }), err_code)
@@ -99,9 +100,10 @@ def check_pronunciation():
         max_len = max(len(teacher_text), len(student_text))
         leven_dist = Levenshtein.distance(teacher_text, student_text)
         result_ratio = (max_len - leven_dist) / max_len
-        result_ratio = round(result_ratio * 100, 2)
+        result_ratio = round(result_ratio, 4)
 
         return {
+            "type": "result",
             "total-ratio": result_ratio,
             "phon-mistakes": leven_dist,
             "teacher-said": teacher_text,

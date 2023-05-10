@@ -10,6 +10,7 @@ from pathlib import Path
 import requests
 
 from shprote.config import load_config
+from shprote import __version__ as __shprote_version__
 
 
 class UI(QMainWindow):
@@ -19,6 +20,7 @@ class UI(QMainWindow):
         super().__init__()
         uic.loadUi("ui/shprote.ui", self)
         self.setWindowIcon(QtGui.QIcon('ui/favicon.png'))
+        self.setWindowTitle("shprote GUI v" + str(__shprote_version__))
 
         self.config = load_config()
 
@@ -48,8 +50,21 @@ class UI(QMainWindow):
             },
             "lang": "zh"
         }).json()
-        display_data = "\n".join(
-            f"{str(k)}: {str(v)}" for k, v in check_result.items())
+
+        display_data = ""
+        if check_result["type"] == "result":
+            display_data = f"""
+Total ratio: {check_result["total-ratio"]*100}%
+Total mistakes: {check_result["phon-mistakes"]}
+
+Teacher's levenseq: {check_result["teacher-said"]}
+Student's levenseq: {check_result["student-said"]}
+""".strip()
+        elif check_result["type"] == "error":
+            display_data = f"""
+ERROR!
+{check_result["error-desc"]} ({check_result["error-name"]})
+""".strip()
         self.resultTextEdit.setPlainText(display_data)
 
 
