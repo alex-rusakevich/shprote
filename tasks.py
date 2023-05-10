@@ -35,12 +35,19 @@ def designer(context):
     prun("pyqt6-tools designer")
 
 
-@task
-def ddir(context):
-    """ App's data dir in ~"""
+@task()
+def datadir(context):
+    """Open app's temporary data folder at '~'"""
     run("explorer %s" % os.path.join(os.path.expanduser("~"), ".shprote"))
 
 
-@task
+@task()
+def cudd(context):
+    """Open app's temporary data folder in vscodium"""
+    run("codium %s" % os.path.join(os.path.expanduser("~"), ".shprote"))
+
+
+@task()
 def tg(context):
+    """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
