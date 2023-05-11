@@ -10,7 +10,7 @@ log_formatter = logging.Formatter(
 
 logfile_dir = os.path.join(DATA_DIR, "log")
 Path(logfile_dir).mkdir(parents=True, exist_ok=True)
-log_file = os.path.join(logfile_dir, "log.txt")
+log_file = os.path.join(logfile_dir, "shprote.log")
 
 shprote_handler = RotatingFileHandler(log_file, mode='a', maxBytes=get_config()["log"]["maxsize"],
                                       backupCount=get_config()["log"]["maxfiles"], encoding="utf8", delay=0)
