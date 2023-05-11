@@ -2,6 +2,8 @@ from invoke import run, task
 from shprote import __version__ as __program_version__
 import os
 
+os.environ["SHPROTE_HOME"] = ".shprote"
+
 
 def prun(command, **kwargs):
     """ Pipenv run """
