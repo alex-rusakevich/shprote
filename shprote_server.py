@@ -3,10 +3,12 @@ import sys
 import re
 import os
 from unicodedata import category
+from pathlib import Path
 
 import pinyin
 import Levenshtein
 from flask import Flask, request, abort, make_response, jsonify, Response
+import numpy as np
 
 from shprote.config import load_config, DATA_DIR
 from shprote.log import get_logger
@@ -17,24 +19,27 @@ config = load_config()
 # Loading ignore characters. They're many enough
 # Thus they'll be cached
 ignored_characters = ""
-ignore_cache_path = os.path.join(DATA_DIR, "shprote-ignore.cache")
+purificator_tr = {}
+
+ignore_cache_path = os.path.join(DATA_DIR, "cache")
+Path(ignore_cache_path).mkdir(parents=True, exist_ok=True)
+ignore_cache_path = os.path.join(ignore_cache_path, "ignored-chars.npy")
+
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
     logger.info("No chached ignore characters.")
     ignored_characters = "".join([chr(i) for i in range(
         sys.maxunicode + 1) if category(chr(i)).startswith("P")])
 
+    purificator_dict = dict.fromkeys(ignored_characters, " ")
+    purificator_tr = str.maketrans(purificator_dict)
+
     logger.info(
         f"Writing cached ignore characters to '{ignore_cache_path}'...")
-    with open(ignore_cache_path, "w", encoding="utf8") as cache_file:
-        cache_file.write(ignored_characters)
+    np.save(ignore_cache_path, purificator_tr)
 else:
     logger.info(
         f"Reading cached ignore characters from '{ignore_cache_path}'...")
-    with open(ignore_cache_path, "r", encoding="utf8") as cache_file:
-        ignored_characters = cache_file.read()
-
-purificator_dict = dict.fromkeys(ignored_characters, " ")
-purificator_tr = str.maketrans(purificator_dict)
+    purificator_tr = np.load(ignore_cache_path, allow_pickle=True).item()
 # ==============================================
 
 app = Flask(__name__)

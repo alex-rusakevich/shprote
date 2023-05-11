@@ -10,6 +10,7 @@ toml = "*"
 flask = "*"
 requests = "*"
 pyqt6 = "*"
+numpy = "*"
 
 [dev-packages]
 autopep8 = "*"
