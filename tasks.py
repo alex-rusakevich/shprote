@@ -2,7 +2,7 @@ from invoke import run, task
 from shprote import __version__ as __program_version__
 import os
 
-os.environ["SHPROTE_HOME"] = ".shprote"
+os.environ["SHPROTE_HOME"] = "."
 
 
 def prun(command, **kwargs):

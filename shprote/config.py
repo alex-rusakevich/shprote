@@ -4,8 +4,8 @@ import shutil
 from pathlib import Path
 
 config = {}
-DATA_DIR = os.environ["SHPROTE_HOME"] or os.path.join(
-    os.path.expanduser("~"), ".shprote")
+DATA_DIR = os.path.join(os.environ.get("SHPROTE_HOME") or
+                        os.path.expanduser("~"), ".shprote")
 Path(DATA_DIR).mkdir(parents=True, exist_ok=True)
 
 

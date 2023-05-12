@@ -1,5 +1,5 @@
 [main]
-debug=true
+debug=false
 
 [server]
 host="127.0.0.1"
