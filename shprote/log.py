@@ -1,6 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+import sys
 from pathlib import Path
 
 from shprote.config import DATA_DIR, get_config
@@ -23,6 +24,16 @@ app_log = logging.getLogger('root')
 app_log.setLevel(LOG_LVL)
 
 app_log.addHandler(shprote_handler)
+
+
+def exception_hook(exc_type, exc_value, exc_traceback):
+    logging.getLogger('root').exception(
+        "Uncaught exception",
+        exc_info=(exc_type, exc_value, exc_traceback)
+    )
+
+
+sys.excepthook = exception_hook
 
 
 def get_logger():

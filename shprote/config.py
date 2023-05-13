@@ -9,7 +9,17 @@ DATA_DIR = os.path.join(os.environ.get("SHPROTE_HOME") or os.environ.get("APPDAT
 Path(DATA_DIR).mkdir(parents=True, exist_ok=True)
 
 
-def load_config(config_path=os.path.join(f"{DATA_DIR}", "config.toml"), default_config_path="default-config.toml") -> dict[any, any]:
+def get_script_dir():
+    scriptdir, _ = os.path.split(os.path.abspath(__file__))
+    scriptdir = os.path.abspath(os.path.join(
+        scriptdir, ".."))
+    scriptdir = os.path.abspath(os.path.join(
+        scriptdir, "..")) if "pkgs" in scriptdir else scriptdir
+    return scriptdir
+
+
+def load_config(config_path=os.path.join(f"{DATA_DIR}", "config.toml"),
+                default_config_path=os.path.join(get_script_dir(), "default_config.toml")) -> dict[any, any]:
     if not (os.path.exists(config_path) and os.path.isfile(config_path)):
         shutil.copy(default_config_path, config_path)
 

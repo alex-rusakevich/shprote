@@ -6,14 +6,14 @@ from PyQt6.QtWidgets import QMainWindow
 from PyQt6.QtCore import QTimer
 import subprocess
 import os
-from pathlib import Path
 import requests
 
-from shprote.config import load_config
+from shprote.config import load_config, get_script_dir
 from shprote import __version__ as __shprote_version__
 from shprote.log import get_logger
 
 logger = get_logger()
+scriptdir = get_script_dir()
 
 
 class UI(QMainWindow):
@@ -21,8 +21,9 @@ class UI(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        uic.loadUi("ui/shprote.ui", self)
-        self.setWindowIcon(QtGui.QIcon('ui/favicon.ico'))
+        uic.loadUi(os.path.join(scriptdir, "ui", "shprote.ui"), self)
+        self.setWindowIcon(QtGui.QIcon(
+            os.path.join(scriptdir, 'ui', 'favicon.ico')))
         self.setWindowTitle("shprote GUI v" + str(__shprote_version__))
 
         self.config = load_config()
@@ -76,7 +77,7 @@ def main():
     os.environ["DISABLE_FLASK_RELOADER"] = "True"
 
     shprote_srv = subprocess.Popen([sys.executable, os.path.join(
-        Path(__file__).parent, 'shprote_server.py')], shell=False)
+        get_script_dir(), 'shprote_server.py')], stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 
     app = QtWidgets.QApplication(sys.argv)
 
