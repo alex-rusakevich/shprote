@@ -51,6 +51,7 @@ def gen_error(err_name: str, err_desc: str, err_code: int) -> dict:
         "error-name": err_name,
         "error-desc": err_desc
     }), err_code)
+    logger.warning(f"A text processing error occured ({err_name}): {err_desc}")
     return resp
 
 
@@ -128,3 +129,5 @@ if __name__ == "__main__":
 
     app.run(debug=config["main"]["debug"], port=config["server"]
             ["port"], host=config["server"]["host"], use_reloader=check_updated_files, threaded=True)
+
+    logger.info("Successfully exited shprote server")

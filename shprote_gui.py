@@ -95,7 +95,6 @@ def main():
 
     logger.info("UI has been closed. Terminating shprote server...")
     shprote_srv.kill()
-    logger.info("Successfully terminated shprote server")
 
     sys.exit(ret)
 
