@@ -1,10 +1,10 @@
 [main]
-debug=false
+debug = false
 
 [server]
-host="127.0.0.1"
-port=5201
+host = "127.0.0.1"
+port = 5201
 
 [log]
-maxfiles=2
-maxsize=2097152 # 2MB
+maxfiles = 2
+maxsize = 2097152 # 2MB

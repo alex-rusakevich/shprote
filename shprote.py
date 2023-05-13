@@ -22,7 +22,7 @@ class UI(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/shprote.ui", self)
-        self.setWindowIcon(QtGui.QIcon('ui/favicon.png'))
+        self.setWindowIcon(QtGui.QIcon('ui/favicon.ico'))
         self.setWindowTitle("shprote GUI v" + str(__shprote_version__))
 
         self.config = load_config()
@@ -71,7 +71,7 @@ ERROR!
         self.resultTextEdit.setPlainText(display_data)
 
 
-if __name__ == "__main__":
+def main():
     logger.info("UI started")
     os.environ["DISABLE_FLASK_RELOADER"] = "True"
 
@@ -97,3 +97,7 @@ if __name__ == "__main__":
     logger.info("Successfully terminated shprote server")
 
     sys.exit(ret)
+
+
+if __name__ == "__main__":
+    main()

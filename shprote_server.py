@@ -64,7 +64,7 @@ def levenshtein_massify(str_in: str) -> str:
 
 
 def er_sound_mod(str_in: str) -> str:
-    return re.sub(r"儿(?!子)", "ɹ", str_in)
+    return re.sub(r"儿(?!子)", "r", str_in)
 
 
 @app.route("/")

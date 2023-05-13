@@ -6,3 +6,4 @@ config.toml
 build/
 dist/
 *.spec
+install.cfg
