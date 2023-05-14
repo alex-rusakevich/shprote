@@ -4,6 +4,7 @@ import os
 import configparser
 import toml
 from pathlib import Path
+import shutil
 
 os.environ["SHPROTE_HOME"] = "."
 
@@ -82,13 +83,38 @@ def build(context):
         config.write(install_file)
 
     prun('pynsist install.cfg')
+    print('The installer was created successfully')
 
 
 @task
 def clean(context):
-    patterns = ['.pytest_cache']
+    patterns = [l.strip() for l in open(
+        '.gitignore', 'r', encoding='utf8').readlines()]
+    patterns.remove('.shprote')
+    patterns.remove('__pycache__/')
+
+    patterns += [os.path.join('.shprote', 'log'),
+                 os.path.join('.shprote', 'cache')]
+
+    patterns = [p for p in patterns if os.path.exists(p.strip())]
+    found_smth = False
+
     for pattern in patterns:
-        run("rm -rf %s" % pattern)
+        found_smth = True
+
+        print("Removing %s" % pattern)
+        try:
+            shutil.rmtree(pattern)
+        except:
+            os.remove(pattern)
+
+    if (pycache := list(Path('.').rglob('__pycache__'))):
+        found_smth = True
+        print("Removing python cache...")
+        [shutil.rmtree(p) for p in pycache]
+
+    if not found_smth:
+        print("Nothing was found to delete, exitting...")
 
 
 @task
