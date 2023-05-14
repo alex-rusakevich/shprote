@@ -45,6 +45,8 @@ class UI(QMainWindow):
         self.resultTextEdit.setPlainText("")
 
     def start_check(self):
+        logger.info("Started processing the input data")
+
         self.resultTextEdit.setPlainText("Checking. Please, wait...")
         adress = "http://" + self.config["server"]["host"] + ":" + \
             str(self.config["server"]["port"]) + "/api/check"
@@ -74,6 +76,7 @@ Student's levenseq: {check_result["student-said"]}
 ERROR!
 {check_result["error-desc"]} ({check_result["error-name"]})
 """.strip()
+        logger.info(f"Displaying the result:\n{display_data}")
         self.resultTextEdit.setPlainText(display_data)
 
     def open_github(self):
@@ -81,7 +84,7 @@ ERROR!
 
 
 def main():
-    logger.info("UI started")
+    logger.info("UI program started")
     os.environ["DISABLE_FLASK_RELOADER"] = "True"
 
     shprote_srv = subprocess.Popen([sys.executable, os.path.join(
