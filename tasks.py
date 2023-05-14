@@ -130,13 +130,15 @@ def designer(context):
 @task()
 def datadir(context):
     """Open app's temporary data folder at '~'"""
-    run("explorer %s" % os.path.join(os.path.expanduser("~"), ".shprote"))
+    run("explorer %s" % os.path.join(os.environ.get(
+        "APPDATA") or os.path.expanduser("~"), ".shprote"))
 
 
 @task()
 def cudd(context):
     """Open app's temporary data folder in vscodium"""
-    run("codium %s" % os.path.join(os.path.expanduser("~"), ".shprote"))
+    run("codium %s" % os.path.join(os.environ.get(
+        "APPDATA") or os.path.expanduser("~"), ".shprote"))
 
 
 @task()
