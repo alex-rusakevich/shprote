@@ -7,9 +7,11 @@ from PyQt6.QtCore import QTimer
 import subprocess
 import os
 import requests
+import webbrowser
 
 from shprote.config import load_config, get_script_dir
 from shprote import __version__ as __shprote_version__
+from shprote import __adress__
 from shprote.log import get_logger
 
 logger = get_logger()
@@ -33,6 +35,9 @@ class UI(QMainWindow):
 
         check_button = self.checkButton
         check_button.clicked.connect(self.start_check)
+
+        help_button = self.helpButton
+        help_button.clicked.connect(self.open_github)
 
     def clear_all(self):
         self.studentTextEdit.setPlainText("")
@@ -70,6 +75,9 @@ ERROR!
 {check_result["error-desc"]} ({check_result["error-name"]})
 """.strip()
         self.resultTextEdit.setPlainText(display_data)
+
+    def open_github(self):
+        webbrowser.open_new_tab(__adress__)
 
 
 def main():

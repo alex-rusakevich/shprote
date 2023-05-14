@@ -38,36 +38,28 @@
     </property>
     <item row="0" column="0">
      <layout class="QGridLayout" name="UIgridLayout">
-      <item row="1" column="1">
-       <widget class="QPlainTextEdit" name="studentTextEdit">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="placeholderText">
-         <string>Student's text</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPlainTextEdit" name="teacherTextEdit">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="placeholderText">
-         <string>Teacher's text</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0" colspan="2">
+       <widget class="QLabel" name="resultLabel">
+        <property name="text">
+         <string>Result:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <layout class="QHBoxLayout" name="buttonsLayout"/>
+      </item>
+      <item row="6" column="0" colspan="2">
        <widget class="QPlainTextEdit" name="resultTextEdit">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="tabChangesFocus">
+         <bool>true</bool>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -77,27 +69,38 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="teacherLabel">
+        <property name="text">
+         <string>Teacher:</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="checkButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Check</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="clearButton">
-        <property name="text">
-         <string>Clear</string>
+      <item row="1" column="1">
+       <widget class="QPlainTextEdit" name="studentTextEdit">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <layout class="QHBoxLayout" name="buttonsLayout"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="teacherLabel">
-        <property name="text">
-         <string>Teacher:</string>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="tabChangesFocus">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>Student's text</string>
         </property>
        </widget>
       </item>
@@ -108,18 +111,78 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QLabel" name="resultLabel">
-        <property name="text">
-         <string>Result:</string>
+      <item row="1" column="0">
+       <widget class="QPlainTextEdit" name="teacherTextEdit">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="tabChangesFocus">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>Teacher's text</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="clearButton">
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="text">
+           <string>Clear</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="helpButton">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="text">
+           <string>?</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>teacherTextEdit</tabstop>
+  <tabstop>studentTextEdit</tabstop>
+  <tabstop>checkButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>helpButton</tabstop>
+  <tabstop>resultTextEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
