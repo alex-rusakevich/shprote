@@ -3,7 +3,7 @@ import os
 import signal
 from PyQt6 import QtWidgets, uic, QtGui
 from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QTimer, QCoreApplication
 import subprocess
 import os
 import requests
@@ -26,7 +26,7 @@ class UI(QMainWindow):
         uic.loadUi(os.path.join(scriptdir, "ui", "shprote.ui"), self)
         self.setWindowIcon(QtGui.QIcon(
             os.path.join(scriptdir, 'ui', 'favicon.ico')))
-        self.setWindowTitle("shprote GUI v" + str(__shprote_version__))
+        self.setWindowTitle("shprote GUI " + str(__shprote_version__))
 
         self.config = load_config()
 
@@ -36,8 +36,13 @@ class UI(QMainWindow):
         check_button = self.checkButton
         check_button.clicked.connect(self.start_check)
 
-        help_button = self.helpButton
-        help_button.clicked.connect(self.open_github)
+        help_menu_b = self.actionShprote_repo
+        help_menu_b.triggered.connect(self.open_github)
+
+        quit_menu_b = self.actionExit
+        quit_menu_b.triggered.connect(QCoreApplication.quit)
+
+        save_text_b = self.actionSave_the_result_as
 
     def clear_all(self):
         self.studentTextEdit.setPlainText("")
