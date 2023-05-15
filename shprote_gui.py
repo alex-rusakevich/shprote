@@ -2,14 +2,16 @@ import sys
 import os
 import signal
 from PyQt6 import QtWidgets, uic, QtGui
-from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PyQt6.QtCore import QTimer, QCoreApplication
 import subprocess
 import os
 import requests
 import webbrowser
+import datetime
+from pathlib import Path
 
-from shprote.config import load_config, get_script_dir
+from shprote.config import load_config, get_script_dir, DATA_DIR
 from shprote import __version__ as __shprote_version__
 from shprote import __adress__
 from shprote.log import get_logger
@@ -43,6 +45,36 @@ class UI(QMainWindow):
         quit_menu_b.triggered.connect(QCoreApplication.quit)
 
         save_text_b = self.actionSave_the_result_as
+        save_text_b.triggered.connect(self.save_result)
+
+    def save_result(self):
+        result_txt = self.resultTextEdit.toPlainText().strip()
+
+        if result_txt == "":
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Critical)
+            msg.setText("There is no result to save")
+            msg.setWindowTitle("Error")
+            msg.exec()
+            return
+
+        # Creating standart dir for results
+        RESULTS_DIR = os.path.join(DATA_DIR, "results")
+        Path(RESULTS_DIR).mkdir(parents=True, exist_ok=True)
+
+        result_save_path, _ = QFileDialog.getSaveFileName(self, "Save As...", RESULTS_DIR, filter="""
+            Text files (*.txt);;
+            All files (*.*)
+        """)
+
+        with open(result_save_path, 'w', encoding='utf8') as result_file:
+            result_file.write(
+                "[" + str(datetime.datetime.utcnow()) + "]" + "\n\n")
+            result_file.write(
+                "Teacher said: " + self.teacherTextEdit.toPlainText().strip() + "\n\n")
+            result_file.write(
+                "Student said: " + self.studentTextEdit.toPlainText().strip() + "\n\n")
+            result_file.write(result_txt + "\n")
 
     def clear_all(self):
         self.studentTextEdit.setPlainText("")

@@ -94,7 +94,8 @@ def clean(context):
     patterns.remove('__pycache__/')
 
     patterns += [os.path.join('.shprote', 'log'),
-                 os.path.join('.shprote', 'cache')]
+                 os.path.join('.shprote', 'cache'),
+                 os.path.join('.shprote', 'results')]
 
     patterns = [p for p in patterns if os.path.exists(p.strip())]
     found_smth = False
