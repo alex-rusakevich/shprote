@@ -25,7 +25,7 @@ HELP = f"""
 
 /start — start the bot and go to the main menu
 /help — display this message
-/check — begin your pronunciation test
+/check — begin your pronunciation test. The special code / hash in bot replies is intended to avoid pupil cheating by sending different results or fake tasks
 /stop — stop the test and go to main menu
 /menu — get to bot's menu
 
@@ -114,8 +114,8 @@ def get_teacher_text_and_print_stud(message, user_hash):
             reply_markup=render_main_menu(), parse_mode="Markdown")
         return
 
-    bot.reply_to(message, tf.format_text(
-        tf.mcode(user_hash)), parse_mode="Markdown")
+    bot.send_message(message.chat.id, tf.format_text(f"Teacher said: {teacher}",
+                                                     tf.mcode(user_hash)), parse_mode="Markdown")
 
     bot.send_message(
         message.chat.id, "Enter student's text:", reply_markup=render_stop_test_btn(), parse_mode="Markdown")
@@ -144,8 +144,8 @@ def get_stud_and_calc_result(message, data):
             reply_markup=render_main_menu(), parse_mode="Markdown")
         return
 
-    bot.reply_to(message, tf.format_text(
-        tf.mcode(data["hash"])), parse_mode="Markdown")
+    bot.send_message(message.chat.id, tf.format_text(f"Student said: {student}",
+                                                     tf.mcode(data["hash"])), parse_mode="Markdown")
 
     bot.send_message(
         message.chat.id, "Now wait a little...", reply_markup=render_stop_test_btn(), parse_mode="Markdown")
@@ -167,6 +167,7 @@ def get_stud_and_calc_result(message, data):
 
         check_result = f"""
 *Your result is {result_total:.2f}%*
+_Now you can forward all the messages with the special code to your teacher_
 
 Phonematic mistakes: {check_result["phon-mistakes"]}
 Teacher's levenseq: {check_result["teacher-said"]}
