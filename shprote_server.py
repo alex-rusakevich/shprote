@@ -109,8 +109,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     teacher = message.text.strip()
     if teacher in (MSG_STOP, "/stop"):
         bot.send_message(
-            message.chat.id, tf.format_text(str("The check was stopped. Getting back to the menu..."),
-                                            tf.mcode(user_hash), separator=" "),
+            message.chat.id, "The check has been stopped. Getting back to the menu...",
             reply_markup=render_main_menu(), parse_mode="Markdown")
         return
 
@@ -139,8 +138,7 @@ def get_stud_and_calc_result(message, data):
 
     if student in (MSG_STOP, "/stop"):
         bot.send_message(
-            message.chat.id, tf.format_text(str("The check was stopped. Getting back to the menu..."),
-                                            tf.mcode(data["hash"]), separator=" "),
+            message.chat.id, "The check has been stopped. Getting back to the menu...",
             reply_markup=render_main_menu(), parse_mode="Markdown")
         return
 
