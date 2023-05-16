@@ -20,3 +20,9 @@ def get_config():
     if config == {}:
         load_config()
     return config
+
+
+def save_config(config_path=os.path.join(f".", "config.toml")):
+    global config
+    with open(config_path, 'w', encoding='utf8') as f:
+        toml.dump(config, f)

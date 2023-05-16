@@ -4,6 +4,8 @@ import os
 import sys
 from pathlib import Path
 
+import telebot
+
 from shprote.config import get_config
 
 DATA_DIR = os.path.abspath(".")
@@ -26,6 +28,7 @@ app_log = logging.getLogger('root')
 app_log.setLevel(LOG_LVL)
 
 app_log.addHandler(shprote_handler)
+telebot.logger = app_log
 
 
 def exception_hook(exc_type, exc_value, exc_traceback):

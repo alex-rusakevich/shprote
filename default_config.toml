@@ -2,8 +2,8 @@
 debug = false
 
 [server]
-token = "TOKEN"
+token = ""
 
 [log]
-maxfiles = 2
-maxsize = 2097152 # 2MB
+maxfiles = 5
+maxsize = 5_242_880 # 5MB
