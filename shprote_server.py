@@ -16,6 +16,7 @@ from shprote import __version__
 MSG_CHECK = "📝 Check"
 MSG_HELP = "❓ Help"
 MSG_MENU = "🍱 Menu"
+MSG_STOP = "❌ Stop"
 
 HELP = f"""
 <b>Standardized 汉语 Pronunciation TEster {__version__}</b>
@@ -24,6 +25,7 @@ HELP = f"""
 /start — start the bot and go to the main menu
 /help — display this message
 /check — begin your pronunciation test
+/stop — stop the test and go to main menu
 /menu — get to bot's menu
 
 <i>May the 汉语 be with you!</i>
@@ -45,6 +47,19 @@ def render_main_menu():
     help_btn = tt.KeyboardButton(MSG_HELP)
     markup.add(check_btn, help_btn)
     return markup
+
+
+def render_stop_test_btn():
+    markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
+    stop_btn = tt.KeyboardButton(MSG_STOP)
+    markup.add(stop_btn)
+    return markup
+
+
+def menu_handler(message):
+    markup = render_main_menu()
+    bot.send_message(
+        message.chat.id, "Welcome to the menu!", reply_markup=markup, disable_web_page_preview=True)
 
 
 @bot.message_handler(commands=['start'])
@@ -70,7 +85,7 @@ def main_text_handler(message):
 
         # Next round
         bot.send_message(
-            message.chat.id, "Enter teacher's text:", parse_mode="Markdown")
+            message.chat.id, "Enter teacher's text:", reply_markup=render_stop_test_btn(), parse_mode="Markdown")
         bot.register_next_step_handler(
             message, get_teacher_text_and_print_stud, user_hash=user_hash)
     elif (message.text in (MSG_HELP, "/help")):
@@ -80,19 +95,25 @@ def main_text_handler(message):
 
         bot.send_message(
             message.chat.id, HELP, reply_markup=markup, parse_mode="HTML")
+    # Stop test will be redirected to here
     elif message.text in (MSG_MENU, "/menu"):
-        markup = render_main_menu()
-        bot.send_message(
-            message.chat.id, "Welcome to the menu!", reply_markup=markup, disable_web_page_preview=True)
+        menu_handler(message)
 
 
 def get_teacher_text_and_print_stud(message, user_hash):
     teacher = message.text.strip()
+    if teacher in (MSG_STOP, "/stop"):
+        bot.send_message(
+            message.chat.id, tf.format_text(str("The check was stopped. Getting back to the menu..."),
+                                            tf.mcode(user_hash), separator=" "),
+            reply_markup=render_main_menu(), parse_mode="Markdown")
+        return
+
     bot.reply_to(message, tf.format_text(
         tf.mcode(user_hash)), parse_mode="Markdown")
 
     bot.send_message(
-        message.chat.id, "Enter student's text:", parse_mode="Markdown")
+        message.chat.id, "Enter student's text:", reply_markup=render_stop_test_btn(), parse_mode="Markdown")
     bot.register_next_step_handler(
         message, get_stud_and_calc_result, data={
             "hash": user_hash,
@@ -110,13 +131,21 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
 def get_stud_and_calc_result(message, data):
     student = message.text.strip()
+
+    if student in (MSG_STOP, "/stop"):
+        bot.send_message(
+            message.chat.id, tf.format_text(str("The check was stopped. Getting back to the menu..."),
+                                            tf.mcode(data["hash"]), separator=" "),
+            reply_markup=render_main_menu(), parse_mode="Markdown")
+        return
+
     bot.reply_to(message, tf.format_text(
         tf.mcode(data["hash"])), parse_mode="Markdown")
 
-    data["student"]["said"] = student
-
     bot.send_message(
-        message.chat.id, "Now wait a little...", parse_mode="Markdown")
+        message.chat.id, "Now wait a little...", reply_markup=render_stop_test_btn(), parse_mode="Markdown")
+
+    data["student"]["said"] = student
 
     check_result = check_pronunciation(data["teacher"]["said"], data["teacher"]["type"],
                                        data["student"]["said"], data["student"]["type"], data["lang"])
@@ -126,7 +155,7 @@ def get_stud_and_calc_result(message, data):
     if check_result["type"] == "error":
         check_result = f"""
 *Something went wrong*
-{check_result["type"]}: {check_result["msg"]}
+{check_result["name"]}: {check_result["msg"]}
 """.strip()
     elif check_result["type"] == "result":
         result_total = check_result["total-ratio"] * 100
@@ -139,9 +168,10 @@ Teacher's levenseq: {check_result["teacher-said"]}
 Student's levenseq: {check_result["student-said"]}
 """.strip()
 
+    markup = render_main_menu()
     bot.send_message(
         message.chat.id, tf.format_text(str(check_result),
-                                        tf.mcode(data["hash"]), separator=" "), parse_mode="Markdown")
+                                        tf.mcode(data["hash"]), separator=" "), reply_markup=markup, parse_mode="Markdown")
 
 
 def main():
