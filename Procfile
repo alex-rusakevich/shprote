@@ -1,1 +1,1 @@
-bot: python3 shprote-server.py
+bot: python3 shprote_server.py
