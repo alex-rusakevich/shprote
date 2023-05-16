@@ -3,6 +3,7 @@
 from getpass import getpass
 import datetime
 import hashlib
+import os
 
 import telebot
 import telebot.types as tt
@@ -34,11 +35,15 @@ HELP = f"""
 logger = get_logger()
 config = load_config()
 
-if not config["main"]["token"]:
+token = os.environ.get("BOT_TOKEN")
+if not token:
+    token = config["main"]["token"]
+if not token:
     config["main"]["token"] = getpass("Bot API key: ")
     save_config()
+    token = config["main"]["token"]
 
-bot = telebot.TeleBot(config["main"]["token"], skip_pending=True)
+bot = telebot.TeleBot(token, skip_pending=True)
 
 
 def render_main_menu():
