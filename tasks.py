@@ -1,8 +1,6 @@
 from invoke import run, task
 from shprote import __version__ as __program_version__
 import os
-import configparser
-import toml
 from pathlib import Path
 import shutil
 
@@ -24,6 +22,7 @@ def clean(context):
     patterns = [l.strip() for l in open(
         '.gitignore', 'r', encoding='utf8').readlines()]
     patterns.remove('__pycache__/')
+    patterns.remove('config.toml')
 
     patterns = [p for p in patterns if os.path.exists(p.strip())]
     found_smth = False
