@@ -27,7 +27,7 @@ def test_empty():
         },
         "lang": "zh"
     })
-    assert response.status_code == 422
+    assert response.json["type"] == "error"
     assert response.json["error-name"] == "LEVENMASS_EMPTY_ERR"
 
 

@@ -7,17 +7,13 @@ name = "pypi"
 levenshtein = "*"
 pinyin = "*"
 toml = "*"
-flask = "*"
-requests = "*"
-pyqt6 = "*"
 numpy = "*"
+pyTelegramBotAPI = "*"
 
 [dev-packages]
 autopep8 = "*"
 pytest = "*"
-pyqt6-tools = "*"
 invoke = "*"
-pynsist = "*"
 
 [requires]
 python_version = "3.11.3"
