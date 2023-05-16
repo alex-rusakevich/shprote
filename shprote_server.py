@@ -1,19 +1,24 @@
 #!/usr/bin/env python
 
 from getpass import getpass
+import datetime
+import hashlib
 
 import telebot
 import telebot.types as tt
+import telebot.formatting as tf
 
 from shprote.config import load_config, save_config
 from shprote.log import get_logger
+from shprote.main import check_pronunciation
+from shprote import __version__
 
 MSG_CHECK = "📝 Check"
 MSG_HELP = "❓ Help"
 MSG_MENU = "🍱 Menu"
 
-HELP = """
-<b>Standardized 汉语 Pronunciation TEster</b>
+HELP = f"""
+<b>Standardized 汉语 Pronunciation TEster {__version__}</b>
 (https://github.com/alex-rusakevich/shprote)
 
 /start — start the bot and go to the main menu
@@ -53,10 +58,21 @@ def send_welcome(message):
 @bot.message_handler(content_types=['text'])
 def main_text_handler(message):
     if (message.text in (MSG_CHECK, "/check")):
-        markup = render_main_menu()
+        # User cache used to confirm results
+        user_hash_seed = str(datetime.datetime.now()) + \
+            " " + message.from_user.username
+        user_hash = hashlib.sha1(
+            user_hash_seed.encode('UTF-8`')).hexdigest()[:12]
+
         bot.send_message(
-            message.chat.id, "Sorry, this function is not available yet. Switching back to the main menu",
-            reply_markup=markup)
+            message.chat.id, tf.format_text(
+                f"The check has started. Check's special code is", tf.mcode(user_hash), separator=" "), parse_mode="Markdown")
+
+        # Next round
+        bot.send_message(
+            message.chat.id, "Enter teacher's text:", parse_mode="Markdown")
+        bot.register_next_step_handler(
+            message, get_teacher_text_and_print_stud, user_hash=user_hash)
     elif (message.text in (MSG_HELP, "/help")):
         markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
         menu_btn = tt.KeyboardButton(MSG_MENU)
@@ -68,6 +84,64 @@ def main_text_handler(message):
         markup = render_main_menu()
         bot.send_message(
             message.chat.id, "Welcome to the menu!", reply_markup=markup, disable_web_page_preview=True)
+
+
+def get_teacher_text_and_print_stud(message, user_hash):
+    teacher = message.text.strip()
+    bot.reply_to(message, tf.format_text(
+        tf.mcode(user_hash)), parse_mode="Markdown")
+
+    bot.send_message(
+        message.chat.id, "Enter student's text:", parse_mode="Markdown")
+    bot.register_next_step_handler(
+        message, get_stud_and_calc_result, data={
+            "hash": user_hash,
+            "lang": "zh",
+            "teacher": {
+                "said": teacher,
+                "type": "text"
+            },
+            "student": {
+                "said": "",
+                "type": "text"
+            }
+        })
+
+
+def get_stud_and_calc_result(message, data):
+    student = message.text.strip()
+    bot.reply_to(message, tf.format_text(
+        tf.mcode(data["hash"])), parse_mode="Markdown")
+
+    data["student"]["said"] = student
+
+    bot.send_message(
+        message.chat.id, "Now wait a little...", parse_mode="Markdown")
+
+    check_result = check_pronunciation(data["teacher"]["said"], data["teacher"]["type"],
+                                       data["student"]["said"], data["student"]["type"], data["lang"])
+
+    logger.debug("Pronunciation check result is " + str(check_result))
+
+    if check_result["type"] == "error":
+        check_result = f"""
+*Something went wrong*
+{check_result["type"]}: {check_result["msg"]}
+""".strip()
+    elif check_result["type"] == "result":
+        result_total = check_result["total-ratio"] * 100
+
+        check_result = f"""
+*Your result is {result_total:.2f}%*
+
+Phonematic mistakes: {check_result["phon-mistakes"]}
+Teacher's levenseq: {check_result["teacher-said"]}
+Student's levenseq: {check_result["student-said"]}
+""".strip()
+
+    bot.send_message(
+        message.chat.id, tf.format_text(str(check_result),
+                                        tf.mcode(data["hash"]), separator=" "), parse_mode="Markdown")
 
 
 def main():
