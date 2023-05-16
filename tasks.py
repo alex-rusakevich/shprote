@@ -4,8 +4,6 @@ import os
 from pathlib import Path
 import shutil
 
-os.environ["SHPROTE_HOME"] = "."
-
 
 def prun(command, **kwargs):
     """ Pipenv run """
@@ -13,6 +11,16 @@ def prun(command, **kwargs):
 
 
 @task
+def stop_heroku(context):
+    prun("heroku ps:scale bot=0 -a=shprote-bot")
+
+
+@task
+def start_heroku(context):
+    prun("heroku ps:scale bot=1 -a=shprote-bot")
+
+
+@task(pre=[stop_heroku,], post=[start_heroku,])
 def srv(context):
     prun("shprote_server.py")
 

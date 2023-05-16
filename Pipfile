@@ -14,6 +14,8 @@ pyTelegramBotAPI = "*"
 autopep8 = "*"
 pytest = "*"
 invoke = "*"
+watchdog = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.11.3"

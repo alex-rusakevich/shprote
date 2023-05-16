@@ -180,7 +180,8 @@ Student's levenseq: {check_result["student-said"]}
 
 def main():
     logger.info("Starting the bot...")
-    bot.infinity_polling()
+    bot.infinity_polling(
+        restart_on_change=config["main"]["debug"], path_to_watch=os.path.join(".", "shprote"))
     logger.info("The bot has stopped.")
 
 
