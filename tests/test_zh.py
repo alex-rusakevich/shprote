@@ -1,5 +1,5 @@
 import pytest
-from shprote_server import app
+from shprote.main import check_pronunciation
 
 test_data = (
     ("码", "妈", 0.5000, 1),
@@ -10,45 +10,27 @@ test_data = (
 )
 
 
-def test_root():
-    respone = app.test_client().get()
-    assert respone.status_code == 200
-
-
 def test_empty():
-    response = app.test_client().get("/api/check", json={
-        "teacher": {
-            "data": "》》？【】！；\t\r    ",
-            "type": "text"
-        },
-        "student": {
-            "data": "你好",
-            "type": "text"
-        },
-        "lang": "zh"
-    })
-    assert response.json["type"] == "error"
-    assert response.json["error-name"] == "LEVENMASS_EMPTY_ERR"
+    response = check_pronunciation(
+        "》》？【】！；\t\r    ", "text",
+        "你好", "text",
+        "zh"
+    )
+
+    assert response["type"] == "error"
+    assert response["name"] == "LEVENMASS_EMPTY_ERR"
 
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)
 def test_zh(teacher, student, exp_ratio, exp_mistakes):
-    response = app.test_client().get("/api/check", json={
-        "teacher": {
-            "data": teacher,
-            "type": "text"
-        },
-        "student": {
-            "data": student,
-            "type": "text"
-        },
-        "lang": "zh"
-    })
+    response = check_pronunciation(
+        teacher, "text",
+        student, "text",
+        "zh"
+    )
 
-    resp_json = response.get_json(force=True)
-
-    resp_ratio = float(resp_json["total-ratio"])
-    resp_mistakes = int(resp_json["phon-mistakes"])
+    resp_ratio = float(response["total-ratio"])
+    resp_mistakes = int(response["phon-mistakes"])
 
     assert exp_ratio == resp_ratio
     assert exp_mistakes == resp_mistakes

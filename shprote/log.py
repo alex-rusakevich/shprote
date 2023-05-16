@@ -4,7 +4,9 @@ import os
 import sys
 from pathlib import Path
 
-from shprote.config import DATA_DIR, get_config
+from shprote.config import get_config
+
+DATA_DIR = os.path.abspath(".")
 
 log_formatter = logging.Formatter(
     '[%(asctime)s] %(levelname)s %(funcName)s(%(lineno)d) %(message)s')
