@@ -31,7 +31,6 @@ HELP = f"""
 /help — display this message
 /check — begin your pronunciation test. The special code / hash in bot replies is intended to avoid pupil cheating by sending different results or fake tasks
 /stop — stop the test and go to main menu
-/menu — get to bot's menu
 
 _May 汉语 be with you!_
 """.strip()
@@ -85,12 +84,6 @@ def render_admin():
     return markup
 
 
-def menu_handler(message):
-    markup = render_main_menu()
-    bot.send_message(
-        message.chat.id, "Welcome to the menu!", reply_markup=markup, disable_web_page_preview=True)
-
-
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = render_main_menu()
@@ -118,20 +111,13 @@ def main_text_handler(message):
         bot.register_next_step_handler(
             message, get_teacher_text_and_print_stud, user_hash=user_hash)
     elif (message.text in (MSG_HELP, "/help")):
-        markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
-        menu_btn = tt.KeyboardButton(MSG_MENU)
-        markup.add(menu_btn)
-
         bot.send_message(
-            message.chat.id, HELP, reply_markup=markup)
-    # Stop test will be redirected to here
-    elif message.text in (MSG_MENU, "/menu"):
-        menu_handler(message)
+            message.chat.id, HELP, reply_markup=render_main_menu())
     elif message.text.lower() in ("я тебя люблю", "i love you",
                                   "我爱你", "я тебя люблю!", "i love you!", "我爱你！", "521", "520"):
         try:
             bot.send_sticker(
-                message.chat.id, "CAACAgIAAxkBAAEJAkdkZJ2OU5DV1melgSjQGkkg7O9jkQACoBwAAipooUjogwEq_q_PRy8E")
+                message.chat.id, "CAACAgIAAxkBAAEJAkdkZJ2OU5DV1melgSjQGkkg7O9jkQACoBwAAipooUjogwEq_q_PRy8E", reply_markup=render_main_menu())
         except:
             bot.send_message(message.chat.id, "❤️",
                              reply_markup=render_main_menu())
