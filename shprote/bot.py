@@ -3,13 +3,14 @@ import datetime
 import hashlib
 import os
 import sys
+from pathlib import Path
 
 import telebot
 import telebot.types as tt
 import telebot.formatting as tf
 
 from shprote.config import get_config, save_config
-from shprote.log import get_logger
+from shprote.log import get_logger, logfile_dir
 from shprote.main import check_pronunciation
 from shprote import __version__
 
@@ -147,14 +148,31 @@ def check_admin_password(message):
 
 
 def admin_commands(message):
+    def send_logs():
+        log_files = [os.path.abspath(str(p)) for p in Path(logfile_dir).glob("*.log*")
+                     if os.path.isfile(os.path.abspath(str(p)))]
+        for log_file_path in log_files:
+            with open(log_file_path, "rb") as log_file:
+                bot.send_document(message.chat.id, log_file)
+
     if message.text in ("/menu", MSG_MENU):
         bot.send_message(
             message.chat.id, "Switching back to the menu...", reply_markup=render_main_menu())
         return
     elif message.text in ("/shutdown", MSG_SHUTDOWN):
         logger.warning("Admin has shutdowned the bot, stopping...")
+        bot.send_message(
+            message.chat.id, "I do hope you know what you've done...")
         bot.stop_bot()
         sys.exit(0)
+    elif message.text in ("/log", MSG_LOG):
+        bot.send_message(
+            message.chat.id, "Here you are...")
+        send_logs()
+        bot.send_message(
+            message.chat.id, "Done, no more logs left to send", reply_markup=render_admin())
+        bot.register_next_step_handler(
+            message, admin_commands)
 
 
 def get_teacher_text_and_print_stud(message, user_hash):
