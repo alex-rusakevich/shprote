@@ -49,6 +49,11 @@ def clean(context):
         except:
             os.remove(pattern)
 
+    if (log_files := list(Path(os.path.join(".", "log")).rglob("*.log*"))):
+        found_smth = True
+        print("Removing logs...")
+        [os.remove(p) for p in log_files]
+
     if (pycache := list(Path('.').rglob('__pycache__'))):
         found_smth = True
         print("Removing python cache...")
