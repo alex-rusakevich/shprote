@@ -2,4 +2,3 @@ __pycache__/
 *.cache
 config.toml
 .pytest_cache/
-log/

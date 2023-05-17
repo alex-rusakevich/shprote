@@ -20,6 +20,11 @@ def start_heroku(context):
     prun("heroku ps:scale bot=1 -a=shprote-bot")
 
 
+@task
+def heroku_bash(context):
+    prun("heroku run bash --app shprote-bot")
+
+
 @task(pre=[stop_heroku,], post=[start_heroku,])
 def srv(context):
     prun("shprote_server.py")

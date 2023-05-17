@@ -39,6 +39,7 @@ _May 汉语 be with you!_
 logger = get_logger()
 config = get_config()
 
+# region Loading password and token
 token = os.environ.get("BOT_TOKEN")
 if not token:
     token = config["main"]["token"]
@@ -54,6 +55,7 @@ if not admin_pass:
     config["main"]["admin-pass"] = getpass("Bot API key: ")
     save_config()
     admin_pass = admin_pass["main"]["admin-pass"]
+# endregion
 
 bot = telebot.TeleBot(token, skip_pending=True,
                       parse_mode="Markdown", threaded=True)
@@ -125,7 +127,7 @@ def main_text_handler(message):
     # Stop test will be redirected to here
     elif message.text in (MSG_MENU, "/menu"):
         menu_handler(message)
-    elif message.text.lower() in ("я тебя люблю", "i love you", "我爱你"):
+    elif message.text.lower() in ("я тебя люблю", "i love you", "我爱你", "я тебя люблю!", "i love you!", "我爱你！"):
         bot.send_message(message.chat.id, "❤️",
                          reply_markup=render_main_menu())
     elif message.text == "/admin":
