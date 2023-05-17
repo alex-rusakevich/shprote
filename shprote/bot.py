@@ -2,6 +2,7 @@ from getpass import getpass
 import datetime
 import hashlib
 import os
+import sys
 
 import telebot
 import telebot.types as tt
@@ -17,6 +18,9 @@ MSG_CHECK = "📝 Check"
 MSG_HELP = "❓ Help"
 MSG_MENU = "🍱 Menu"
 MSG_STOP = "❌ Stop"
+
+MSG_SHUTDOWN = "🔴 Shutdown"
+MSG_LOG = "📜 Log"
 
 HELP = f"""
 *Standardized 汉语 Pronunciation TEster {__version__}*
@@ -42,6 +46,14 @@ if not token:
     save_config()
     token = config["main"]["token"]
 
+admin_pass = os.environ.get("ADMIN_PASS")
+if not admin_pass:
+    admin_pass = config["main"]["admin-pass"]
+if not admin_pass:
+    config["main"]["admin-pass"] = getpass("Bot API key: ")
+    save_config()
+    admin_pass = admin_pass["main"]["admin-pass"]
+
 bot = telebot.TeleBot(token, skip_pending=True,
                       parse_mode="Markdown", threaded=True)
 
@@ -58,6 +70,15 @@ def render_stop_test_btn():
     markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
     stop_btn = tt.KeyboardButton(MSG_STOP)
     markup.add(stop_btn)
+    return markup
+
+
+def render_admin():
+    markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
+    menu_btn = tt.KeyboardButton(MSG_MENU)
+    shutdown_btn = tt.KeyboardButton(MSG_SHUTDOWN)
+    log_btn = tt.KeyboardButton(MSG_LOG)
+    markup.add(menu_btn, shutdown_btn, log_btn)
     return markup
 
 
@@ -106,6 +127,34 @@ def main_text_handler(message):
     elif message.text.lower() in ("я тебя люблю", "i love you", "我爱你"):
         bot.send_message(message.chat.id, "❤️",
                          reply_markup=render_main_menu())
+    elif message.text == "/admin":
+        bot.send_message(
+            message.chat.id, "Enter the password:")
+        bot.register_next_step_handler(
+            message, check_admin_password)
+
+
+def check_admin_password(message):
+    if message.text != admin_pass:
+        bot.send_message(
+            message.chat.id, "The password is wrong, returning to the main menu", reply_markup=render_main_menu())
+        return
+
+    bot.send_message(message.chat.id, "Hello, admin!",
+                     reply_markup=render_admin())
+    bot.register_next_step_handler(
+        message, admin_commands)
+
+
+def admin_commands(message):
+    if message.text in ("/menu", MSG_MENU):
+        bot.send_message(
+            message.chat.id, "Switching back to the menu...", reply_markup=render_main_menu())
+        return
+    elif message.text in ("/shutdown", MSG_SHUTDOWN):
+        logger.warning("Admin has shutdowned the bot, stopping...")
+        bot.stop_bot()
+        sys.exit(0)
 
 
 def get_teacher_text_and_print_stud(message, user_hash):

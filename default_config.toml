@@ -1,8 +1,7 @@
 [main]
 debug = false
-
-[server]
 token = ""
+admin-pass = ""
 
 [log]
 maxfiles = 5
