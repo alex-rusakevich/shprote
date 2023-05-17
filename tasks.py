@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 import shutil
 
+os.environ["PIPENV_VERBOSITY"] = "-1"
+
 
 def prun(command, **kwargs):
     """ Pipenv run """
@@ -11,23 +13,20 @@ def prun(command, **kwargs):
 
 
 @task
-def stop_heroku(context):
-    prun("heroku ps:scale bot=0 -a=shprote-bot")
+def heroku(context, command):
+    if command == "stop":
+        prun("heroku ps:scale bot=0 -a=shprote-bot")
+    elif command == "start":
+        prun("heroku ps:scale bot=1 -a=shprote-bot")
+    elif command == "bash":
+        prun("heroku run bash --app shprote-bot")
 
 
 @task
-def start_heroku(context):
-    prun("heroku ps:scale bot=1 -a=shprote-bot")
-
-
-@task
-def heroku_bash(context):
-    prun("heroku run bash --app shprote-bot")
-
-
-@task(pre=[stop_heroku,], post=[start_heroku,])
 def srv(context):
+    heroku(context, "stop")
     prun("shprote_server.py")
+    heroku(context, "start")
 
 
 @task

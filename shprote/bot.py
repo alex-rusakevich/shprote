@@ -127,7 +127,8 @@ def main_text_handler(message):
     # Stop test will be redirected to here
     elif message.text in (MSG_MENU, "/menu"):
         menu_handler(message)
-    elif message.text.lower() in ("я тебя люблю", "i love you", "我爱你", "я тебя люблю!", "i love you!", "我爱你！"):
+    elif message.text.lower() in ("я тебя люблю", "i love you",
+                                  "我爱你", "я тебя люблю!", "i love you!", "我爱你！", "521", "520"):
         try:
             bot.send_sticker(
                 message.chat.id, "CAACAgIAAxkBAAEJAkdkZJ2OU5DV1melgSjQGkkg7O9jkQACoBwAAipooUjogwEq_q_PRy8E")
@@ -234,7 +235,7 @@ def get_stud_and_calc_result(message, data):
     if check_result["type"] == "error":
         check_result = f"""
 *Something went wrong*
-{check_result["name"]}: {check_result["msg"]}
+{tf.escape_markdown(check_result["name"])}: {check_result["msg"]}
 """.strip()
     elif check_result["type"] == "result":
         result_total = check_result["total-ratio"] * 100
