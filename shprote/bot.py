@@ -54,7 +54,7 @@ if not admin_pass:
 if not admin_pass:
     config["main"]["admin-pass"] = getpass("Bot API key: ")
     save_config()
-    admin_pass = admin_pass["main"]["admin-pass"]
+    admin_pass = config["main"]["admin-pass"]
 # endregion
 
 bot = telebot.TeleBot(token, skip_pending=True,
