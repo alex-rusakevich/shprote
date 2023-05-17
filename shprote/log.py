@@ -26,8 +26,16 @@ shprote_handler.setLevel(LOG_LVL)
 
 app_log = logging.getLogger('root')
 app_log.setLevel(LOG_LVL)
-
 app_log.addHandler(shprote_handler)
+
+
+if get_config()["log"]["stdout"]:
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stdout_handler.setLevel(LOG_LVL)
+    stdout_handler.setFormatter(log_formatter)
+    app_log.addHandler(stdout_handler)
+
+
 telebot.logger = app_log
 
 

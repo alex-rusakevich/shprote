@@ -6,3 +6,4 @@ admin-pass = ""
 [log]
 maxfiles = 5
 maxsize = 5_242_880 # 5MB
+stdout = true
