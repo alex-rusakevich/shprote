@@ -128,8 +128,12 @@ def main_text_handler(message):
     elif message.text in (MSG_MENU, "/menu"):
         menu_handler(message)
     elif message.text.lower() in ("я тебя люблю", "i love you", "我爱你", "я тебя люблю!", "i love you!", "我爱你！"):
-        bot.send_message(message.chat.id, "❤️",
-                         reply_markup=render_main_menu())
+        try:
+            bot.send_sticker(
+                message.chat.id, "CAACAgIAAxkBAAEJAkdkZJ2OU5DV1melgSjQGkkg7O9jkQACoBwAAipooUjogwEq_q_PRy8E")
+        except:
+            bot.send_message(message.chat.id, "❤️",
+                             reply_markup=render_main_menu())
     elif message.text == "/admin":
         bot.send_message(
             message.chat.id, "Enter the password:")
