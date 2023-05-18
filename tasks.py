@@ -67,7 +67,12 @@ def test(context):
     prun("pytest")
 
 
-@task()
-def tg(context):
+@task
+def tag(context):
     """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
+
+
+@task
+def cloc(context):
+    run("cloc .")
