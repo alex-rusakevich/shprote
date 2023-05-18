@@ -44,26 +44,19 @@ def get_teacher_text_and_print_stud(message, user_hash):
             reply_markup=render_main_menu())
         return
 
-    is_teacher_forwarded = False
-
-    teacher = ""
-    if message.forward_date or message.reply_to_message:
-        is_teacher_forwarded = True
-        teacher = message.text.strip()
-    else:
-        teacher = message.text.strip()
-
     forwarded_msg = ""
-    if not is_teacher_forwarded:
-        forwarded_msg = " *[NOT FORWARDED]*"
-    elif message.reply_to_message:
-        pass  # TODO: React to replied answers
+    teacher = message.text
+
+    if not message.forward_date and not message.reply_to_message:
+        forwarded_msg = " *[WRITTEN BY STUDENT]*"
     else:
-        usr_name = message.forward_sender_name if message.forward_from == None else f"@{message.forward_from.username}"
-        if str(usr_name) == "None":
+        if message.reply_to_message:
             usr_name = None if not message.reply_to_message.from_user.username else f"@{message.reply_to_message.from_user.username}"
-        if usr_name != None:
-            forwarded_msg = f" *[{usr_name}]*"
+            forwarded_msg = f" *[REPLIED TO {usr_name}]*"
+            teacher = message.reply_to_message.text
+        elif message.forward_date:
+            usr_name = message.forward_sender_name if message.forward_from == None else f"@{message.forward_from.username}"
+            forwarded_msg = f" *[FORWARDED FROM {usr_name}]*"
 
     bot.send_message(message.chat.id, tf.format_text(f"Teacher said{forwarded_msg}: {teacher}",
                                                      tf.mcode(user_hash)))
