@@ -1,5 +1,5 @@
 import pytest
-from shprote.main import check_pronunciation
+from shprote.logics.zh import compare_lang_text
 
 test_data = (
     ("码", "妈", 0.5000, 1),
@@ -11,10 +11,9 @@ test_data = (
 
 
 def test_empty():
-    response = check_pronunciation(
-        "》》？【】！；\t\r    ", "text",
-        "你好", "text",
-        "zh"
+    response = compare_lang_text(
+        "》》？【】！；\t\r    ",
+        "你好"
     )
 
     assert response["type"] == "error"
@@ -23,10 +22,9 @@ def test_empty():
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)
 def test_zh(teacher, student, exp_ratio, exp_mistakes):
-    response = check_pronunciation(
-        teacher, "text",
-        student, "text",
-        "zh"
+    response = compare_lang_text(
+        teacher,
+        student
     )
 
     resp_ratio = float(response["total-ratio"])

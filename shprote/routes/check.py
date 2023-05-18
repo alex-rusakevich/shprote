@@ -6,7 +6,7 @@ import telebot.formatting as tf
 
 from ..common import *
 from ..bot import bot
-from ..main import check_pronunciation
+from shprote.logics import get_module_by_lang, Language
 from ..log import get_logger
 
 logger = get_logger()
@@ -82,8 +82,10 @@ def get_stud_and_calc_result(message, data):
 
     data["student"]["said"] = student
 
-    check_result = check_pronunciation(data["teacher"]["said"], data["teacher"]["type"],
-                                       data["student"]["said"], data["student"]["type"], data["lang"])
+    lng_mod = get_module_by_lang(Language.Chinese)
+
+    check_result = lng_mod.compare_lang_text(data["teacher"]["said"],
+                                             data["student"]["said"])
 
     logger.debug("Pronunciation check result is " + str(check_result))
 
