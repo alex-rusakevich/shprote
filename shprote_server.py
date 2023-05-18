@@ -4,7 +4,7 @@ import os
 
 from shprote.log import get_logger
 from shprote.config import get_config
-from shprote.bot import bot
+from shprote.bot_server import bot
 
 
 logger = get_logger()
