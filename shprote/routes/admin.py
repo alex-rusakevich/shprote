@@ -74,6 +74,12 @@ def check_admin_password(message):
             message.chat.id, "⛔ The password is wrong, returning to the main menu", reply_markup=render_main_menu())
         return
 
+    bot.delete_message(message.chat.id, message.id)
+
+    usr = message.from_user
+    logger.info(
+        f"Somebody has logged in the admin panel. His name is {usr.first_name} {usr.last_name} (@{usr.username}, {usr.id})")
+
     bot.send_message(message.chat.id, "Hello, admin!",
                      reply_markup=render_admin())
     bot.register_next_step_handler(
