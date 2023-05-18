@@ -48,7 +48,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     teacher = message.text
 
     if not message.forward_date and not message.reply_to_message:
-        forwarded_msg = " *[WRITTEN BY STUDENT]*"
+        forwarded_msg = " *[WRITTEN BY THE STUDENT]*"
     else:
         if message.reply_to_message:
             usr_name = None if not message.reply_to_message.from_user.username else f"@{message.reply_to_message.from_user.username}"
