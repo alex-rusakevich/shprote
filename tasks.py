@@ -71,6 +71,7 @@ def test(context):
 def tag(context):
     """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
+    run(f"git push --tags")
 
 
 @task
