@@ -37,6 +37,10 @@ def main_text_handler(message):
     elif (message.text in (MSG_MENU, "/menu")):
         bot.send_message(
             message.chat.id, "Welcome to the main menu!", reply_markup=render_main_menu())
+    elif message.text.strip() in (MSG_STOP, "/stop"):
+        bot.send_message(
+            message.chat.id, "The check has been stopped. Getting back to the menu...",
+            reply_markup=render_main_menu())
     elif (message.text in (MSG_HELP, "/help")):
         bot.send_message(
             message.chat.id, HELP, reply_markup=render_main_menu())

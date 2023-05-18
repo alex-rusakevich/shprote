@@ -47,7 +47,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     is_teacher_forwarded = False
 
     teacher = ""
-    if hasattr(message, 'forward_from'):
+    if message.forward_date or message.reply_to_message:
         is_teacher_forwarded = True
         teacher = message.text.strip()
     else:
