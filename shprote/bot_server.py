@@ -34,6 +34,9 @@ def send_welcome(message):
 def main_text_handler(message):
     if (message.text in (MSG_CHECK, "/check")):
         start_test(message)
+    elif (message.text in (MSG_MENU, "/menu")):
+        bot.send_message(
+            message.chat.id, "Welcome to the main menu!", reply_markup=render_main_menu())
     elif (message.text in (MSG_HELP, "/help")):
         bot.send_message(
             message.chat.id, HELP, reply_markup=render_main_menu())

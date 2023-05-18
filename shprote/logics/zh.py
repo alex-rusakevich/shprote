@@ -41,21 +41,16 @@ def compare_phon_repr(teacher_text, student_text) -> str:
     }
 
 
+def text_phonetizer(str_in: str) -> str:
+    str_in = er_sound_mod(str_in)
+    str_in = pinyin.get(
+        str_in, format='diacritical', delimiter=" ")
+    str_in = levenshtein_massify(str_in)
+    return str_in
+
+
 def compare_lang_text(teacher_data: str, student_data: str) -> dict:
-    teacher_text = ""
-    student_text = ""
-
-    # Control R-like sounds (儿)
-    # Process teacher text
-    teacher_data = er_sound_mod(teacher_data)
-    teacher_text = pinyin.get(
-        teacher_data, format='diacritical', delimiter=" ")
-    teacher_text = levenshtein_massify(teacher_text)
-
-    # Process student text
-    student_data = er_sound_mod(student_data)
-    student_text = pinyin.get(
-        student_data, format='diacritical', delimiter=" ")
-    student_text = levenshtein_massify(student_text)
+    teacher_text, student_text = text_phonetizer(
+        teacher_data), text_phonetizer(student_data)
 
     return compare_phon_repr(teacher_text, student_text)
