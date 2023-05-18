@@ -24,6 +24,7 @@ ignore_cache_path = os.path.join(tempfile.gettempdir(), "cache")
 Path(ignore_cache_path).mkdir(parents=True, exist_ok=True)
 ignore_cache_path = os.path.join(ignore_cache_path, "ignored-chars.npy")
 
+# region Load ignored characters
 if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
     logger.info("No chached ignore characters.")
     ignored_characters = "".join([chr(i) for i in range(
@@ -39,7 +40,7 @@ else:
     logger.info(
         f"Reading cached ignore characters from '{ignore_cache_path}'...")
     purificator_tr = np.load(ignore_cache_path, allow_pickle=True).item()
-# ==============================================
+# endregion
 
 
 def levenshtein_massify(str_in: str) -> str:
