@@ -50,8 +50,12 @@ def render_admin():
 
 def check_tg_id(message):
     if int(message.chat.id) in admin_id:
+        markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
+        stop_btn = tt.KeyboardButton(MSG_MENU)
+        markup.add(stop_btn)
+
         bot.send_message(
-            message.chat.id, "✅ The id is correct. Now enter the password, please:")
+            message.chat.id, "✅ The id is correct. Now enter the password, please:", reply_markup=markup)
         bot.register_next_step_handler(
             message, check_admin_password)
     else:
@@ -60,6 +64,11 @@ def check_tg_id(message):
 
 
 def check_admin_password(message):
+    if message.text in (MSG_MENU, "/menu"):
+        bot.send_message(
+            message.chat.id, "Returning to the main menu", reply_markup=render_main_menu())
+        return
+
     if message.text != admin_pass:
         bot.send_message(
             message.chat.id, "⛔ The password is wrong, returning to the main menu", reply_markup=render_main_menu())
