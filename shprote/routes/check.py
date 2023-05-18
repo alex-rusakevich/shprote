@@ -38,14 +38,34 @@ def start_test(message):
 
 
 def get_teacher_text_and_print_stud(message, user_hash):
-    teacher = message.text.strip()
-    if teacher in (MSG_STOP, "/stop"):
+    if message.text.strip() in (MSG_STOP, "/stop"):
         bot.send_message(
             message.chat.id, "The check has been stopped. Getting back to the menu...",
             reply_markup=render_main_menu())
         return
 
-    bot.send_message(message.chat.id, tf.format_text(f"Teacher said: {teacher}",
+    is_teacher_forwarded = False
+
+    teacher = ""
+    if hasattr(message, 'forward_from'):
+        is_teacher_forwarded = True
+        teacher = message.text.strip()
+    else:
+        teacher = message.text.strip()
+
+    forwarded_msg = ""
+    if not is_teacher_forwarded:
+        forwarded_msg = " *[NOT FORWARDED]*"
+    elif message.reply_to_message:
+        pass  # TODO: React to replied answers
+    else:
+        usr_name = message.forward_sender_name if message.forward_from == None else f"@{message.forward_from.username}"
+        if str(usr_name) == "None":
+            usr_name = None if not message.reply_to_message.from_user.username else f"@{message.reply_to_message.from_user.username}"
+        if usr_name != None:
+            forwarded_msg = f" *[{usr_name}]*"
+
+    bot.send_message(message.chat.id, tf.format_text(f"Teacher said{forwarded_msg}: {teacher}",
                                                      tf.mcode(user_hash)))
 
     bot.send_message(
@@ -66,11 +86,18 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
 
 def get_stud_and_calc_result(message, data):
-    student = message.text.strip()
-
-    if student in (MSG_STOP, "/stop"):
+    if message.text.strip() in (MSG_STOP, "/stop"):
         bot.send_message(
             message.chat.id, "The check has been stopped. Getting back to the menu...",
+            reply_markup=render_main_menu())
+        return
+
+    is_student_forwarded = False
+    student = message.text.strip()
+
+    if message.forward_date or message.reply_to_message:
+        bot.send_message(
+            message.chat.id, "*The answer cannot be forwarded or be a reply. The test has failed.*",
             reply_markup=render_main_menu())
         return
 
