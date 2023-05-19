@@ -28,7 +28,7 @@ def start_test(message):
 
     bot.send_message(
         message.chat.id, tf.format_text(
-            f"The check has started. Check's special code is", tf.mcode(user_hash), separator=" "))
+            f"The check has started. _Please, remember that you cannot use replied or forwarded messages as student's answers._ Check's special code is", tf.mcode(user_hash), separator=" "))
 
     # Next round
     bot.send_message(
@@ -48,17 +48,17 @@ def get_teacher_text_and_print_stud(message, user_hash):
     teacher = message.text
 
     if not message.forward_date and not message.reply_to_message:
-        forwarded_msg = " *[WRITTEN BY THE STUDENT]*"
+        forwarded_msg = "*[WRITTEN BY THE STUDENT]*"
     else:
         if message.reply_to_message:
             usr_name = None if not message.reply_to_message.from_user.username else f"@{message.reply_to_message.from_user.username}"
-            forwarded_msg = f" *[REPLIED TO {usr_name}]*"
+            forwarded_msg = f"*[REPLIED TO {usr_name}]*"
             teacher = message.reply_to_message.text
         elif message.forward_date:
             usr_name = message.forward_sender_name if message.forward_from == None else f"@{message.forward_from.username}"
-            forwarded_msg = f" *[FORWARDED FROM {usr_name}]*"
+            forwarded_msg = f"*[FORWARDED FROM {usr_name}]*"
 
-    bot.send_message(message.chat.id, tf.format_text(f"Teacher said{forwarded_msg}: {teacher}",
+    bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(text)*: {teacher}",
                                                      tf.mcode(user_hash)))
 
     bot.send_message(
@@ -90,11 +90,13 @@ def get_stud_and_calc_result(message, data):
 
     if message.forward_date or message.reply_to_message:
         bot.send_message(
-            message.chat.id, "*The answer cannot be forwarded or be a reply. The test has failed.*",
+            message.chat.id, "*The answer cannot be forwarded or be a reply. The test has been failed.*",
             reply_markup=render_main_menu())
+        logger.info(
+            f"Someone has tried to cheat: @{message.from_user.username}, id is {message.from_user.id}")
         return
 
-    bot.send_message(message.chat.id, tf.format_text(f"Student said: {student}",
+    bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
                                                      tf.mcode(data["hash"])))
 
     bot.send_message(
