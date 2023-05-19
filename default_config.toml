@@ -3,6 +3,7 @@ debug = false
 token = ""
 admin-pass = ""
 admin-id = []
+threads = 4
 
 [log]
 maxfiles = 5

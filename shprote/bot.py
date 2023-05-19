@@ -18,4 +18,4 @@ if not token:
 # endregion
 
 bot = telebot.TeleBot(token, skip_pending=True,
-                      parse_mode="Markdown", threaded=True, num_threads=4)
+                      parse_mode="Markdown", threaded=True, num_threads=int(config["main"]["threads"]))
