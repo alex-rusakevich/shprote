@@ -6,6 +6,7 @@ import datetime
 from dateutil.relativedelta import *
 
 import telebot.types as tt
+from telebot.apihelper import ApiTelegramException
 from sqlalchemy import extract
 
 from shprote.config import get_config, save_config
@@ -14,11 +15,13 @@ from ..common import *
 from ..log import logfile_dir, get_logger
 from shprote.db import DB_SESSION
 from shprote.db.declarations import User
+from shprote.db.management import get_user_id_list, remove_user_by_id
 
 
 MSG_SHUTDOWN = "🔴 Shutdown"
 MSG_LOG = "📜 Log"
 MSG_STATS = "🧮 Statistics"
+MSG_GLOB_MAIL = "📣 Message to all users"
 
 
 config = get_config()
@@ -51,7 +54,8 @@ def render_admin():
     shutdown_btn = tt.KeyboardButton(MSG_SHUTDOWN)
     log_btn = tt.KeyboardButton(MSG_LOG)
     stats_btn = tt.KeyboardButton(MSG_STATS)
-    markup.add(menu_btn, shutdown_btn, log_btn, stats_btn)
+    glob_msg_btn = tt.KeyboardButton(MSG_GLOB_MAIL)
+    markup.add(menu_btn, shutdown_btn, log_btn, stats_btn, glob_msg_btn)
     return markup
 
 
@@ -165,3 +169,27 @@ def admin_commands(message):
             message.chat.id, STATS_MSG, reply_markup=render_admin())
         bot.register_next_step_handler(
             message, admin_commands)
+    elif message.text in (MSG_GLOB_MAIL, "/globm"):
+        bot.send_message(
+            message.chat.id, "Write to all the registred users:", reply_markup=render_admin())
+        bot.register_next_step_handler(
+            message, global_mail)
+
+
+def global_mail(message):
+    glob_msg = message.text
+    msg_count = 0
+
+    for usr_id in get_user_id_list():
+        usr_id = usr_id[0]
+        logger.debug("Trying to send a message to " + str(usr_id))
+
+        try:
+            bot.send_message(usr_id, glob_msg)
+        except ApiTelegramException:
+            remove_user_by_id(usr_id)
+        else:
+            msg_count += 1
+
+    bot.send_message(
+        message.chat.id, f"🟢 Done! {msg_count} messages sent!", reply_markup=render_admin())

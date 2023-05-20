@@ -26,3 +26,25 @@ def upsert_user(user_id: int):
         session.rollback()
     finally:
         session.close()
+
+
+def get_user_id_list():
+    session = scoped_session(DB_SESSION_FACTORY)
+    id_list = session.query(User.user_id).distinct()
+    session.close()
+    return id_list
+
+
+def remove_user_by_id(user_id: int):
+    session = scoped_session(DB_SESSION_FACTORY)
+
+    session.query(User).filter(User.user_id == user_id).delete()
+
+    try:
+        session.commit()
+    except:
+        logger.warning(
+            "Something went wrong while trying to upsert user visit info. Rolling back...")
+        session.rollback()
+    finally:
+        session.close()
