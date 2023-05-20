@@ -10,7 +10,7 @@ from shprote.db.management import upsert_user
 
 HELP = f"""
 *Standardized 汉语 Pronunciation TEster {__version__}*
-(https://github.com/alex-rusakevich/shprote)
+Created by Alexander Rusakevich (https://github.com/alex-rusakevich)
 
 /start — start the bot and go to the main menu
 /help — display this message
