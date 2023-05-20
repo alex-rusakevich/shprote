@@ -1,3 +1,5 @@
+import threading
+
 from shprote.config import get_config
 from shprote.log import get_logger
 from shprote import __version__
@@ -26,18 +28,19 @@ config = get_config()
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    upsert_user(message.from_user.id)
 
     markup = render_main_menu()
     bot.send_message(
         message.chat.id, f"Hello there, {message.from_user.first_name}! I'm ready to check your pronunciation! 🤓",
         reply_markup=markup)
 
+    uu_thread = threading.Thread(
+        target=upsert_user, args=(message.from_user.id,))
+    uu_thread.start()
+
 
 @bot.message_handler(content_types=['text'])
 def main_text_handler(message):
-    upsert_user(message.from_user.id)
-
     if (message.text in (MSG_CHECK, "/check")):
         start_test(message)
     elif (message.text in (MSG_MENU, "/menu")):
@@ -63,3 +66,7 @@ def main_text_handler(message):
         bot.send_message(
             message.chat.id, "Checking your telegram id...")
         check_tg_id(message)
+
+    uu_thread = threading.Thread(
+        target=upsert_user, args=(message.from_user.id,))
+    uu_thread.start()

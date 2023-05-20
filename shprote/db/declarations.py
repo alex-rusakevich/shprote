@@ -14,8 +14,8 @@ class User(DeclarativeBase):
 
     user_id = Column(BIGINT(unsigned=False), primary_key=True,
                      autoincrement=False)
-    joined = Column(DateTime, default=func.now())
-    last_active = Column(DateTime, default=func.now())
+    joined = Column(DateTime(timezone=True), default=func.now())
+    last_active = Column(DateTime(timezone=True), default=func.now())
 
     def __repr__(self):
         return "".format(self.code)

@@ -4,6 +4,7 @@ token = ""
 admin-pass = ""
 admin-id = []
 threads = 4
+timezone = "Europe/Minsk"
 
 [database]
 drivername = 'driver'

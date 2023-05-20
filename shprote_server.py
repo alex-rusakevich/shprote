@@ -10,6 +10,8 @@ from shprote.bot_server import bot
 logger = get_logger()
 config = get_config()
 
+os.environ["TZ"] = config["main"]["timezone"]
+
 
 def main():
     logger.info("Starting the bot...")

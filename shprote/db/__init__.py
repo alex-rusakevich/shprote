@@ -20,4 +20,5 @@ else:
                               echo=config["main"]["debug"])
 
 DeclarativeBase.metadata.create_all(DB_ENGINE)
-DB_SESSION = sessionmaker(bind=DB_ENGINE)()
+DB_SESSION_FACTORY = sessionmaker(bind=DB_ENGINE)
+DB_SESSION = DB_SESSION_FACTORY()
