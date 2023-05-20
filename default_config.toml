@@ -16,7 +16,7 @@ timezone = "Europe/Minsk"
     database = 'mydb'
 
     [database.options]
-    recycle = 300
+    recycle = 3600
     pre-ping = true
 
 [log]
