@@ -2,17 +2,23 @@ from getpass import getpass
 import os
 import sys
 from pathlib import Path
+import datetime
+from dateutil.relativedelta import *
 
 import telebot.types as tt
+from sqlalchemy import extract
 
 from shprote.config import get_config, save_config
 from ..bot import bot
 from ..common import *
 from ..log import logfile_dir, get_logger
+from shprote.db import DB_SESSION
+from shprote.db.declarations import User
 
 
 MSG_SHUTDOWN = "🔴 Shutdown"
 MSG_LOG = "📜 Log"
+MSG_STATS = "🧮 Statistics"
 
 
 config = get_config()
@@ -44,7 +50,8 @@ def render_admin():
     menu_btn = tt.KeyboardButton(MSG_MENU)
     shutdown_btn = tt.KeyboardButton(MSG_SHUTDOWN)
     log_btn = tt.KeyboardButton(MSG_LOG)
-    markup.add(menu_btn, shutdown_btn, log_btn)
+    stats_btn = tt.KeyboardButton(MSG_STATS)
+    markup.add(menu_btn, shutdown_btn, log_btn, stats_btn)
     return markup
 
 
@@ -110,5 +117,51 @@ def admin_commands(message):
         send_logs()
         bot.send_message(
             message.chat.id, "Done, no more logs left to send", reply_markup=render_admin())
+        bot.register_next_step_handler(
+            message, admin_commands)
+    elif message.text in (MSG_STATS, "/stats", "/statistics"):
+        # region Calc date
+        this_year = datetime.date.today()
+        prev_year = (this_year - relativedelta(year=1)).year
+        this_year = this_year.year
+
+        this_month = datetime.date.today()
+        prev_month = (this_month - relativedelta(month=1)).month
+        this_month = this_month.month
+        # endregion
+
+        all_users = DB_SESSION.query(User)
+        users_in_total = all_users.count()
+
+        # region New users
+        new_users_this_month = all_users.filter(extract("year", User.joined) == this_year)\
+            .filter(extract("month", User.joined) == this_month).count() - all_users\
+            .filter(extract("year", User.joined) == prev_year).filter(extract("month", User.joined) == prev_month).count()
+
+        new_users_this_year = all_users.filter(extract("year", User.joined) == this_year).count() - all_users\
+            .filter(extract("year", User.joined) == prev_year).count()
+        # endregion
+
+        # region Active users
+        active_users_this_year = all_users.filter(
+            extract("year", User.last_active) == this_year).count()
+        new_active_users_this_year = active_users_this_year - \
+            all_users.filter(extract("year", User.last_active)
+                             == prev_year).count()
+
+        active_users_this_month = all_users.filter(extract("year", User.last_active) == this_year)\
+            .filter(extract("month", User.last_active) == this_month).count()
+        new_active_users_this_month = active_users_this_month - all_users.filter(extract("year", User.last_active) == prev_year)\
+            .filter(extract("month", User.last_active) == prev_month).count()
+        # endregion
+
+        STATS_MSG = f"""
+*All users:* {users_in_total} ({'{:+}'.format(new_users_this_month)} this month, {'{:+}'.format(new_users_this_year)} this year)
+*Active users this year:* {active_users_this_year} ({'{:+}'.format(new_active_users_this_year)})
+*Active users this month:* {active_users_this_month} ({'{:+}'.format(new_active_users_this_month)})
+        """.strip()
+
+        bot.send_message(
+            message.chat.id, STATS_MSG, reply_markup=render_admin())
         bot.register_next_step_handler(
             message, admin_commands)

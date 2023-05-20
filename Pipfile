@@ -11,6 +11,7 @@ numpy = "*"
 pyTelegramBotAPI = "*"
 sqlalchemy = "*"
 mysqlclient = "*"
+python-dateutil = "*"
 
 [dev-packages]
 autopep8 = "*"
