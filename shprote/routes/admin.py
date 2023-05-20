@@ -171,7 +171,7 @@ def admin_commands(message):
             message, admin_commands)
     elif message.text in (MSG_GLOB_MAIL, "/globm"):
         bot.send_message(
-            message.chat.id, "Write to all the registred users:", reply_markup=render_admin())
+            message.chat.id, "Write to ⚠ *all* ⚠ the registred users:", reply_markup=render_admin())
         bot.register_next_step_handler(
             message, global_mail)
 
@@ -193,3 +193,5 @@ def global_mail(message):
 
     bot.send_message(
         message.chat.id, f"🟢 Done! {msg_count} messages sent!", reply_markup=render_admin())
+    bot.register_next_step_handler(
+        message, admin_commands)
