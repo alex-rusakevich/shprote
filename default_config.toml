@@ -7,12 +7,17 @@ threads = 4
 timezone = "Europe/Minsk"
 
 [database]
-drivername = 'driver'
-username = 'username'
-password = 'password'
-host = '127.0.0.1'
-port = 5000
-database = 'mydb'
+    [database.connection]
+    drivername = 'driver'
+    username = 'username'
+    password = 'password'
+    host = '127.0.0.1'
+    port = 5000
+    database = 'mydb'
+
+    [database.options]
+    recycle = 300
+    pre-ping = true
 
 [log]
 maxfiles = 5
