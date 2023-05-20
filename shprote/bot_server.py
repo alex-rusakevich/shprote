@@ -6,6 +6,8 @@ from shprote.routes.check import start_test
 from shprote.common import *
 from shprote.bot import bot
 
+from shprote.db import DATABASE, DB_ENGINE
+
 HELP = f"""
 *Standardized 汉语 Pronunciation TEster {__version__}*
 (https://github.com/alex-rusakevich/shprote)

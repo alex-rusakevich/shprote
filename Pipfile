@@ -9,6 +9,8 @@ pinyin = "*"
 toml = "*"
 numpy = "*"
 pyTelegramBotAPI = "*"
+sqlalchemy = "*"
+mysqlclient = "*"
 
 [dev-packages]
 autopep8 = "*"

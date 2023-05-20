@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import telebot
+import sqlalchemy
 
 from shprote.config import get_config
 
@@ -28,7 +29,7 @@ app_log = logging.getLogger('root')
 app_log.setLevel(LOG_LVL)
 app_log.addHandler(shprote_handler)
 
-
+stdout_handler = None
 if get_config()["log"]["stdout"]:
     stdout_handler = logging.StreamHandler(sys.stdout)
     stdout_handler.setLevel(LOG_LVL)
@@ -37,6 +38,14 @@ if get_config()["log"]["stdout"]:
 
 
 telebot.logger = app_log
+
+# region SQLAlchemy logger
+sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
+sqlalchemy_logger.setLevel(LOG_LVL)
+sqlalchemy_logger.addHandler(shprote_handler)
+if get_config()["log"]["stdout"]:
+    sqlalchemy_logger.addHandler(stdout_handler)
+# endregion
 
 
 def exception_hook(exc_type, exc_value, exc_traceback):

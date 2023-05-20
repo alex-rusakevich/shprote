@@ -5,6 +5,14 @@ admin-pass = ""
 admin-id = []
 threads = 4
 
+[database]
+drivername = 'driver'
+username = 'username'
+password = 'password'
+host = '127.0.0.1'
+port = 5000
+database = 'mydb'
+
 [log]
 maxfiles = 5
 maxsize = 5_242_880 # 5MB
