@@ -77,3 +77,8 @@ def tag(context):
 @task
 def cloc(context):
     run("cloc .")
+
+
+@task
+def time(context):
+    run('git-time .')
