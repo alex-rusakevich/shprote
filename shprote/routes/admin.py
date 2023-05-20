@@ -170,14 +170,26 @@ def admin_commands(message):
         bot.register_next_step_handler(
             message, admin_commands)
     elif message.text in (MSG_GLOB_MAIL, "/globm"):
+        markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
+        stop_btn = tt.KeyboardButton(MSG_STOP)
+        markup.add(stop_btn)
+
         bot.send_message(
-            message.chat.id, "Write to ⚠ *all* ⚠ the registred users:", reply_markup=render_admin())
+            message.chat.id, "Write to ⚠ *all* ⚠ the registred users:", reply_markup=markup)
         bot.register_next_step_handler(
             message, global_mail)
 
 
 def global_mail(message):
     glob_msg = message.text
+
+    if glob_msg in (MSG_STOP, "/stop"):
+        bot.send_message(
+            message.chat.id, "Getting back to the admin menu...", reply_markup=render_admin())
+        bot.register_next_step_handler(
+            message, admin_commands)
+        return
+
     msg_count = 0
 
     for usr_id in get_user_id_list():
