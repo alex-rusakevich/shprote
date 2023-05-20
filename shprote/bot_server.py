@@ -6,7 +6,7 @@ from shprote.routes.check import start_test
 from shprote.common import *
 from shprote.bot import bot
 
-from shprote.db import DATABASE, DB_ENGINE
+from shprote.db.management import upsert_user
 
 HELP = f"""
 *Standardized 汉语 Pronunciation TEster {__version__}*
@@ -26,6 +26,8 @@ config = get_config()
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    upsert_user(message.from_user.id)
+
     markup = render_main_menu()
     bot.send_message(
         message.chat.id, f"Hello there, {message.from_user.first_name}! I'm ready to check your pronunciation! 🤓",
@@ -34,6 +36,8 @@ def send_welcome(message):
 
 @bot.message_handler(content_types=['text'])
 def main_text_handler(message):
+    upsert_user(message.from_user.id)
+
     if (message.text in (MSG_CHECK, "/check")):
         start_test(message)
     elif (message.text in (MSG_MENU, "/menu")):

@@ -40,7 +40,9 @@ if get_config()["log"]["stdout"]:
 telebot.logger = app_log
 
 # region SQLAlchemy logger
-sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
+sqlalchemy_logger = logging.getLogger('sqlalchemy.engine.base.Engine')
+for hdlr in sqlalchemy_logger.handlers:
+    sqlalchemy_logger.removeHandler(hdlr)
 sqlalchemy_logger.setLevel(LOG_LVL)
 sqlalchemy_logger.addHandler(shprote_handler)
 if get_config()["log"]["stdout"]:
