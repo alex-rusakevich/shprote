@@ -24,6 +24,11 @@ def heroku(context, command):
 
 
 @task
+def hs(context):
+    heroku(context, "start")
+
+
+@task
 def srv(context):
     heroku(context, "stop")
     prun("shprote_server.py")
