@@ -2,11 +2,11 @@ import sys
 import os
 from unicodedata import category
 from pathlib import Path
-import tempfile
 
 import numpy as np
 
 from shprote.log import get_logger
+from shprote.temp import get_tmp
 
 logger = get_logger()
 purificator_tr = {}
@@ -18,7 +18,7 @@ def get_ignored_char_tr():
     if not purificator_tr:
         ignored_characters = ""
         purificator_tr = {}
-        ignore_cache_path = os.path.join(tempfile.gettempdir(), "cache")
+        ignore_cache_path = os.path.join(get_tmp(), "cache")
         Path(ignore_cache_path).mkdir(parents=True, exist_ok=True)
         ignore_cache_path = os.path.join(
             ignore_cache_path, "ignored-chars.npy")

@@ -2,17 +2,23 @@ import os
 from getpass import getpass
 
 import telebot
+from sqlalchemy.sql import text
 
 from shprote.config import get_config, save_config
 from shprote.log import get_logger
-from shprote.db import DB_SESSION
+from shprote.db import DB_ENGINE, DB_SESSION
 
 
 class TGExceptionHandler(telebot.ExceptionHandler):
     @staticmethod
     def handle(exception):
-        get_logger().warning("An exception occured, rolling back the database session...")
-        DB_SESSION.rollback()
+        get_logger().warning("An exception occured, pinging the database...")
+
+        try:
+            DB_ENGINE.connect().execute(text("SELECT 1;"))
+        finally:
+            get_logger().warning("Rolling back the database session...")
+            DB_SESSION.rollback()
 
 
 config = get_config()

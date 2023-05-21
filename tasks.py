@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 
 os.environ["PIPENV_VERBOSITY"] = "-1"
+os.environ["SHPROTE_TEMP"] = ".shprote"
 
 
 def prun(command, **kwargs):

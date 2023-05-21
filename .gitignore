@@ -3,3 +3,4 @@ __pycache__/
 config.toml
 .pytest_cache/
 log/
+.shprote
