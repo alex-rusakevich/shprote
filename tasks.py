@@ -70,7 +70,7 @@ def clean(context):
 
 @task
 def test(context):
-    prun("pytest")
+    prun("pytest -W ignore::DeprecationWarning")
 
 
 @task
