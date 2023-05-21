@@ -4,7 +4,7 @@ from shprote.logics.zh import compare_lang_text, text_phonetizer
 test_data = (
     ("码", "妈", 0.5000, 1),
     ("你好，我叫萨沙", "你好，我叫米沙", 0.8750, 2),
-    ("我们那儿有个王小三儿，在门口儿摆着一个小杂货摊儿", "我们那儿有个王小三儿，在门口儿白着一个小杂货摊儿", 0.9831, 1),
+    ("我们那儿有个王小三儿，在门口儿摆着一个小杂货摊儿", "我们那儿有个王小三儿，在门口儿白着一个小杂货摊儿", 0.9828, 1),
     ("画儿", "画", 0.7500, 1),
     ("儿子", "二字", 0.5000, 2),
     ("妈妈", "密码", 0.5000, 2),
@@ -13,10 +13,14 @@ test_data = (
 )
 
 test_levenmass = (
+    # Test latin will remain the same
+    ("Hello from Belarus!", "hellofrombelarus"),
+    ("érzizàinǎrhuàhuàr", "érzizàinǎrhuàhuàr"),
     ("马马虎虎", "mǎmǎhūhū"),
     ("花儿", "huār"),
     ("南岸", "nán'àn"),
-    ("儿子在哪儿画画儿？", "érzizàinǎrhuàhuàr")
+    ("儿子在哪儿画画儿？", "érzizàinǎrhuàhuàr"),
+    ("句子", "jùzi"),
 )
 
 

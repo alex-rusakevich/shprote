@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "65accc3cb45c2041c819747be5423e6d7fadbba574cf51bf62fb7e1a3b7a364d"
+            "sha256": "28abf8d17482c33f542d1bc644eac4f21c6f5eac0e885fc54e163983704a9732"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -403,13 +403,6 @@
             "index": "pypi",
             "version": "==1.24.3"
         },
-        "pinyin": {
-            "hashes": [
-                "sha256:8842ae53cb7a81c8c3ec03d1cd7dba9aedb20d8d6962aebc620fad74da0868f5"
-            ],
-            "index": "pypi",
-            "version": "==0.4.0"
-        },
         "pocketsphinx": {
             "hashes": [
                 "sha256:1577e9148a575942e1a1e4811e3a9eef353bdc964dd86055413e306e0ede41a8",
@@ -441,6 +434,14 @@
             ],
             "index": "pypi",
             "version": "==0.25.1"
+        },
+        "pypinyin": {
+            "hashes": [
+                "sha256:3791f5b647e446866e6b5d3a63942ecbaeb29b49fed268a9d9a4982241c35fe0",
+                "sha256:a5d61a79c5f48f6b4a422f010c20d48fcd53c705784df4aa80e329493219a4be"
+            ],
+            "index": "pypi",
+            "version": "==0.49.0"
         },
         "pytelegrambotapi": {
             "hashes": [

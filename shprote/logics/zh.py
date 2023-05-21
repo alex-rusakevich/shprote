@@ -1,9 +1,18 @@
 import re
 
-import pinyin
+from pypinyin import lazy_pinyin, Style
 import Levenshtein
 
 from shprote.logics.util import get_ignored_char_tr
+
+
+def pinyin_exceptions_mod(str_in: str) -> str:
+    pinyin_exc = {
+        "马马虎虎": "mǎmǎhūhū",
+    }
+    for k, v in pinyin_exc.items():
+        str_in = str_in.replace(k, v)
+    return str_in
 
 
 def levenshtein_massify(str_in: str) -> str:
@@ -42,9 +51,10 @@ def compare_phon_repr(teacher_text, student_text) -> str:
 
 
 def text_phonetizer(str_in: str) -> str:
+    str_in = pinyin_exceptions_mod(str_in)
     str_in = er_sound_mod(str_in)
-    str_in = pinyin.get(
-        str_in, format='diacritical', delimiter=" ")
+    str_in = " ".join(lazy_pinyin(
+        str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True))
     str_in = levenshtein_massify(str_in)
     return str_in
 
