@@ -2,7 +2,7 @@ import shprote.logics.zh as zh
 
 
 class Language:
-    Chinese = "zh"
+    Chinese = "zh-CN"
     Russian = "ru"
     English = "en"
     Belarusian = "be"

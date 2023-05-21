@@ -12,6 +12,9 @@ pyTelegramBotAPI = "*"
 sqlalchemy = "*"
 mysqlclient = "*"
 python-dateutil = "*"
+pydub = "*"
+speechrecognition = "*"
+pocketsphinx = "*"
 
 [dev-packages]
 autopep8 = "*"

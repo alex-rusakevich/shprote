@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 
 import telebot
-import sqlalchemy
 
 from shprote.config import get_config
 

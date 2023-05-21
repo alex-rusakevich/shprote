@@ -15,13 +15,13 @@ os.environ["TZ"] = config["main"]["timezone"]
 
 
 def main():
-    logger.info("Cleaning temp before start...")
-    clean_temp()
-
     logger.info("Starting the bot...")
     bot.infinity_polling(
         restart_on_change=config["main"]["debug"], path_to_watch=os.path.join(".", "shprote"))
+
     logger.info("The bot has stopped.")
+    logger.info("Cleaning temp...")
+    clean_temp()
 
 
 if __name__ == "__main__":

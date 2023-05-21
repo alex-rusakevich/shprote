@@ -139,7 +139,7 @@ def get_stud_and_calc_result(message, data):
         logger.debug(f"Processing the audio file with path '{save_path}'...")
         student = voice_msg_to_text(save_path, Language.Chinese)
 
-        bot.send_message(message.chat.id, tf.format_text(f"Teacher said *(voice)*: {student}\n*The signed voice message itself will appear below*",
+        bot.send_message(message.chat.id, tf.format_text(f"Student said *(voice)*: {student}\n*The signed voice message itself will appear below*",
                                                          tf.mcode(data["hash"])))
         bot.send_voice(message.chat.id, message.voice.file_id,
                        tf.format_text(tf.mcode(data["hash"])))
