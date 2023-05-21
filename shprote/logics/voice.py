@@ -36,28 +36,25 @@ unpack_models()
 
 
 def voice_msg_to_text(ogg_path, lang) -> str:
-    def _voice_msg_to_text(ogg_path, lang) -> str:
-        wav_path = os.path.splitext(ogg_path)[0] + ".wav"
-        song = AudioSegment.from_ogg(ogg_path)
-        song = song.set_channels(CHANNELS)
-        song = song.set_frame_rate(FRAMERATE)
-        song.export(wav_path, format="wav")
+    wav_path = os.path.splitext(ogg_path)[0] + ".wav"
+    song = AudioSegment.from_ogg(ogg_path)
+    song = song.set_channels(CHANNELS)
+    song = song.set_frame_rate(FRAMERATE)
+    song.export(wav_path, format="wav")
 
-        r = sr.Recognizer()
-        with sr.AudioFile(wav_path) as source:
-            audio = r.record(source)
+    r = sr.Recognizer()
+    with sr.AudioFile(wav_path) as source:
+        audio = r.record(source)
 
-        result = ""
+    result = ""
 
+    try:
+        result = r.recognize_google(audio, language=lang)
+    except:
         try:
-            result = r.recognize_google(audio, language=lang)
+            result = r.recognize_sphinx(audio, language=lang)
         except:
-            try:
-                result = r.recognize_sphinx(audio, language=lang)
-            except:
-                pass
+            pass
 
-        logger.debug(f"Speech-to-text result: '{result}'")
-        return result
-
-    return _voice_msg_to_text(ogg_path, lang)
+    logger.debug(f"Speech-to-text result: '{result}'")
+    return result

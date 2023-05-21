@@ -41,7 +41,7 @@ def send_welcome(message):
 
 @bot.message_handler(content_types=['text'])
 def main_text_handler(message):
-    if (message.text in (MSG_CHECK, "/check")):
+    if (message.text in (MSG_CHECK_PRONUN, "/checkpr")):
         start_test(message)
     elif (message.text in (MSG_MENU, "/menu")):
         bot.send_message(
