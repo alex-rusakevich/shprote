@@ -90,7 +90,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
         return
 
     bot.send_message(
-        message.chat.id, "❓ Enter student's text:", reply_markup=render_stop_test_btn())
+        message.chat.id, "❓ Student voice record:", reply_markup=render_stop_test_btn())
     bot.register_next_step_handler(
         message, get_stud_and_calc_result, data={
             "hash": user_hash,
@@ -107,6 +107,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
 
 def get_stud_and_calc_result(message, data):
+    """ Student recognition step """
     if message.text and message.text.strip() in (MSG_STOP, "/stop"):
         bot.send_message(
             message.chat.id, "The check has been stopped. Getting back to the menu...",
@@ -123,11 +124,11 @@ def get_stud_and_calc_result(message, data):
             f"Someone has tried to cheat: @{message.from_user.username}, id is {message.from_user.id}")
         return
 
-    if message.content_type == "text":
-        student = message.text.strip()
-        bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
-                                                         tf.mcode(data["hash"])))
-    elif message.content_type == "voice":
+    # if message.content_type == "text":
+    #    student = message.text.strip()
+    #    bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
+    #                                                     tf.mcode(data["hash"])))
+    if message.content_type == "voice":
         file_info = bot.get_file(message.voice.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
         save_path = os.path.join(
@@ -139,7 +140,7 @@ def get_stud_and_calc_result(message, data):
         logger.debug(f"Processing the audio file with path '{save_path}'...")
         student = voice_msg_to_text(save_path, Language.Chinese)
 
-        bot.send_message(message.chat.id, tf.format_text(f"Student said *(voice)*: {student}\n*The signed voice message itself will appear below*",
+        bot.send_message(message.chat.id, tf.format_text(f"Student said: {student}\n*The signed voice message itself will appear below*",
                                                          tf.mcode(data["hash"])))
         bot.send_voice(message.chat.id, message.voice.file_id,
                        tf.format_text(tf.mcode(data["hash"])))
