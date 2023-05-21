@@ -2,25 +2,14 @@ import threading
 
 from shprote.config import get_config
 from shprote.log import get_logger
-from shprote import __version__
 from shprote.routes.admin import check_tg_id
 from shprote.routes.check import start_test
+from shprote.routes.help import HELP
 from shprote.common import *
 from shprote.bot import bot
 
 from shprote.db.management import upsert_user
 
-HELP = f"""
-*Standardized 汉语 Pronunciation TEster {__version__}*
-Created by Alexander Rusakevich (https://github.com/alex-rusakevich)
-
-/start — start the bot and go to the main menu
-/help — display this message
-/checkpr — begin your pronunciation test. The special code / hash in bot replies is intended to avoid pupil cheating by sending different results or fake tasks
-/stop — stop the test and go to main menu
-
-_May 汉语 be with you!_
-""".strip()
 
 logger = get_logger()
 config = get_config()
