@@ -52,13 +52,13 @@ def get_teacher_text_and_print_stud(message, user_hash):
     teacher = ""
 
     forwarded_msg = ""
-    if message.reply_to_message:
+    if message.forward_date:
         usr_name = message.forward_sender_name if message.forward_from == None else f"@{message.forward_from.username}"
         forwarded_msg = f"*[FORWARDED FROM {usr_name}]*"
-        message = message.reply_to_message
     elif message.reply_to_message:
         usr_name = None if not message.reply_to_message.from_user.username else f"@{message.reply_to_message.from_user.username}"
         forwarded_msg = f"*[REPLIED TO {usr_name}]*"
+        message = message.reply_to_message
     else:
         forwarded_msg = "*[DONE BY THE STUDENT]*"
 
