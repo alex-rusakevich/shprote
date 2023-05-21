@@ -1,5 +1,5 @@
 import pytest
-from shprote.logics.zh import compare_lang_text
+from shprote.logics.zh import compare_lang_text, text_phonetizer
 
 test_data = (
     ("码", "妈", 0.5000, 1),
@@ -12,15 +12,12 @@ test_data = (
     ("石室诗士施氏", "嗜狮, 誓食十狮", 0.6667, 6)
 )
 
-
-def test_empty():
-    response = compare_lang_text(
-        "》》？【】！；\t\r    ",
-        "你好"
-    )
-
-    assert response["type"] == "error"
-    assert response["name"] == "LEVENMASS_EMPTY_ERR"
+test_levenmass = (
+    ("马马虎虎", "mǎmǎhūhū"),
+    ("花儿", "huār"),
+    ("南岸", "nán'àn"),
+    ("儿子在哪儿画画儿？", "érzizàinǎrhuàhuàr")
+)
 
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)
@@ -35,3 +32,19 @@ def test_zh(teacher, student, exp_ratio, exp_mistakes):
 
     assert exp_ratio == resp_ratio
     assert exp_mistakes == resp_mistakes
+
+
+@pytest.mark.parametrize("word_given, pinyin_expected", test_levenmass)
+def test_levenmass(word_given, pinyin_expected):
+    pinyin_given = text_phonetizer(word_given)
+    assert pinyin_given == pinyin_expected
+
+
+def test_empty():
+    response = compare_lang_text(
+        "》》？【】！；\t\r    ",
+        "你好"
+    )
+
+    assert response["type"] == "error"
+    assert response["name"] == "LEVENMASS_EMPTY_ERR"
