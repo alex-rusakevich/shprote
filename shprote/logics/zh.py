@@ -29,16 +29,16 @@ def er_sound_mod(str_in: str) -> str:
     return re.sub(r"儿(?!子)", "r", str_in)
 
 
-def compare_phon_repr(teacher_text, student_text) -> str:
-    if len(teacher_text) == 0 or len(student_text) == 0:
+def compare_phon_repr(teacher_levenseq, student_levenseq) -> str:
+    if len(teacher_levenseq) == 0 or len(student_levenseq) == 0:
         return {
             "type": "error",
             "name": "LEVENMASS_EMPTY_ERR",
             "msg": "Levenshtein mass cannot be empty. Please, check your request"
         }
 
-    max_len = max(len(teacher_text), len(student_text))
-    leven_dist = Levenshtein.distance(teacher_text, student_text)
+    max_len = max(len(teacher_levenseq), len(student_levenseq))
+    leven_dist = Levenshtein.distance(teacher_levenseq, student_levenseq)
     result_ratio = (max_len - leven_dist) / max_len
     result_ratio = round(result_ratio, 4)
 
@@ -46,22 +46,39 @@ def compare_phon_repr(teacher_text, student_text) -> str:
         "type": "result",
         "total-ratio": result_ratio,
         "phon-mistakes": leven_dist,
-        "teacher-said": teacher_text,
-        "student-said": student_text
     }
 
 
-def text_phonetizer(str_in: str) -> str:
+def make_repr_from_text(str_in: str) -> str:
     str_in = pinyin_exceptions_mod(str_in)
     str_in = er_sound_mod(str_in)
     str_in = " ".join(lazy_pinyin(
         str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True))
+    return str_in
+
+
+def text_to_levenseq(str_in: str) -> str:
+    str_in = make_repr_from_text(str_in)
     str_in = levenshtein_massify(str_in)
     return str_in
 
 
 def compare_lang_text(teacher_data: str, student_data: str) -> dict:
-    teacher_text, student_text = text_phonetizer(
-        teacher_data), text_phonetizer(student_data)
+    teacher_repr = make_repr_from_text(teacher_data)
+    student_repr = make_repr_from_text(student_data)
 
-    return compare_phon_repr(teacher_text, student_text)
+    teacher_levenseq = levenshtein_massify(teacher_repr)
+    student_levenseq = levenshtein_massify(student_repr)
+
+    result = compare_phon_repr(teacher_levenseq, student_levenseq)
+
+    result["teacher"], result["student"] = ({}, {})
+    result["teacher"]["levenseq"] = teacher_levenseq
+    result["teacher"]["repr"] = teacher_repr
+    result["teacher"]["text"] = teacher_data
+
+    result["student"]["levenseq"] = student_levenseq
+    result["student"]["repr"] = student_repr
+    result["student"]["text"] = student_data
+
+    return result

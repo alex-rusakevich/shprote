@@ -172,8 +172,8 @@ def get_stud_and_calc_result(message, data):
 _Now you can forward all the messages with the special code to your teacher_
 
 Phonematic mistakes: {check_result["phon-mistakes"]}
-Teacher's levenseq: {check_result["teacher-said"]}
-Student's levenseq: {check_result["student-said"]}
+Teacher's transcription: {check_result["teacher"]["repr"]}
+Student's transcription: {check_result["student"]["repr"]}
 """.strip()
 
     markup = render_main_menu()

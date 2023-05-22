@@ -1,5 +1,5 @@
 import pytest
-from shprote.logics.zh import compare_lang_text, text_phonetizer
+from shprote.logics.zh import compare_lang_text, text_to_levenseq
 from shprote.logics.voice import *
 from shprote.logics import *
 
@@ -50,7 +50,7 @@ def test_zh(teacher, student, exp_ratio, exp_mistakes):
 
 @pytest.mark.parametrize("word_given, pinyin_expected", test_levenmass)
 def test_levenmass(word_given, pinyin_expected):
-    pinyin_given = text_phonetizer(word_given)
+    pinyin_given = text_to_levenseq(word_given)
     assert pinyin_given == pinyin_expected
 
 
@@ -58,7 +58,7 @@ def test_levenmass(word_given, pinyin_expected):
 def test_audio(audio_file_path, pinyin_expected):
     txt = audio_file_to_text(os.path.join(
         ".", "tests", "audio", audio_file_path), lang=Language.Chinese)
-    pinyin = text_phonetizer(txt)
+    pinyin = text_to_levenseq(txt)
     assert pinyin == pinyin_expected
 
 
