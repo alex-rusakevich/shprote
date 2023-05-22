@@ -74,10 +74,8 @@ def get_teacher_text_and_print_stud(message, user_hash):
         logger.debug(f"Processing the audio file with path '{save_path}'...")
         teacher = audio_file_to_text(save_path, Language.Chinese)
 
-        bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(voice)*: {teacher}\n*The signed voice message itself will appear below*",
-                                                         tf.mcode(user_hash)))
         bot.send_voice(message.chat.id, message.voice.file_id,
-                       tf.format_text("Teacher's signed voice message, ", tf.mcode(user_hash)))
+                       tf.format_text(f"Teacher's signed voice message {forwarded_msg}", tf.mcode(user_hash)))
     else:
         bot.send_message(
             message.chat.id, "🔴 Wrong data type, please, retry:", reply_markup=render_stop_test_btn())
@@ -86,7 +84,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
         return
 
     bot.send_message(
-        message.chat.id, "❓ Student's answer':", reply_markup=render_stop_test_btn())
+        message.chat.id, "❓ Student's answer:", reply_markup=render_stop_test_btn())
     bot.register_next_step_handler(
         message, get_stud_and_calc_result, data={
             "hash": user_hash,
@@ -122,7 +120,7 @@ def get_stud_and_calc_result(message, data):
 
     if message.content_type == "text":
         student = message.text.strip()
-        bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
+        bot.send_message(message.chat.id, tf.format_text(f"Student wrote: {student}",
                                                          tf.mcode(data["hash"])))
     else:
         bot.send_message(

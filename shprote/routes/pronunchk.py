@@ -64,7 +64,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
     if message.content_type == "text":
         teacher = message.text
-        bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(text)*: {teacher}",
+        bot.send_message(message.chat.id, tf.format_text(f"Teacher wrote {forwarded_msg}: {teacher}",
                                                          tf.mcode(user_hash)))
     elif message.content_type == "voice":
         file_info = bot.get_file(message.voice.file_id)
@@ -78,7 +78,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
         logger.debug(f"Processing the audio file with path '{save_path}'...")
         teacher = audio_file_to_text(save_path, Language.Chinese)
 
-        bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(voice)*: {teacher}\n*The signed voice message itself will appear below*",
+        bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg}: {teacher}\n*The signed voice message itself will appear below*",
                                                          tf.mcode(user_hash)))
         bot.send_voice(message.chat.id, message.voice.file_id,
                        tf.format_text("Teacher's signed voice message, ", tf.mcode(user_hash)))

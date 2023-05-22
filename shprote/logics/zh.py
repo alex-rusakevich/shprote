@@ -9,6 +9,7 @@ from shprote.logics.util import get_ignored_char_tr
 def pinyin_exceptions_mod(str_in: str) -> str:
     pinyin_exc = {
         "马马虎虎": "mǎmǎhūhū",
+        "朋友": "péngyou"
     }
     for k, v in pinyin_exc.items():
         str_in = str_in.replace(k, v)

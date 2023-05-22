@@ -30,7 +30,7 @@ test_levenmass = (
 test_audio_levenmass = (
     ("zh_1.ogg", "wǒzhùzàimíngsīkè"),
     ("zh_2.ogg", "běijīngshìzhōngguódeshǒudū"),
-    ("zh_3.ogg", "wǒnǚpéngyǒushìzuìměilìde")
+    ("zh_3.ogg", "wǒnǚpéngyoushìzuìměilìde")
 )
 
 
