@@ -66,25 +66,50 @@ def get_teacher_text_and_print_stud(message, user_hash):
         teacher = message.text
         bot.send_message(message.chat.id, tf.format_text(f"Teacher wrote {forwarded_msg}: {teacher}",
                                                          tf.mcode(user_hash)))
-    elif message.content_type == "voice":
-        file_info = bot.get_file(message.voice.file_id)
+    # Teacher can send both audio and voice
+    elif message.content_type in ("voice", "audio"):
+        file_info = ""
+        file_id = 0x00000000
+
+        if message.content_type == "voice":
+            file_id = message.voice.file_id
+        else:
+            file_id = message.audio.file_id
+
+        file_info = bot.get_file(file_id)
         downloaded_file = bot.download_file(file_info.file_path)
+
+        # Getting the extension
+        ext = os.path.splitext(file_info.file_path)[1]
+        if ext == ".oga":
+            ext = ".ogg"
+
         save_path = os.path.join(
-            voice_temp_dir, f'{message.chat.id}_{int(time())}.ogg')
+            voice_temp_dir, f'{message.chat.id}_{int(time())}{ext}')
 
         with open(save_path, 'wb+') as new_file:
             new_file.write(downloaded_file)
 
         logger.debug(f"Processing the audio file with path '{save_path}'...")
-        teacher = audio_file_to_text(save_path, Language.Chinese)
+
+        try:
+            teacher = audio_file_to_text(save_path, Language.Chinese)
+        except:
+            logger.error(
+                "Something happened while processing user's audio:", exc_info=True)
+            bot.send_message(
+                message.chat.id, f"🔴 Cannot process this file, please, try another one:", reply_markup=render_stop_test_btn())
+            bot.register_next_step_handler(
+                message, get_teacher_text_and_print_stud, user_hash=user_hash)
+            return
 
         bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg}: {teacher}\n*The signed voice message itself will appear below*",
                                                          tf.mcode(user_hash)))
-        bot.send_voice(message.chat.id, message.voice.file_id,
+        bot.send_audio(message.chat.id, file_id,
                        tf.format_text("Teacher's signed voice message, ", tf.mcode(user_hash)))
     else:
         bot.send_message(
-            message.chat.id, "🔴 Wrong data type, please, retry:", reply_markup=render_stop_test_btn())
+            message.chat.id, f"🔴 Wrong data type (\"{message.content_type}\"), please, send a voice message or an audio (.mp3, .ogg) file:", reply_markup=render_stop_test_btn())
         bot.register_next_step_handler(
             message, get_teacher_text_and_print_stud, user_hash=user_hash)
         return
@@ -124,17 +149,33 @@ def get_stud_and_calc_result(message, data):
             f"Someone has tried to cheat: @{message.from_user.username}, id is {message.from_user.id}")
         return
 
+    # Student cannot send audio
     if message.content_type == "voice":
         file_info = bot.get_file(message.voice.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
+
+        # Getting the extension
+        ext = os.path.splitext(file_info.file_path)[1]
+        if ext == ".oga":
+            ext = ".ogg"
+
         save_path = os.path.join(
-            voice_temp_dir, f'{message.chat.id}_{int(time())}.ogg')
+            voice_temp_dir, f'{message.chat.id}_{int(time())}{ext}')
 
         with open(save_path, 'wb+') as new_file:
             new_file.write(downloaded_file)
 
         logger.debug(f"Processing the audio file with path '{save_path}'...")
-        student = audio_file_to_text(save_path, Language.Chinese)
+        try:
+            student = audio_file_to_text(save_path, Language.Chinese)
+        except:
+            logger.error(
+                "Something happened while processing user's audio:", exc_info=True)
+            bot.send_message(
+                message.chat.id, f"🔴 Cannot process this file, please, try another one:", reply_markup=render_stop_test_btn())
+            bot.register_next_step_handler(
+                message, get_stud_and_calc_result, data=data)
+            return
 
         bot.send_message(message.chat.id, tf.format_text(f"Student said: {student}\n*The signed voice message will appear below*",
                                                          tf.mcode(data["hash"])))
@@ -142,7 +183,7 @@ def get_stud_and_calc_result(message, data):
                        tf.format_text("Student's signed voice message, ", tf.mcode(data["hash"])))
     else:
         bot.send_message(
-            message.chat.id, "🔴 Wrong data type, please, retry:", reply_markup=render_stop_test_btn())
+            message.chat.id, f"🔴 Wrong data type (\"{message.content_type}\"), please, send a _voice_ message:", reply_markup=render_stop_test_btn())
         bot.register_next_step_handler(
             message, get_stud_and_calc_result, data=data)
         return

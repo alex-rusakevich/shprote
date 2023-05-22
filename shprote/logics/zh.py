@@ -25,10 +25,6 @@ def levenshtein_massify(str_in: str) -> str:
     return str_in
 
 
-def er_sound_mod(str_in: str) -> str:
-    return re.sub(r"儿(?!子)", "r", str_in)
-
-
 def compare_phon_repr(teacher_levenseq, student_levenseq) -> str:
     if len(teacher_levenseq) == 0 or len(student_levenseq) == 0:
         return {
@@ -51,7 +47,7 @@ def compare_phon_repr(teacher_levenseq, student_levenseq) -> str:
 
 def make_repr_from_text(str_in: str) -> str:
     str_in = pinyin_exceptions_mod(str_in)
-    str_in = er_sound_mod(str_in)
+    str_in = re.sub(r"儿(?!子)", "r", str_in)  # Erhua
     str_in = " ".join(lazy_pinyin(
         str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True))
     return str_in
