@@ -16,6 +16,9 @@ FRAMERATE = 16000
 CHANNELS = 1
 
 
+rec = sr.Recognizer()
+
+
 def unpack_models():
     logger.info("Unpacking language models...")
 
@@ -42,17 +45,16 @@ def audio_file_to_text(file_path, lang) -> str:
     song = song.set_frame_rate(FRAMERATE)
     song.export(wav_path, format="wav")
 
-    r = sr.Recognizer()
     with sr.AudioFile(wav_path) as source:
-        audio = r.record(source)
+        audio = rec.record(source)
 
     result = ""
 
     try:
-        result = r.recognize_google(audio, language=lang)
+        result = rec.recognize_google(audio, language=lang)
     except:
         try:
-            result = r.recognize_sphinx(audio, language=lang)
+            result = rec.recognize_sphinx(audio, language=lang)
         except:
             pass
 
