@@ -6,7 +6,7 @@ import os
 import telebot.types as tt
 import telebot.formatting as tf
 
-from ..common import *
+from .common import *
 from ..bot import bot
 from shprote.logics import get_module_by_lang, Language
 from shprote.logics.util import get_tmp

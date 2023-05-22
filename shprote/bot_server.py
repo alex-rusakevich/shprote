@@ -6,7 +6,7 @@ from shprote.routes.admin import check_tg_id
 from shprote.routes.pronunchk import start_pronun_test
 from shprote.routes.listeningchk import start_listening_test
 from shprote.routes.help import HELP
-from shprote.common import *
+from shprote.routes.common import *
 from shprote.bot import bot
 
 from shprote.db.management import upsert_user

@@ -3,10 +3,6 @@ import shprote.logics.zh as zh
 
 class Language:
     Chinese = "zh-CN"
-    Russian = "ru"
-    English = "en"
-    Belarusian = "be"
-    Arabian = "ar"
 
 
 def get_module_by_lang(lang):
@@ -14,3 +10,8 @@ def get_module_by_lang(lang):
         return zh
     else:
         raise Exception(f"Language not available: {lang}")
+
+
+langcode_to_name = {
+    Language.Chinese: "Chinese",
+}

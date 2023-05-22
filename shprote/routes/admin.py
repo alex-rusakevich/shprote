@@ -11,7 +11,7 @@ from sqlalchemy import extract
 
 from shprote.config import get_config, save_config
 from ..bot import bot
-from ..common import *
+from .common import *
 from ..log import logfile_dir, get_logger
 from shprote.db import DB_SESSION
 from shprote.db.declarations import User
