@@ -56,7 +56,7 @@ def test_levenmass(word_given, pinyin_expected):
 
 @pytest.mark.parametrize("audio_file_path, pinyin_expected", test_audio_levenmass)
 def test_audio(audio_file_path, pinyin_expected):
-    txt = voice_msg_to_text(os.path.join(
+    txt = audio_file_to_text(os.path.join(
         ".", "tests", "audio", audio_file_path), lang=Language.Chinese)
     pinyin = text_phonetizer(txt)
     assert pinyin == pinyin_expected

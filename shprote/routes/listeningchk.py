@@ -10,7 +10,7 @@ from ..common import *
 from ..bot import bot
 from shprote.logics import get_module_by_lang, Language
 from shprote.logics.util import get_tmp
-from shprote.logics.voice import voice_msg_to_text
+from shprote.logics.voice import audio_file_to_text
 from ..log import get_logger
 
 logger = get_logger()
@@ -24,7 +24,7 @@ def render_stop_test_btn():
     return markup
 
 
-def start_test(message):
+def start_listening_test(message):
     # User cache used to confirm results
     user_hash_seed = str(datetime.datetime.now()) + \
         " " + message.from_user.username
@@ -33,7 +33,7 @@ def start_test(message):
 
     bot.send_message(
         message.chat.id, tf.format_text(
-            f"The check has started. _Please, remember that you cannot use replied or forwarded messages as student's answers._ Check's special code is", tf.mcode(user_hash), separator=" "))
+            f"The *listening* check has started. _Please, remember that you cannot use replied or forwarded messages as student's answers._ Check's special code is", tf.mcode(user_hash), separator=" "))
 
     # Next round
     bot.send_message(
@@ -62,11 +62,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     else:
         forwarded_msg = "*[DONE BY THE STUDENT]*"
 
-    if message.content_type == "text":
-        teacher = message.text
-        bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(text)*: {teacher}",
-                                                         tf.mcode(user_hash)))
-    elif message.content_type == "voice":
+    if message.content_type == "voice":
         file_info = bot.get_file(message.voice.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
         save_path = os.path.join(
@@ -76,7 +72,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
             new_file.write(downloaded_file)
 
         logger.debug(f"Processing the audio file with path '{save_path}'...")
-        teacher = voice_msg_to_text(save_path, Language.Chinese)
+        teacher = audio_file_to_text(save_path, Language.Chinese)
 
         bot.send_message(message.chat.id, tf.format_text(f"Teacher said {forwarded_msg} *(voice)*: {teacher}\n*The signed voice message itself will appear below*",
                                                          tf.mcode(user_hash)))
@@ -84,13 +80,13 @@ def get_teacher_text_and_print_stud(message, user_hash):
                        tf.format_text("Teacher's signed voice message, ", tf.mcode(user_hash)))
     else:
         bot.send_message(
-            message.chat.id, "🔴 Unknown data type, please, retry:", reply_markup=render_stop_test_btn())
+            message.chat.id, "🔴 Wrong data type, please, retry:", reply_markup=render_stop_test_btn())
         bot.register_next_step_handler(
             message, get_teacher_text_and_print_stud, user_hash=user_hash)
         return
 
     bot.send_message(
-        message.chat.id, "❓ Student voice record:", reply_markup=render_stop_test_btn())
+        message.chat.id, "❓ Student's answer':", reply_markup=render_stop_test_btn())
     bot.register_next_step_handler(
         message, get_stud_and_calc_result, data={
             "hash": user_hash,
@@ -124,29 +120,13 @@ def get_stud_and_calc_result(message, data):
             f"Someone has tried to cheat: @{message.from_user.username}, id is {message.from_user.id}")
         return
 
-    # if message.content_type == "text":
-    #    student = message.text.strip()
-    #    bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
-    #                                                     tf.mcode(data["hash"])))
-    if message.content_type == "voice":
-        file_info = bot.get_file(message.voice.file_id)
-        downloaded_file = bot.download_file(file_info.file_path)
-        save_path = os.path.join(
-            voice_temp_dir, f'{message.chat.id}_{int(time())}.ogg')
-
-        with open(save_path, 'wb+') as new_file:
-            new_file.write(downloaded_file)
-
-        logger.debug(f"Processing the audio file with path '{save_path}'...")
-        student = voice_msg_to_text(save_path, Language.Chinese)
-
-        bot.send_message(message.chat.id, tf.format_text(f"Student said: {student}\n*The signed voice message will appear below*",
+    if message.content_type == "text":
+        student = message.text.strip()
+        bot.send_message(message.chat.id, tf.format_text(f"Student said *(text)*: {student}",
                                                          tf.mcode(data["hash"])))
-        bot.send_voice(message.chat.id, message.voice.file_id,
-                       tf.format_text("Student's signed voice message, ", tf.mcode(data["hash"])))
     else:
         bot.send_message(
-            message.chat.id, "🔴 Unknown data type, please, retry:", reply_markup=render_stop_test_btn())
+            message.chat.id, "🔴 Wrong data type, please, retry:", reply_markup=render_stop_test_btn())
         bot.register_next_step_handler(
             message, get_stud_and_calc_result, data=data)
         return
@@ -161,7 +141,7 @@ def get_stud_and_calc_result(message, data):
     check_result = lng_mod.compare_lang_text(data["teacher"]["said"],
                                              data["student"]["said"])
 
-    logger.debug("Pronunciation check result is " + str(check_result))
+    logger.debug("Listening check result is " + str(check_result))
 
     if check_result["type"] == "error":
         check_result = f"""
@@ -172,7 +152,7 @@ def get_stud_and_calc_result(message, data):
         result_total = check_result["total-ratio"] * 100
 
         check_result = f"""
-*Your result is {result_total:.2f}%*
+*Your *listening* check result is {result_total:.2f}%*
 _Now you can forward all the messages with the special code to your teacher_
 
 Phonematic mistakes: {check_result["phon-mistakes"]}

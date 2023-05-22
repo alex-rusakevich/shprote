@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 
 from pydub import AudioSegment
 import speech_recognition as sr
@@ -32,12 +33,11 @@ def unpack_models():
     logger.info("Language models are ready")
 
 
-unpack_models()
+def audio_file_to_text(file_path, lang) -> str:
+    wav_path = os.path.splitext(file_path)[0] + ".wav"
+    file_in_type = Path(file_path).suffix[1:]
 
-
-def voice_msg_to_text(ogg_path, lang) -> str:
-    wav_path = os.path.splitext(ogg_path)[0] + ".wav"
-    song = AudioSegment.from_ogg(ogg_path)
+    song = AudioSegment.from_file(file_path, file_in_type)
     song = song.set_channels(CHANNELS)
     song = song.set_frame_rate(FRAMERATE)
     song.export(wav_path, format="wav")
@@ -58,3 +58,7 @@ def voice_msg_to_text(ogg_path, lang) -> str:
 
     logger.debug(f"Speech-to-text result: '{result}'")
     return result
+
+
+if True:  # On module loaded
+    unpack_models()

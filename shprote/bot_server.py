@@ -3,7 +3,8 @@ import threading
 from shprote.config import get_config
 from shprote.log import get_logger
 from shprote.routes.admin import check_tg_id
-from shprote.routes.check import start_test
+from shprote.routes.pronunchk import start_pronun_test
+from shprote.routes.listeningchk import start_listening_test
 from shprote.routes.help import HELP
 from shprote.common import *
 from shprote.bot import bot
@@ -31,7 +32,9 @@ def send_welcome(message):
 @bot.message_handler(content_types=['text'])
 def main_text_handler(message):
     if (message.text in (MSG_CHECK_PRONUN, "/checkpr")):
-        start_test(message)
+        start_pronun_test(message)
+    elif (message.text in (MSG_CHECK_LISTEN, "/checklisten")):
+        start_listening_test(message)
     elif (message.text in (MSG_MENU, "/menu")):
         bot.send_message(
             message.chat.id, "Welcome to the main menu!", reply_markup=render_main_menu())
