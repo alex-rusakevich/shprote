@@ -96,7 +96,9 @@ def patchnote(context):
         f"git log --pretty=oneline {prev_commit}..{current_commit}").stdout.strip()
 
     patchnote_info = re.sub(r"[\da-f]{40}", "", patchnote_info)
-    patchnote_info = "\n".join([l.strip() for l in patchnote_info.split("\n")])
+    patchnote_info = [l.strip() for l in patchnote_info.split("\n")]
+    patchnote_info = "\n".join([
+        l for l in patchnote_info if not l.startswith("New version")])
 
     with open("patchnote.txt", "w", encoding="utf-8") as f:
         f.write(f"{prev_commit} → {current_commit}\n")

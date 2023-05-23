@@ -15,6 +15,7 @@ pydub = "*"
 speechrecognition = "*"
 pocketsphinx = "*"
 pypinyin = "*"
+expiringdict = "*"
 
 [dev-packages]
 autopep8 = "*"

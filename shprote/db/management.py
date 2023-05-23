@@ -1,5 +1,6 @@
 from sqlalchemy.sql import func
 from sqlalchemy.orm import scoped_session
+from expiringdict import ExpiringDict
 
 from shprote.db import DB_SESSION_FACTORY
 from shprote.db.declarations import User
@@ -8,7 +9,15 @@ from shprote.log import get_logger
 logger = get_logger()
 
 
+acitive_recently = ExpiringDict(max_len=128, max_age_seconds=28800)
+
+
 def upsert_user(user_id: int):
+    if acitive_recently.get(user_id):
+        return
+    else:
+        acitive_recently[user_id] = True
+
     session = scoped_session(DB_SESSION_FACTORY)
 
     usr_found = session.query(User).filter(User.user_id == user_id).first()
