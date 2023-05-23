@@ -88,9 +88,9 @@ def time(context):
 @task
 def patchnote(context):
     # git log --pretty=oneline `git tag --sort=-committerdate | head -1`...`git tag --sort=-committerdate | head -2 | tail -1`
-    current_commit = run(
-        "git tag --sort=-committerdate | head -1").stdout.strip()
     prev_commit = run(
+        "git tag --sort=-committerdate | head -1").stdout.strip()
+    current_commit = run(
         "git tag --sort=-committerdate | head -2 | tail -1").stdout.strip()
     patchnote_info = run(
         f"git log --pretty=oneline {prev_commit}..{current_commit}").stdout.strip()
@@ -107,7 +107,7 @@ def patchnote(context):
 @task
 def commit_patchnote(context):
     current_commit = run(
-        "git tag --sort=-committerdate | head -1").stdout.strip()
+        "git tag --sort=-committerdate | head -2 | tail -1").stdout.strip()
 
     run("git add *")
     run(f'git commit -m "New version: {current_commit}"')
