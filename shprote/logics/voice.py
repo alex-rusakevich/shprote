@@ -6,6 +6,8 @@ from pydub import AudioSegment
 import speech_recognition as sr
 
 from shprote.log import get_logger
+from shprote.logics import *
+from shprote.temp import get_tmp
 
 
 logger = get_logger()
@@ -18,22 +20,34 @@ CHANNELS = 1
 
 rec = sr.Recognizer()
 
+TEMP = get_tmp()
+SPHINX_MODELDIR = os.path.join(TEMP, "pocketsphinx-data")
+
+sphinx_lng_to_path = {
+    Language.Chinese: (os.path.join(SPHINX_MODELDIR, Language.Chinese, "acoustic-model"),
+                       os.path.join(SPHINX_MODELDIR, Language.Chinese,
+                                    "language-model.lm.bin"),
+                       os.path.join(SPHINX_MODELDIR, Language.Chinese, "pronounciation-dictionary.dict"),),
+}
+
 
 def unpack_models():
     logger.info("Unpacking language models...")
 
-    sphinx_folder = os.path.dirname(sr.__file__)
     sphinx_archives = {
-        "zh-CN": os.path.join(DATA_DIR, "models", "sphinx-zh-CN.zip")
+        Language.Chinese: os.path.join(DATA_DIR, "models", "sphinx-zh-CN.zip")
     }
 
     for k, v in sphinx_archives.items():
-        sphinx_unpack_path = os.path.join(
-            sphinx_folder, "pocketsphinx-data", k)
+        sphinx_unpack_path = os.path.join(SPHINX_MODELDIR, k)
         if not os.path.exists(sphinx_unpack_path) or not os.path.isdir(sphinx_unpack_path):
-            shutil.unpack_archive(v, sphinx_folder)
-            logger.info(f"Unpacked sphinxes {k} into {sphinx_unpack_path}")
-    logger.info("Language models are ready")
+            shutil.unpack_archive(v, TEMP)
+            logger.info(f"Unpacked sphinx'es {k} into {sphinx_unpack_path}")
+        else:
+            logger.info(
+                f"Sphinx'es {k} at {sphinx_unpack_path} is already ready")
+
+    logger.info("Language models are unpacked")
 
 
 def audio_file_to_text(file_path, lang) -> str:
@@ -54,7 +68,8 @@ def audio_file_to_text(file_path, lang) -> str:
         result = rec.recognize_google(audio, language=lang)
     except:
         try:
-            result = rec.recognize_sphinx(audio, language=lang)
+            result = rec.recognize_sphinx(
+                audio, language=sphinx_lng_to_path[lang])
         except:
             pass
 
