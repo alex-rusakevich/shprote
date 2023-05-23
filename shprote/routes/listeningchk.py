@@ -63,6 +63,9 @@ def get_teacher_text_and_print_stud(message, user_hash):
         forwarded_msg = "*[DONE BY THE STUDENT]*"
 
     if message.content_type in ("voice", "audio"):
+        bot.send_message(
+            message.chat.id, "⏳ Processing the audio file, please, wait...")
+
         file_info = ""
         file_id = 0x00000000
 

@@ -69,6 +69,9 @@ def get_teacher_text_and_print_stud(message, user_hash):
                                                          tf.mcode(user_hash)))
     # Teacher can send both audio and voice
     elif message.content_type in ("voice", "audio"):
+        bot.send_message(
+            message.chat.id, "⏳ Processing the audio file, please, wait...")
+
         file_info = ""
         file_id = 0x00000000
 
@@ -152,6 +155,9 @@ def get_stud_and_calc_result(message, data):
 
     # Student cannot send audio
     if message.content_type == "voice":
+        bot.send_message(
+            message.chat.id, "⏳ Processing the audio file, please, wait...")
+
         file_info = bot.get_file(message.voice.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
 
