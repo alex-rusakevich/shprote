@@ -85,6 +85,7 @@ def time(context):
     run('git-time .')
 
 
+@task
 def tag(context):
     """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
