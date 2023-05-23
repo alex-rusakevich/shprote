@@ -1,4 +1,0 @@
-v0.6.8 → v0.6.9
-Added help message
-Added audio processing messages
-Sphinx unpacks to temp

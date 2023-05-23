@@ -85,37 +85,6 @@ def time(context):
     run('git-time .')
 
 
-@task
-def patchnote(context):
-    # git log --pretty=oneline `git tag --sort=-committerdate | head -1`...`git tag --sort=-committerdate | head -2 | tail -1`
-    current_commit = run(
-        "git tag --sort=-committerdate | head -1").stdout.strip()
-    prev_commit = run(
-        "git tag --sort=-committerdate | head -2 | tail -1").stdout.strip()
-    patchnote_info = run(
-        f"git log --pretty=oneline {prev_commit}..{current_commit}").stdout.strip()
-
-    patchnote_info = re.sub(r"[\da-f]{40}", "", patchnote_info)
-    patchnote_info = [l.strip() for l in patchnote_info.split("\n")]
-    patchnote_info = "\n".join([
-        l for l in patchnote_info if not l.startswith("New version")])
-
-    with open("patchnote.txt", "w", encoding="utf-8") as f:
-        f.write(f"{prev_commit} → {current_commit}\n")
-        f.write(patchnote_info + "\n")
-    print("Patchnote was generated successfully!")
-
-
-@task
-def commit_patchnote(context):
-    current_commit = run(
-        "git tag --sort=-committerdate | head -1").stdout.strip()
-
-    run("git add *")
-    run(f'git commit -m "New version: {current_commit}"')
-
-
-@task(post=[patchnote, commit_patchnote])
 def tag(context):
     """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
