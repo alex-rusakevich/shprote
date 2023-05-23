@@ -9,7 +9,8 @@ import telebot.formatting as tf
 from .common import *
 from ..bot import bot
 from shprote.logics import get_module_by_lang, Language
-from shprote.logics.util import get_tmp
+from shprote.logics.util import telebot_diff
+from shprote.temp import get_tmp
 from shprote.logics.voice import audio_file_to_text
 from ..log import get_logger
 
@@ -174,15 +175,19 @@ def get_stud_and_calc_result(message, data):
         result_total = check_result["total-ratio"] * 100
 
         check_result = f"""
-*Your *listening* check result is {result_total:.2f}%*
-_Now you can forward all the messages with the special code to your teacher_
+<b>Your listening check result is {result_total:.2f}% ({check_result["phon-mistakes"]} phonematic mistake(s))</b>
+<i>Now you can forward all the messages with the special code to your teacher</i>
 
-Phonematic mistakes: {check_result["phon-mistakes"]}
+Student → teacher:
+{telebot_diff(check_result["teacher"]["repr"], check_result["student"]["repr"])}
+
 Teacher's transcription: {check_result["teacher"]["repr"]}
+
 Student's transcription: {check_result["student"]["repr"]}
 """.strip()
 
     markup = render_main_menu()
     bot.send_message(
         message.chat.id, tf.format_text(str(check_result),
-                                        tf.mcode(data["hash"]), separator=" "), reply_markup=markup)
+                                        tf.hcode(data["hash"])),
+        reply_markup=markup, parse_mode="HTML")

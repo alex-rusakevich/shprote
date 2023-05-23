@@ -1,9 +1,10 @@
 import re
+import string
 
 from pypinyin import lazy_pinyin, Style
 import Levenshtein
 
-from shprote.logics.util import get_ignored_char_tr
+from shprote.logics.util import purificator_tr, CHINESE_IGNORED
 
 
 def pinyin_exceptions_mod(str_in: str) -> str:
@@ -18,7 +19,7 @@ def pinyin_exceptions_mod(str_in: str) -> str:
 
 def levenshtein_massify(str_in: str) -> str:
     # Replace all punctuation marks with spaces
-    str_in = str_in.lower().translate(get_ignored_char_tr())
+    str_in = str_in.lower().translate(purificator_tr)
     str_in = re.sub(
         r"(\s[āàáǎaēéěèeōóǒòo])", r"'\1", str_in)  # Add ' before words starting with a, e and o
     str_in = re.sub(r"\s", "", str_in)  # Remove spaces
@@ -50,6 +51,9 @@ def make_repr_from_text(str_in: str) -> str:
     str_in = re.sub(r"儿(?!子)", "r", str_in)  # Erhua
     str_in = " ".join(lazy_pinyin(
         str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True))
+
+    str_in = re.sub(rf"\s?([{re.escape(CHINESE_IGNORED)}])\s?", r"\1", str_in)
+    str_in = re.sub(rf"\s?([{string.punctuation}])", r"\1", str_in)
     return str_in
 
 

@@ -9,7 +9,7 @@ import telebot.formatting as tf
 from .common import *
 from ..bot import bot
 from shprote.logics import get_module_by_lang, Language
-from shprote.logics.util import get_tmp
+from shprote.temp import get_tmp
 from shprote.logics.voice import audio_file_to_text
 from ..log import get_logger
 

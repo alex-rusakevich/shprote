@@ -1,53 +1,40 @@
-import sys
-import os
-from unicodedata import category
-from pathlib import Path
+import string
+import difflib
+import re
 
-import numpy as np
+import telebot.formatting as tf
 
 from shprote.log import get_logger
-from shprote.temp import get_tmp
+
+
+CHINESE_IGNORED = "！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
+IGNORED_CHARACTERS = CHINESE_IGNORED + string.punctuation
+
 
 logger = get_logger()
-purificator_tr = {}
+
+purificator_dict = dict.fromkeys(IGNORED_CHARACTERS, " ")
+purificator_tr = str.maketrans(purificator_dict)
 
 
-def load_ignored_char_tr():
-    global purificator_tr
+def telebot_diff(teacher: str, student: str, new_fn=tf.hunderline, delete_fn=tf.hstrikethrough) -> str:
+    str1, str2 = student, teacher
 
-    ignored_characters = ""
-    purificator_tr = {}
-    ignore_cache_path = os.path.join(get_tmp(), "cache")
-    Path(ignore_cache_path).mkdir(parents=True, exist_ok=True)
-    ignore_cache_path = os.path.join(
-        ignore_cache_path, "ignored-chars.npy")
+    user_chars = []
+    for i, s in enumerate(difflib.ndiff(str1, str2)):
+        ch = s[-1]
 
-    if not (os.path.exists(ignore_cache_path) and os.path.isfile(ignore_cache_path)):
-        logger.info("No chached ignore characters.")
-        ignored_characters = "".join([chr(i) for i in range(
-            sys.maxunicode + 1) if category(chr(i)).startswith("P")])
+        if s[0] == ' ' or ch == ' ' or ch in IGNORED_CHARACTERS:
+            user_chars.append(ch)
+        elif s[0] == '-':
+            user_chars.append(delete_fn(ch))
+        elif s[0] == '+':
+            user_chars.append(new_fn(ch))
 
-        purificator_dict = dict.fromkeys(ignored_characters, " ")
-        purificator_tr = str.maketrans(purificator_dict)
+    result = tf.format_text(*user_chars, separator="")
+    for i in ("<s></s>", "<b></b>", "<i></i>", "<u></u>"):
+        result = result.replace(i, "")
 
-        logger.info(
-            f"Writing cached ignore characters to '{ignore_cache_path}'...")
-        np.save(ignore_cache_path, purificator_tr)
-    else:
-        logger.info(
-            f"Reading cached ignore characters from '{ignore_cache_path}'...")
-        purificator_tr = np.load(
-            ignore_cache_path, allow_pickle=True).item()
+    logger.debug("Diff result: " + result)
 
-
-def get_ignored_char_tr():
-    global purificator_tr
-
-    if not purificator_tr:
-        load_ignored_char_tr()
-
-    return purificator_tr
-
-
-if True:  # Preload all the cache
-    load_ignored_char_tr()
+    return result
