@@ -1,6 +1,9 @@
 import telebot.types as tt
+import telebot.formatting as tf
+
 from shprote.logics import Language
 from shprote.bot import bot
+from shprote.logics.util import telebot_diff
 from shprote.logics import *
 
 
@@ -48,3 +51,30 @@ def language_handler(message, callback_fn, *callback_args, **callback_kwargs):
             message, language_menu_node)
         return
     callback_fn(*callback_args, lang=lang, **callback_kwargs)
+
+
+def generate_final_answer(test_type: str, data: dict, check_result: dict) -> str:
+    if check_result["type"] == "error":
+        check_result = f"""
+*Something went wrong*
+{tf.escape_markdown(check_result["name"])}: {check_result["msg"]}
+""".strip()
+    elif check_result["type"] == "result":
+        result_total = check_result["total-ratio"] * 100
+
+        student_to_teacher = ""
+        if result_total != 100:
+            student_to_teacher = f"""\n\n<b>Student → teacher:</b>
+{telebot_diff(check_result["teacher"]["repr"], check_result["student"]["repr"])}"""
+
+        check_result = f"""
+<b>Your {test_type} check result is {result_total:.2f}% ({check_result["phon-mistakes"]} phonematic mistake(s))</b>
+<i>Now you can forward all the messages with the special code to your teacher</i>{student_to_teacher}
+
+<b>Teacher's transcription:</b> {check_result["teacher"]["repr"]}
+
+<b>Student's transcription:</b> {check_result["student"]["repr"]}
+""".strip()
+
+    return tf.format_text(str(check_result),
+                          tf.hcode(data["hash"]))

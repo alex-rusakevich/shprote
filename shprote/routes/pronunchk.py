@@ -11,6 +11,7 @@ from ..bot import bot
 from shprote.logics import get_module_by_lang, Language
 from shprote.temp import get_tmp
 from shprote.logics.voice import audio_file_to_text
+from shprote.logics.util import telebot_diff
 from ..log import get_logger
 
 logger = get_logger()
@@ -200,24 +201,8 @@ def get_stud_and_calc_result(message, data):
 
     logger.debug("Pronunciation check result is " + str(check_result))
 
-    if check_result["type"] == "error":
-        check_result = f"""
-*Something went wrong*
-{tf.escape_markdown(check_result["name"])}: {check_result["msg"]}
-""".strip()
-    elif check_result["type"] == "result":
-        result_total = check_result["total-ratio"] * 100
-
-        check_result = f"""
-*Your *pronunciation* check result is {result_total:.2f}%*
-_Now you can forward all the messages with the special code to your teacher_
-
-Phonematic mistakes: {check_result["phon-mistakes"]}
-Teacher's transcription: {check_result["teacher"]["repr"]}
-Student's transcription: {check_result["student"]["repr"]}
-""".strip()
-
     markup = render_main_menu()
     bot.send_message(
-        message.chat.id, tf.format_text(str(check_result),
-                                        tf.mcode(data["hash"]), separator=" "), reply_markup=markup)
+        message.chat.id, generate_final_answer(
+            "pronunciation", data, check_result),
+        reply_markup=markup, parse_mode="HTML")
