@@ -33,6 +33,6 @@ bot_url = os.environ.get("HEROKU_URL", "127.0.0.1")
 bot.remove_webhook()
 bot.set_webhook(url=urljoin(bot_url, "bot"))
 
-logger.info("Running in production mode")
+logger.info("Running in production mode: " + str(app.debug))
 
 app.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
