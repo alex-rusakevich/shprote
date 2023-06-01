@@ -35,5 +35,3 @@ bot.remove_webhook()
 bot.set_webhook(url=urljoin(bot_url, "bot"))
 
 logger.info("Running in production mode: " + str(not app.debug))
-
-app.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
