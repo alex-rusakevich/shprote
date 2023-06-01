@@ -18,9 +18,9 @@ def prun(command, **kwargs):
 @task
 def heroku(context, command):
     if command == "stop":
-        prun("heroku ps:scale bot=0 -a=shprote-bot")
+        prun("heroku ps:scale web=0 -a=shprote-bot")
     elif command == "start":
-        prun("heroku ps:scale bot=1 -a=shprote-bot")
+        prun("heroku ps:scale web=1 -a=shprote-bot")
     elif command == "bash":
         prun("heroku run bash --app shprote-bot")
 
@@ -31,8 +31,8 @@ def hs(context):
 
 
 @task
-def srv(context):
-    prun("python shprote_server.py")
+def dev(context):
+    prun("python devsrv.py")
 
 
 @task

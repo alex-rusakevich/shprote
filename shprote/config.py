@@ -5,6 +5,11 @@ import shutil
 config = {}
 
 
+def on_config_loaded():
+    global config
+    os.environ["TZ"] = config["main"]["timezone"]
+
+
 def load_config(config_path=os.path.join(f".", "config.toml"),
                 default_config_path=os.path.join(".", "default_config.toml")) -> dict[any, any]:
     global config
@@ -15,6 +20,8 @@ def load_config(config_path=os.path.join(f".", "config.toml"),
     if not (os.path.exists(config_path) and os.path.isfile(config_path)):
         shutil.copy(default_config_path, config_path)
     config = toml.load(config_path)
+
+    on_config_loaded()
     return config
 
 

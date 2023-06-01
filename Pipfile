@@ -17,6 +17,7 @@ pocketsphinx = "*"
 pypinyin = "*"
 expiringdict = "*"
 flask = "*"
+waitress = "*"
 
 [dev-packages]
 autopep8 = "*"

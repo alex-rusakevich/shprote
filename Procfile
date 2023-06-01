@@ -1,1 +1,1 @@
-bot: python3 shprote_server.py
+web: waitress-serve --port=$PORT wsgi:app
