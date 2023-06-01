@@ -16,6 +16,7 @@ speechrecognition = "*"
 pocketsphinx = "*"
 pypinyin = "*"
 expiringdict = "*"
+flask = "*"
 
 [dev-packages]
 autopep8 = "*"

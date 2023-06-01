@@ -32,9 +32,7 @@ def hs(context):
 
 @task
 def srv(context):
-    heroku(context, "stop")
     prun("python shprote_server.py")
-    heroku(context, "start")
 
 
 @task
