@@ -20,10 +20,7 @@ app.logger = logger
 
 @app.route("/bot", methods=['POST'])
 def get_message():
-    if request.headers.get("content-type") == "application/json" and (
-        request.url_root.startswith(
-            "https://api.telegram.org")  # Security check
-    ):
+    if request.headers.get("content-type") == "application/json":
         json_string = request.get_data().decode("utf-8")
         update = telebot.types.Update.de_json(json_string)
         bot.process_new_updates([update])
@@ -38,7 +35,7 @@ def root_hook():
 
 
 app.debug = config["main"]["debug"]
-bot_url = os.environ.get("HEROKU_URL", "127.0.0.1")
+bot_url = os.environ.get("OUTER_URL", "127.0.0.1")
 
 bot.remove_webhook()
 time.sleep(1)
