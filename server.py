@@ -23,13 +23,13 @@ app = Flask(__name__)
 app.logger = logger
 
 
-@app.before_request
+""" @app.before_request
 def before_request():
     if "DYNO" in os.environ:  # Force heroku https
         if request.url.startswith("http://"):
             url = request.url.replace("http://", "https://", 1)
             code = 301
-            return redirect(url, code=code)
+            return redirect(url, code=code) """
 
 
 @app.route(WEBHOOK_URL_PATH, methods=['POST'])
