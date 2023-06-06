@@ -53,7 +53,8 @@ app.debug = config["main"]["debug"]
 bot.remove_webhook()
 time.sleep(1)
 
-bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH)
+bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+                drop_pending_updates=config["bot"]["drop-pending"])
 
 logger.info("Running in production mode: " + str(not app.debug))
 

@@ -1,10 +1,13 @@
 [main]
 debug = false
+timezone = "Europe/Minsk"
+
+[bot]
 token = ""
 admin-pass = ""
 admin-id = []
 threads = 4
-timezone = "Europe/Minsk"
+drop-pending = true
 
 [database]
     [database.connection]

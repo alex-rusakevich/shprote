@@ -42,9 +42,9 @@ def save_config(config_path=os.path.join(f".", "config.toml")):
 # region Loading token
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 if not BOT_TOKEN:
-    BOT_TOKEN = get_config()["main"]["token"]
+    BOT_TOKEN = get_config()["bot"]["token"]
 if not BOT_TOKEN:
-    get_config()["main"]["token"] = getpass("Bot API key: ")
+    get_config()["bot"]["token"] = getpass("Bot API token: ")
     save_config()
-    BOT_TOKEN = get_config()["main"]["token"]
+    BOT_TOKEN = get_config()["bot"]["token"]
 # endregion

@@ -30,22 +30,22 @@ logger = get_logger()
 
 admin_pass = os.environ.get("ADMIN_PASS")
 if not admin_pass:
-    admin_pass = config["main"]["admin-pass"]
+    admin_pass = config["bot"]["admin-pass"]
 if not admin_pass:
-    config["main"]["admin-pass"] = getpass("Admin password: ")
+    config["bot"]["admin-pass"] = getpass("Admin password: ")
     save_config()
-    admin_pass = config["main"]["admin-pass"]
+    admin_pass = config["bot"]["admin-pass"]
 
 admin_id = os.environ.get("ADMIN_ID")
 if admin_id:
     admin_id = list(map(int, admin_id.split(";")))
 else:
-    admin_id = config["main"]["admin-id"]
+    admin_id = config["bot"]["admin-id"]
     if not admin_id:
-        config["main"]["admin-id"] = list(map(int,
-                                          getpass("Admin ids (XX;YY;ZZ): ").split(";")))
+        config["bot"]["admin-id"] = list(map(int,
+                                             getpass("Admin ids (XX;YY;ZZ): ").split(";")))
         save_config
-        admin_id = config["main"]["admin-id"]
+        admin_id = config["bot"]["admin-id"]
 
 
 def render_admin():
