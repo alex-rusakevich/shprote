@@ -49,12 +49,14 @@ bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH)
 logger.info("Running in production mode: " + str(not app.debug))
 
 # Starting waitress
-waitress_args = {
-    "port": os.environ.get("PORT", 8080)
-}
+waitress_args = {}
 
 if os.environ.get("DYNO"):  # Expose the socket to ngnix if running on Heroku
     waitress_args["unix_socket"] = "/tmp/nginx.socket"
     open('/tmp/app-initialized', 'w').close()
+else:
+    waitress_args = {
+        "port": os.environ.get("PORT", 8080)
+    }
 
 serve(app.wsgi_app, **waitress_args)
