@@ -49,6 +49,18 @@ if get_config()["log"]["stdout"]:
 # endregion
 
 
+# region Waitress logger
+waitress_logger = logging.getLogger('waitress')
+if waitress_logger:
+    for hdlr in waitress_logger.handlers:
+        waitress_logger.removeHandler(hdlr)
+    waitress_logger.setLevel(LOG_LVL)
+    waitress_logger.addHandler(shprote_handler)
+    if get_config()["log"]["stdout"]:
+        waitress_logger.addHandler(stdout_handler)
+# endregion
+
+
 def exception_hook(exc_type, exc_value, exc_traceback):
     logging.getLogger('root').exception(
         "Uncaught exception",

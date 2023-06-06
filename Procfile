@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT wsgi:app
+web: bin/start-nginx python server.py
