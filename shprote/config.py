@@ -1,6 +1,7 @@
 import toml
 import os
 import shutil
+from getpass import getpass
 
 config = {}
 
@@ -36,3 +37,14 @@ def save_config(config_path=os.path.join(f".", "config.toml")):
     global config
     with open(config_path, 'w', encoding='utf8') as f:
         toml.dump(config, f)
+
+
+# region Loading token
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+if not BOT_TOKEN:
+    BOT_TOKEN = get_config()["main"]["token"]
+if not BOT_TOKEN:
+    get_config()["main"]["token"] = getpass("Bot API key: ")
+    save_config()
+    BOT_TOKEN = get_config()["main"]["token"]
+# endregion
