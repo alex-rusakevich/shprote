@@ -55,5 +55,6 @@ waitress_args = {
 
 if os.environ.get("DYNO"):  # Expose the socket to ngnix if running on Heroku
     waitress_args["unix_socket"] = "/tmp/nginx.socket"
+    open('/tmp/app-initialized', 'w').close()
 
 serve(app.wsgi_app, **waitress_args)
