@@ -69,6 +69,11 @@ def clean(context):
 
 
 @task
+def docs(context):
+    prun("pdoc -o ./docs shprote")
+
+
+@task
 def test(context):
     prun("pytest -W ignore::DeprecationWarning")
 
