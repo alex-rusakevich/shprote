@@ -1,11 +1,10 @@
-import telebot.types as tt
 import telebot.formatting as tf
+import telebot.types as tt
 
-from shprote.logics import Language
 from shprote.bot import bot
-from shprote.logics.util import telebot_diff
 from shprote.logics import *
-
+from shprote.logics import Language
+from shprote.logics.util import telebot_diff
 
 MSG_CHECK_PRONUN = "🎤 Check pronunciation"
 MSG_CHECK_LISTEN = "👂 Check listening"

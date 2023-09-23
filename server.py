@@ -1,15 +1,14 @@
 import os
 import time
 
-from flask import Flask, request, redirect
 import flask
 import telebot
+from flask import Flask, redirect, request
 from waitress import serve
 
-from shprote.log import get_logger
-from shprote.config import get_config, BOT_TOKEN
 from shprote.bot_server import bot
-
+from shprote.config import BOT_TOKEN, get_config
+from shprote.log import get_logger
 
 logger = get_logger()
 config = get_config()

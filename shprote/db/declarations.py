@@ -1,9 +1,6 @@
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import (
-    Column,
-    DateTime
-)
+from sqlalchemy import Column, DateTime
 from sqlalchemy.dialects.mysql import BIGINT
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 
 DeclarativeBase = declarative_base()

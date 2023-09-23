@@ -1,7 +1,8 @@
 import pytest
-from shprote.logics.zh import compare_lang_text, text_to_levenseq
-from shprote.logics.voice import *
+
 from shprote.logics import *
+from shprote.logics.voice import *
+from shprote.logics.zh import compare_lang_text, text_to_levenseq
 
 test_data = (
     ("码", "妈", 0.5000, 1),

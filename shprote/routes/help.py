@@ -1,8 +1,8 @@
 import os
+
 import toml
 
 from shprote import __version__
-
 
 pipfile = toml.load(os.path.join(".", "Pipfile"))
 used_packages = list(pipfile["packages"].keys())

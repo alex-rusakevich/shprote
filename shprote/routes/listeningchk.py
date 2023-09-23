@@ -1,17 +1,18 @@
-import hashlib
 import datetime
-from time import time
+import hashlib
 import os
+from time import time
 
-import telebot.types as tt
 import telebot.formatting as tf
+import telebot.types as tt
 
-from .common import *
-from ..bot import bot
-from shprote.logics import get_module_by_lang, Language
-from shprote.temp import get_tmp
+from shprote.logics import Language, get_module_by_lang
 from shprote.logics.voice import audio_file_to_text
+from shprote.temp import get_tmp
+
+from ..bot import bot
 from ..log import get_logger
+from .common import *
 
 logger = get_logger()
 voice_temp_dir = get_tmp("voice")

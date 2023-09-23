@@ -1,9 +1,9 @@
 import telebot
 from sqlalchemy.sql import text
 
-from shprote.config import get_config, BOT_TOKEN
-from shprote.log import get_logger
+from shprote.config import BOT_TOKEN, get_config
 from shprote.db import DB_ENGINE, DB_SESSION
+from shprote.log import get_logger
 
 
 class TGExceptionHandler(telebot.ExceptionHandler):

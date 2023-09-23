@@ -1,8 +1,8 @@
-from invoke import run, task
 import os
-import re
-from pathlib import Path
 import shutil
+from pathlib import Path
+
+from invoke import run, task
 
 from shprote import __version__ as __program_version__
 

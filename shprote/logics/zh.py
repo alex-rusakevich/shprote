@@ -1,10 +1,10 @@
 import re
 import string
 
-from pypinyin import lazy_pinyin, Style
 import Levenshtein
+from pypinyin import Style, lazy_pinyin
 
-from shprote.logics.util import purificator_tr, CHINESE_IGNORED
+from shprote.logics.util import CHINESE_IGNORED, purificator_tr
 
 
 def pinyin_exceptions_mod(str_in: str) -> str:

@@ -1,7 +1,8 @@
-import toml
 import os
 import shutil
 from getpass import getpass
+
+import toml
 
 config = {}
 

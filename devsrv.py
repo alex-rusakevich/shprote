@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 import os
 
-from shprote.log import get_logger
-from shprote.config import get_config
 from shprote.bot_server import bot
+from shprote.config import get_config
+from shprote.log import get_logger
 from shprote.temp import clean_temp
-
 
 logger = get_logger()
 config = get_config()

@@ -1,6 +1,6 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import scoped_session
 from expiringdict import ExpiringDict
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.sql import func
 
 from shprote.db import DB_SESSION_FACTORY
 from shprote.db.declarations import User

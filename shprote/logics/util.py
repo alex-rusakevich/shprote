@@ -1,11 +1,9 @@
-import string
 import difflib
-import re
+import string
 
 import telebot.formatting as tf
 
 from shprote.log import get_logger
-
 
 CHINESE_IGNORED = "！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
 IGNORED_CHARACTERS = CHINESE_IGNORED + string.punctuation

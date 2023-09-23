@@ -1,16 +1,14 @@
 import threading
 
+from shprote.bot import bot
 from shprote.config import get_config
+from shprote.db.management import upsert_user
 from shprote.log import get_logger
 from shprote.routes.admin import check_tg_id
-from shprote.routes.pronunchk import start_pronun_test
-from shprote.routes.listeningchk import start_listening_test
-from shprote.routes.help import HELP
 from shprote.routes.common import *
-from shprote.bot import bot
-
-from shprote.db.management import upsert_user
-
+from shprote.routes.help import HELP
+from shprote.routes.listeningchk import start_listening_test
+from shprote.routes.pronunchk import start_pronun_test
 
 logger = get_logger()
 config = get_config()
@@ -18,7 +16,6 @@ config = get_config()
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-
     markup = render_main_menu()
     bot.send_message(
         message.chat.id, f"Hello there, {message.from_user.first_name}! I'm ready to check your pronunciation! 🤓",
