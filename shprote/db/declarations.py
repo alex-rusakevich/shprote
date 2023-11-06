@@ -9,8 +9,7 @@ DeclarativeBase = declarative_base()
 class User(DeclarativeBase):
     __tablename__ = "users"
 
-    user_id = Column(BIGINT(unsigned=False), primary_key=True,
-                     autoincrement=False)
+    user_id = Column(BIGINT(unsigned=False), primary_key=True, autoincrement=False)
     joined = Column(DateTime(timezone=True), default=func.now())
     last_active = Column(DateTime(timezone=True), default=func.now())
 

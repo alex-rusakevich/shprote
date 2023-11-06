@@ -20,6 +20,11 @@ class TGExceptionHandler(telebot.ExceptionHandler):
 
 config = get_config()
 
-bot = telebot.TeleBot(BOT_TOKEN, skip_pending=config["bot"]["drop-pending"],
-                      parse_mode="Markdown", threaded=True, num_threads=int(config["bot"]["threads"]),
-                      exception_handler=TGExceptionHandler)
+bot = telebot.TeleBot(
+    BOT_TOKEN,
+    skip_pending=config["bot"]["drop-pending"],
+    parse_mode="Markdown",
+    threaded=True,
+    num_threads=int(config["bot"]["threads"]),
+    exception_handler=TGExceptionHandler,
+)

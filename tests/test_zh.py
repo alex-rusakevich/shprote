@@ -12,7 +12,7 @@ test_data = (
     ("儿子", "二字", 0.5000, 2),
     ("妈妈", "密码", 0.5000, 2),
     ("河里的鹅", "不渴不饿", 0.1250, 7),
-    ("石室诗士施氏", "嗜狮, 誓食十狮", 0.6667, 6)
+    ("石室诗士施氏", "嗜狮, 誓食十狮", 0.6667, 6),
 )
 
 test_levenmass = (
@@ -24,23 +24,23 @@ test_levenmass = (
     ("南岸", "nán'àn"),
     ("儿子在哪儿画画儿？", "érzizàinǎrhuàhuàr"),
     ("句子", "jùzi"),
-    ("""521521521521，，，，【【【】】】{{{{{{{}}}}}}}
-        520520520520""", "521521521521520520520520")
+    (
+        """521521521521，，，，【【【】】】{{{{{{{}}}}}}}
+        520520520520""",
+        "521521521521520520520520",
+    ),
 )
 
 test_audio_levenmass = (
     ("zh_1.ogg", "wǒzhùzàimíngsīkè"),
     ("zh_2.ogg", "běijīngshìzhōngguódeshǒudū"),
-    ("zh_3.ogg", "wǒnǚpéngyoushìzuìměilìde")
+    ("zh_3.ogg", "wǒnǚpéngyoushìzuìměilìde"),
 )
 
 
 @pytest.mark.parametrize("teacher, student, exp_ratio, exp_mistakes", test_data)
 def test_zh(teacher, student, exp_ratio, exp_mistakes):
-    response = compare_lang_text(
-        teacher,
-        student
-    )
+    response = compare_lang_text(teacher, student)
 
     resp_ratio = float(response["total-ratio"])
     resp_mistakes = int(response["phon-mistakes"])
@@ -57,17 +57,15 @@ def test_levenmass(word_given, pinyin_expected):
 
 @pytest.mark.parametrize("audio_file_path, pinyin_expected", test_audio_levenmass)
 def test_audio(audio_file_path, pinyin_expected):
-    txt = audio_file_to_text(os.path.join(
-        ".", "tests", "audio", audio_file_path), lang=Language.Chinese)
+    txt = audio_file_to_text(
+        os.path.join(".", "tests", "audio", audio_file_path), lang=Language.Chinese
+    )
     pinyin = text_to_levenseq(txt)
     assert pinyin == pinyin_expected
 
 
 def test_empty():
-    response = compare_lang_text(
-        "》》？【】！；\t\r    ",
-        "你好"
-    )
+    response = compare_lang_text("》》？【】！；\t\r    ", "你好")
 
     assert response["type"] == "error"
     assert response["name"] == "LEVENMASS_EMPTY_ERR"

@@ -8,10 +8,7 @@ from shprote.logics.util import CHINESE_IGNORED, purificator_tr
 
 
 def pinyin_exceptions_mod(str_in: str) -> str:
-    pinyin_exc = {
-        "马马虎虎": "mǎmǎhūhū",
-        "朋友": "péngyou"
-    }
+    pinyin_exc = {"马马虎虎": "mǎmǎhūhū", "朋友": "péngyou"}
     for k, v in pinyin_exc.items():
         str_in = str_in.replace(k, v)
     return str_in
@@ -21,7 +18,8 @@ def levenshtein_massify(str_in: str) -> str:
     # Replace all punctuation marks with spaces
     str_in = str_in.lower().translate(purificator_tr)
     str_in = re.sub(
-        r"(\s[āàáǎaēéěèeōóǒòo])", r"'\1", str_in)  # Add ' before words starting with a, e and o
+        r"(\s[āàáǎaēéěèeōóǒòo])", r"'\1", str_in
+    )  # Add ' before words starting with a, e and o
     str_in = re.sub(r"\s", "", str_in)  # Remove spaces
     return str_in
 
@@ -31,7 +29,7 @@ def compare_phon_repr(teacher_levenseq, student_levenseq) -> str:
         return {
             "type": "error",
             "name": "LEVENMASS_EMPTY_ERR",
-            "msg": "Levenshtein mass cannot be empty. Please, check your request"
+            "msg": "Levenshtein mass cannot be empty. Please, check your request",
         }
 
     max_len = max(len(teacher_levenseq), len(student_levenseq))
@@ -49,8 +47,9 @@ def compare_phon_repr(teacher_levenseq, student_levenseq) -> str:
 def make_repr_from_text(str_in: str) -> str:
     str_in = pinyin_exceptions_mod(str_in)
     str_in = re.sub(r"儿(?!子)", "r", str_in)  # Erhua
-    str_in = " ".join(lazy_pinyin(
-        str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True))
+    str_in = " ".join(
+        lazy_pinyin(str_in, style=Style.TONE, v_to_u=True, tone_sandhi=True)
+    )
 
     str_in = re.sub(rf"\s?([{re.escape(CHINESE_IGNORED)}])\s?", r"\1", str_in)
     str_in = re.sub(rf"\s?([{string.punctuation}])", r"\1", str_in)

@@ -11,20 +11,27 @@ from shprote.config import get_config
 DATA_DIR = os.path.abspath(".")
 
 log_formatter = logging.Formatter(
-    '[%(asctime)s] %(levelname)s %(funcName)s(%(lineno)d) %(message)s')
+    "[%(asctime)s] %(levelname)s %(funcName)s(%(lineno)d) %(message)s"
+)
 
 logfile_dir = os.path.join(DATA_DIR, "log")
 Path(logfile_dir).mkdir(parents=True, exist_ok=True)
 log_file = os.path.join(logfile_dir, "shprote.log")
 
-shprote_handler = RotatingFileHandler(log_file, mode='a', maxBytes=get_config()["log"]["maxsize"],
-                                      backupCount=get_config()["log"]["maxfiles"], encoding="utf8", delay=0)
+shprote_handler = RotatingFileHandler(
+    log_file,
+    mode="a",
+    maxBytes=get_config()["log"]["maxsize"],
+    backupCount=get_config()["log"]["maxfiles"],
+    encoding="utf8",
+    delay=0,
+)
 LOG_LVL = logging.DEBUG if get_config()["main"]["debug"] else logging.INFO
 
 shprote_handler.setFormatter(log_formatter)
 shprote_handler.setLevel(LOG_LVL)
 
-app_log = logging.getLogger('root')
+app_log = logging.getLogger("root")
 app_log.setLevel(LOG_LVL)
 app_log.addHandler(shprote_handler)
 
@@ -39,7 +46,7 @@ if get_config()["log"]["stdout"]:
 telebot.logger = app_log
 
 # region SQLAlchemy logger
-sqlalchemy_logger = logging.getLogger('sqlalchemy.engine.base.Engine')
+sqlalchemy_logger = logging.getLogger("sqlalchemy.engine.base.Engine")
 for hdlr in sqlalchemy_logger.handlers:
     sqlalchemy_logger.removeHandler(hdlr)
 sqlalchemy_logger.setLevel(LOG_LVL)
@@ -50,7 +57,7 @@ if get_config()["log"]["stdout"]:
 
 
 # region Waitress logger
-waitress_logger = logging.getLogger('waitress')
+waitress_logger = logging.getLogger("waitress")
 if waitress_logger:
     for hdlr in waitress_logger.handlers:
         waitress_logger.removeHandler(hdlr)
@@ -62,9 +69,8 @@ if waitress_logger:
 
 
 def exception_hook(exc_type, exc_value, exc_traceback):
-    logging.getLogger('root').exception(
-        "Uncaught exception",
-        exc_info=(exc_type, exc_value, exc_traceback)
+    logging.getLogger("root").exception(
+        "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
     )
 
 
@@ -72,4 +78,4 @@ sys.excepthook = exception_hook
 
 
 def get_logger():
-    return logging.getLogger('root')
+    return logging.getLogger("root")

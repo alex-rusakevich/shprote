@@ -33,7 +33,9 @@ def get_tmp(sub_dir="") -> str:
 
 def clean_temp():
     tmp_d = get_tmp()
-    patterns = [os.path.join(tmp_d, "voice"),]
+    patterns = [
+        os.path.join(tmp_d, "voice"),
+    ]
     patterns = [p for p in patterns if os.path.exists(p)]
 
     for pattern in patterns:

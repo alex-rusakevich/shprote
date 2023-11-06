@@ -23,10 +23,13 @@ TEMP = get_tmp()
 SPHINX_MODELDIR = os.path.join(TEMP, "pocketsphinx-data")
 
 sphinx_lng_to_path = {
-    Language.Chinese: (os.path.join(SPHINX_MODELDIR, Language.Chinese, "acoustic-model"),
-                       os.path.join(SPHINX_MODELDIR, Language.Chinese,
-                                    "language-model.lm.bin"),
-                       os.path.join(SPHINX_MODELDIR, Language.Chinese, "pronounciation-dictionary.dict"),),
+    Language.Chinese: (
+        os.path.join(SPHINX_MODELDIR, Language.Chinese, "acoustic-model"),
+        os.path.join(SPHINX_MODELDIR, Language.Chinese, "language-model.lm.bin"),
+        os.path.join(
+            SPHINX_MODELDIR, Language.Chinese, "pronounciation-dictionary.dict"
+        ),
+    ),
 }
 
 
@@ -39,12 +42,13 @@ def unpack_models():
 
     for k, v in sphinx_archives.items():
         sphinx_unpack_path = os.path.join(SPHINX_MODELDIR, k)
-        if not os.path.exists(sphinx_unpack_path) or not os.path.isdir(sphinx_unpack_path):
+        if not os.path.exists(sphinx_unpack_path) or not os.path.isdir(
+            sphinx_unpack_path
+        ):
             shutil.unpack_archive(v, TEMP)
             logger.info(f"Unpacked sphinx'es {k} into {sphinx_unpack_path}")
         else:
-            logger.info(
-                f"Sphinx'es {k} at {sphinx_unpack_path} is already ready")
+            logger.info(f"Sphinx'es {k} at {sphinx_unpack_path} is already ready")
 
     logger.info("Language models are unpacked")
 
@@ -67,8 +71,7 @@ def audio_file_to_text(file_path, lang) -> str:
         result = rec.recognize_google(audio, language=lang)
     except:
         try:
-            result = rec.recognize_sphinx(
-                audio, language=sphinx_lng_to_path[lang])
+            result = rec.recognize_sphinx(audio, language=sphinx_lng_to_path[lang])
         except:
             pass
 

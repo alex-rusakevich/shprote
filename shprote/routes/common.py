@@ -22,9 +22,7 @@ def render_main_menu():
     return markup
 
 
-languages_menu_captions = {
-    "🇨🇳 中文": Language.Chinese
-}
+languages_menu_captions = {"🇨🇳 中文": Language.Chinese}
 
 
 def language_menu_node(message, callback_fn, *callback_args, **callback_kwargs):
@@ -32,22 +30,26 @@ def language_menu_node(message, callback_fn, *callback_args, **callback_kwargs):
     for k, _ in languages_menu_captions.items():
         markup.add(tt.KeyboardButton(k))
     bot.send_message(
-        message.chat.id, "Choose your language, please:", reply_markup=markup)
+        message.chat.id, "Choose your language, please:", reply_markup=markup
+    )
     bot.register_next_step_handler(
-        message, language_handler, callback_fn, *callback_args, **callback_kwargs)
+        message, language_handler, callback_fn, *callback_args, **callback_kwargs
+    )
 
 
 def language_handler(message, callback_fn, *callback_args, **callback_kwargs):
     language_menu_commands = {
-        "/" + v.lower().strip(): k for k, v in langcode_to_name.items()}
+        "/" + v.lower().strip(): k for k, v in langcode_to_name.items()
+    }
 
-    lang = languages_menu_captions.get(
-        message.text) or language_menu_commands.get(message.text)
+    lang = languages_menu_captions.get(message.text) or language_menu_commands.get(
+        message.text
+    )
     if lang == None:
         bot.send_message(
-            message.chat.id, f"🔴 There is no such language: {message.text}")
-        bot.register_next_step_handler(
-            message, language_menu_node)
+            message.chat.id, f"🔴 There is no such language: {message.text}"
+        )
+        bot.register_next_step_handler(message, language_menu_node)
         return
     callback_fn(*callback_args, lang=lang, **callback_kwargs)
 
@@ -75,5 +77,4 @@ def generate_final_answer(test_type: str, data: dict, check_result: dict) -> str
 <b>Student's transcription:</b> {check_result["student"]["repr"]}
 """.strip()
 
-    return tf.format_text(str(check_result),
-                          tf.hcode(data["hash"]))
+    return tf.format_text(str(check_result), tf.hcode(data["hash"]))

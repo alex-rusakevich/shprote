@@ -21,11 +21,12 @@ waitress = "*"
 pdoc = "*"
 
 [dev-packages]
-autopep8 = "*"
 pytest = "*"
 invoke = "*"
 watchdog = "*"
 psutil = "*"
+isort = "*"
+black = "*"
 
 [requires]
-python_version = "3.11.3"
+python_version = "3.11"

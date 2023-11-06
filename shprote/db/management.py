@@ -31,7 +31,8 @@ def upsert_user(user_id: int):
         session.commit()
     except:
         logger.warning(
-            "Something went wrong while trying to upsert user visit info. Rolling back...")
+            "Something went wrong while trying to upsert user visit info. Rolling back..."
+        )
         session.rollback()
     finally:
         session.close()
@@ -53,7 +54,8 @@ def remove_user_by_id(user_id: int):
         session.commit()
     except:
         logger.warning(
-            "Something went wrong while trying to upsert user visit info. Rolling back...")
+            "Something went wrong while trying to upsert user visit info. Rolling back..."
+        )
         session.rollback()
     finally:
         session.close()

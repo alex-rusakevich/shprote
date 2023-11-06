@@ -12,8 +12,10 @@ def on_config_loaded():
     os.environ["TZ"] = config["main"]["timezone"]
 
 
-def load_config(config_path=os.path.join(f".", "config.toml"),
-                default_config_path=os.path.join(".", "default_config.toml")) -> dict[any, any]:
+def load_config(
+    config_path=os.path.join(f".", "config.toml"),
+    default_config_path=os.path.join(".", "default_config.toml"),
+) -> dict[any, any]:
     global config
     if os.environ.get("DYNO"):
         config = toml.load(default_config_path)
@@ -36,7 +38,7 @@ def get_config():
 
 def save_config(config_path=os.path.join(f".", "config.toml")):
     global config
-    with open(config_path, 'w', encoding='utf8') as f:
+    with open(config_path, "w", encoding="utf8") as f:
         toml.dump(config, f)
 
 

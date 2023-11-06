@@ -42,8 +42,9 @@ if admin_id:
 else:
     admin_id = config["bot"]["admin-id"]
     if not admin_id:
-        config["bot"]["admin-id"] = list(map(int,
-                                             getpass("Admin ids (XX;YY;ZZ): ").split(";")))
+        config["bot"]["admin-id"] = list(
+            map(int, getpass("Admin ids (XX;YY;ZZ): ").split(";"))
+        )
         save_config
         admin_id = config["bot"]["admin-id"]
 
@@ -66,63 +67,79 @@ def check_tg_id(message):
         markup.add(stop_btn)
 
         bot.send_message(
-            message.chat.id, "✅ The id is correct. Now enter the password, please:", reply_markup=markup)
-        bot.register_next_step_handler(
-            message, check_admin_password)
+            message.chat.id,
+            "✅ The id is correct. Now enter the password, please:",
+            reply_markup=markup,
+        )
+        bot.register_next_step_handler(message, check_admin_password)
     else:
         bot.send_message(
-            message.chat.id, "⛔ Your id is not allowed, returning to the main menu", reply_markup=render_main_menu())
+            message.chat.id,
+            "⛔ Your id is not allowed, returning to the main menu",
+            reply_markup=render_main_menu(),
+        )
 
 
 def check_admin_password(message):
     if message.text in (MSG_MENU, "/menu"):
         bot.send_message(
-            message.chat.id, "Returning to the main menu", reply_markup=render_main_menu())
+            message.chat.id,
+            "Returning to the main menu",
+            reply_markup=render_main_menu(),
+        )
         return
 
     if message.text != admin_pass:
         bot.send_message(
-            message.chat.id, "⛔ The password is wrong, returning to the main menu", reply_markup=render_main_menu())
+            message.chat.id,
+            "⛔ The password is wrong, returning to the main menu",
+            reply_markup=render_main_menu(),
+        )
         return
 
     bot.delete_message(message.chat.id, message.id)
 
     usr = message.from_user
     logger.info(
-        f"Somebody has logged in the admin panel. His name is {usr.first_name} {usr.last_name} (@{usr.username}, {usr.id})")
+        f"Somebody has logged in the admin panel. His name is {usr.first_name} {usr.last_name} (@{usr.username}, {usr.id})"
+    )
 
-    bot.send_message(message.chat.id, "Hello, admin!",
-                     reply_markup=render_admin())
-    bot.register_next_step_handler(
-        message, admin_commands)
+    bot.send_message(message.chat.id, "Hello, admin!", reply_markup=render_admin())
+    bot.register_next_step_handler(message, admin_commands)
 
 
 def admin_commands(message):
     def send_logs():
-        log_files = [os.path.abspath(str(p)) for p in Path(logfile_dir).glob("*.log*")
-                     if os.path.isfile(os.path.abspath(str(p)))]
+        log_files = [
+            os.path.abspath(str(p))
+            for p in Path(logfile_dir).glob("*.log*")
+            if os.path.isfile(os.path.abspath(str(p)))
+        ]
         for log_file_path in log_files:
             with open(log_file_path, "rb") as log_file:
                 bot.send_document(message.chat.id, log_file)
 
     if message.text in ("/menu", MSG_MENU):
         bot.send_message(
-            message.chat.id, "Switching back to the menu...", reply_markup=render_main_menu())
+            message.chat.id,
+            "Switching back to the menu...",
+            reply_markup=render_main_menu(),
+        )
         return
     elif message.text in ("/shutdown", MSG_SHUTDOWN):
         logger.warning("Admin has shutdowned the bot, stopping...")
-        bot.send_message(
-            message.chat.id, "I do hope you know what you've done...")
+        bot.send_message(message.chat.id, "I do hope you know what you've done...")
         bot.stop_bot()
         sys.exit(0)
     elif message.text in ("/log", MSG_LOG):
-        bot.send_message(
-            message.chat.id, "Here you are...")
+        bot.send_message(message.chat.id, "Here you are...")
         send_logs()
         bot.send_message(
-            message.chat.id, "Done, no more logs left to send", reply_markup=render_admin())
-        bot.register_next_step_handler(
-            message, admin_commands)
+            message.chat.id,
+            "Done, no more logs left to send",
+            reply_markup=render_admin(),
+        )
+        bot.register_next_step_handler(message, admin_commands)
     elif message.text in (MSG_STATS, "/stats", "/statistics"):
         # region Calc date
         this_year = datetime.date.today()
@@ -138,25 +155,41 @@ def admin_commands(message):
         users_in_total = all_users.count()
 
         # region New users
-        new_users_this_month = all_users.filter(extract("year", User.joined) == this_year)\
-            .filter(extract("month", User.joined) == this_month).count() - all_users\
-            .filter(extract("year", User.joined) == prev_year).filter(extract("month", User.joined) == prev_month).count()
+        new_users_this_month = (
+            all_users.filter(extract("year", User.joined) == this_year)
+            .filter(extract("month", User.joined) == this_month)
+            .count()
+            - all_users.filter(extract("year", User.joined) == prev_year)
+            .filter(extract("month", User.joined) == prev_month)
+            .count()
+        )
 
-        new_users_this_year = all_users.filter(extract("year", User.joined) == this_year).count() - all_users\
-            .filter(extract("year", User.joined) == prev_year).count()
+        new_users_this_year = (
+            all_users.filter(extract("year", User.joined) == this_year).count()
+            - all_users.filter(extract("year", User.joined) == prev_year).count()
+        )
         # endregion
 
         # region Active users
         active_users_this_year = all_users.filter(
-            extract("year", User.last_active) == this_year).count()
-        new_active_users_this_year = active_users_this_year - \
-            all_users.filter(extract("year", User.last_active)
-                             == prev_year).count()
+            extract("year", User.last_active) == this_year
+        ).count()
+        new_active_users_this_year = (
+            active_users_this_year
+            - all_users.filter(extract("year", User.last_active) == prev_year).count()
+        )
 
-        active_users_this_month = all_users.filter(extract("year", User.last_active) == this_year)\
-            .filter(extract("month", User.last_active) == this_month).count()
-        new_active_users_this_month = active_users_this_month - all_users.filter(extract("year", User.last_active) == prev_year)\
-            .filter(extract("month", User.last_active) == prev_month).count()
+        active_users_this_month = (
+            all_users.filter(extract("year", User.last_active) == this_year)
+            .filter(extract("month", User.last_active) == this_month)
+            .count()
+        )
+        new_active_users_this_month = (
+            active_users_this_month
+            - all_users.filter(extract("year", User.last_active) == prev_year)
+            .filter(extract("month", User.last_active) == prev_month)
+            .count()
+        )
         # endregion
 
         STATS_MSG = f"""
@@ -165,19 +198,19 @@ def admin_commands(message):
 *Active users this month:* {active_users_this_month} ({'{:+}'.format(new_active_users_this_month)})
         """.strip()
 
-        bot.send_message(
-            message.chat.id, STATS_MSG, reply_markup=render_admin())
-        bot.register_next_step_handler(
-            message, admin_commands)
+        bot.send_message(message.chat.id, STATS_MSG, reply_markup=render_admin())
+        bot.register_next_step_handler(message, admin_commands)
     elif message.text in (MSG_GLOB_MAIL, "/globm"):
         markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
         stop_btn = tt.KeyboardButton(MSG_STOP)
         markup.add(stop_btn)
 
         bot.send_message(
-            message.chat.id, "Write to ⚠ *all* ⚠ the registred users:", reply_markup=markup)
-        bot.register_next_step_handler(
-            message, global_mail)
+            message.chat.id,
+            "Write to ⚠ *all* ⚠ the registred users:",
+            reply_markup=markup,
+        )
+        bot.register_next_step_handler(message, global_mail)
 
 
 def global_mail(message):
@@ -185,9 +218,11 @@ def global_mail(message):
 
     if glob_msg in (MSG_STOP, "/stop"):
         bot.send_message(
-            message.chat.id, "Getting back to the admin menu...", reply_markup=render_admin())
-        bot.register_next_step_handler(
-            message, admin_commands)
+            message.chat.id,
+            "Getting back to the admin menu...",
+            reply_markup=render_admin(),
+        )
+        bot.register_next_step_handler(message, admin_commands)
         return
 
     msg_count = 0
@@ -204,6 +239,8 @@ def global_mail(message):
             msg_count += 1
 
     bot.send_message(
-        message.chat.id, f"🟢 Done! {msg_count} messages sent!", reply_markup=render_admin())
-    bot.register_next_step_handler(
-        message, admin_commands)
+        message.chat.id,
+        f"🟢 Done! {msg_count} messages sent!",
+        reply_markup=render_admin(),
+    )
+    bot.register_next_step_handler(message, admin_commands)

@@ -16,7 +16,9 @@ def main():
 
     logger.info("Running in polling mode...")
     bot.infinity_polling(
-        restart_on_change=config["main"]["debug"], path_to_watch=os.path.join(".", "shprote"))
+        restart_on_change=config["main"]["debug"],
+        path_to_watch=os.path.join(".", "shprote"),
+    )
 
     logger.info("The bot has stopped.")
     logger.info("Cleaning temp...")

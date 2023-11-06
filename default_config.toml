@@ -11,12 +11,12 @@ drop-pending = true
 
 [database]
     [database.connection]
-    drivername = 'driver'
-    username = 'username'
-    password = 'password'
+    drivername = 'mysql'
+    username = 'shprote_db_user'
+    password = 'shprote_db_user_password'
     host = '127.0.0.1'
-    port = 5000
-    database = 'mydb'
+    port = 3306
+    database = 'shprote_db'
 
     [database.options]
     recycle = 3600
