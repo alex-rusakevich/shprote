@@ -113,7 +113,7 @@
                     <div class="attr variable">
             <span class="name">config</span>        =
 <input id="config-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="config-view-value"></label><span class="default_value">{&#39;main&#39;: {&#39;debug&#39;: True, &#39;timezone&#39;: &#39;Europe/Minsk&#39;}, &#39;bot&#39;: {&#39;token&#39;: &#39;6135084920:AAGLfCvQ__D1mAbJdlRWZS504ZOINEBpV8s&#39;, &#39;admin-pass&#39;: &#39;sdnasjfnadifnd8234u&#39;, &#39;admin-id&#39;: [697532405], &#39;threads&#39;: 4, &#39;drop-pending&#39;: True}, &#39;database&#39;: {&#39;connection&#39;: {&#39;drivername&#39;: &#39;mysql&#39;, &#39;username&#39;: &#39;admin&#39;, &#39;password&#39;: &#39;admin&#39;, &#39;host&#39;: &#39;127.0.0.1&#39;, &#39;port&#39;: 3306, &#39;database&#39;: &#39;shprote&#39;}, &#39;options&#39;: {&#39;recycle&#39;: 3600, &#39;pre-ping&#39;: True}}, &#39;log&#39;: {&#39;maxfiles&#39;: 5, &#39;maxsize&#39;: 5242880, &#39;stdout&#39;: False}}</span>
+            <label class="view-value-button pdoc-button" for="config-view-value"></label><span class="default_value">{&#39;main&#39;: {&#39;debug&#39;: True, &#39;timezone&#39;: &#39;Europe/Minsk&#39;}, &#39;bot&#39;: {&#39;token&#39;: &#39;6135084920:AAGLfCvQ__D1mAbJdlRWZS504ZOINEBpV8s&#39;, &#39;admin-pass&#39;: &#39;1234321&#39;, &#39;admin-id&#39;: [697532405], &#39;threads&#39;: 4, &#39;drop-pending&#39;: True}, &#39;database&#39;: {&#39;connection&#39;: {&#39;drivername&#39;: &#39;mysql&#39;, &#39;username&#39;: &#39;shprote_db_user&#39;, &#39;password&#39;: &#39;shprote_db_user_password&#39;, &#39;host&#39;: &#39;127.0.0.1&#39;, &#39;port&#39;: 3306, &#39;database&#39;: &#39;shprote_db&#39;}, &#39;options&#39;: {&#39;recycle&#39;: 3600, &#39;pre-ping&#39;: True}}, &#39;log&#39;: {&#39;maxfiles&#39;: 5, &#39;maxsize&#39;: 5242880, &#39;stdout&#39;: True}}</span>
 
         
     </div>
@@ -126,7 +126,7 @@
                     <div class="attr variable">
             <span class="name">DATABASE</span>        =
 <input id="DATABASE-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="DATABASE-view-value"></label><span class="default_value">{&#39;drivername&#39;: &#39;mysql&#39;, &#39;username&#39;: &#39;admin&#39;, &#39;password&#39;: &#39;admin&#39;, &#39;host&#39;: &#39;127.0.0.1&#39;, &#39;port&#39;: 3306, &#39;database&#39;: &#39;shprote&#39;}</span>
+            <label class="view-value-button pdoc-button" for="DATABASE-view-value"></label><span class="default_value">{&#39;drivername&#39;: &#39;mysql&#39;, &#39;username&#39;: &#39;shprote_db_user&#39;, &#39;password&#39;: &#39;shprote_db_user_password&#39;, &#39;host&#39;: &#39;127.0.0.1&#39;, &#39;port&#39;: 3306, &#39;database&#39;: &#39;shprote_db&#39;}</span>
 
         
     </div>
@@ -138,7 +138,7 @@
                 <section id="DB_ENGINE">
                     <div class="attr variable">
             <span class="name">DB_ENGINE</span>        =
-<span class="default_value">Engine(mysql://admin:***@127.0.0.1:3306/shprote)</span>
+<span class="default_value">Engine(mysql://shprote_db_user:***@127.0.0.1:3306/shprote_db)</span>
 
         
     </div>
@@ -163,7 +163,7 @@
                     <div class="attr variable">
             <span class="name">DB_SESSION_FACTORY</span>        =
 <input id="DB_SESSION_FACTORY-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="DB_SESSION_FACTORY-view-value"></label><span class="default_value">sessionmaker(class_=&#39;Session&#39;, bind=Engine(mysql://admin:***@127.0.0.1:3306/shprote), autoflush=True, expire_on_commit=True)</span>
+            <label class="view-value-button pdoc-button" for="DB_SESSION_FACTORY-view-value"></label><span class="default_value">sessionmaker(class_=&#39;Session&#39;, bind=Engine(mysql://shprote_db_user:***@127.0.0.1:3306/shprote_db), autoflush=True, expire_on_commit=True)</span>
 
         
     </div>

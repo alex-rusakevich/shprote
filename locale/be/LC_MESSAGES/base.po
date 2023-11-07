@@ -1,0 +1,379 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-07 14:13+0300\n"
+"PO-Revision-Date: 2023-11-07 15:01+0300\n"
+"Language: be\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Alexander Rusakevich <mr.alexander.rusakevich@gmail.com>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: shprote\bot_server.py:30
+#, python-brace-format
+msgid "Hello there, {name}! I'm ready to check your pronunciation! 🤓"
+msgstr "Добры дзень, {name}! Я гатовы праверыць вашы навыкі вымаўлення! 🤓"
+
+#: shprote\bot_server.py:45 shprote\routes\common.py:17
+msgid "🎤 Check pronunciation"
+msgstr "🎤 Праверка вымаўлення"
+
+#: shprote\bot_server.py:47 shprote\routes\common.py:18
+msgid "👂 Check listening"
+msgstr "👂 Праверка аўдзіравання"
+
+#: shprote\bot_server.py:49 shprote\routes\admin.py:51
+#: shprote\routes\admin.py:65 shprote\routes\admin.py:85
+#: shprote\routes\admin.py:125
+msgid "🍱 Menu"
+msgstr "🍱 Меню"
+
+#: shprote\bot_server.py:52
+msgid "Welcome to the main menu!"
+msgstr "Вітаем вас у галоўным меню!"
+
+#: shprote\bot_server.py:55 shprote\routes\admin.py:222
+#: shprote\routes\admin.py:237 shprote\routes\listeningchk.py:27
+#: shprote\routes\listeningchk.py:66 shprote\routes\listeningchk.py:183
+#: shprote\routes\pronunchk.py:27 shprote\routes\pronunchk.py:66
+#: shprote\routes\pronunchk.py:202
+msgid "❌ Stop"
+msgstr "❌ Запыніць"
+
+#: shprote\bot_server.py:58 shprote\routes\listeningchk.py:69
+#: shprote\routes\listeningchk.py:186 shprote\routes\pronunchk.py:69
+#: shprote\routes\pronunchk.py:205
+msgid "The check has been stopped. Getting back to the menu..."
+msgstr "Праверка запынена. Вяртаемся у галоўнае меню..."
+
+#: shprote\bot_server.py:61 shprote\routes\common.py:19
+msgid "❓ Help"
+msgstr "❓ Дапамога"
+
+#: shprote\bot_server.py:66
+#, python-brace-format
+msgid ""
+"\n"
+"*Standardized 汉语 Pronunciation TEster {__version__}*\n"
+"Created by Alexander Rusakevich (https://github.com/alex-rusakevich)\n"
+"\n"
+"/start — start the bot and go to the main menu\n"
+"/help — display this message\n"
+"/checkpr — begin your pronunciation check. The special code / hash in bot "
+"replies is intended to avoid pupil cheating by sending different results or "
+"fake tasks\n"
+"/checklisten — begin the listening check\n"
+"/stop — stop the check and go to main menu\n"
+"\n"
+"_May 汉语 be with you!_\n"
+"\n"
+"_Special thanks to the authors of {used_packages_exc_last} and "
+"{used_packages_last} libraries_\n"
+msgstr ""
+"\n"
+"*Праграма праверкі кітайскага вымаўлення \"shprote\" {__version__}*\n"
+"Створана Аляксандрам Русакевічам (https://github.com/alex-rusakevich)\n"
+"\n"
+"/start — запусціць бота і перайсці ў галоўнае меню\n"
+"/help — паказаць даведку, якую вы зараз чытаеце\n"
+"/checkpr — пачаць праверку вымаўлення. Спецыяльны код / хэш у адказах "
+"выкарыстоўваецца дзеля таго, каб студэнт не мог паслаць розныя адказы і "
+"рэзультаты\n"
+"/checklisten — пачаць праверку аўдзіравання\n"
+"/stop — запыніць праверку і перайсці ў галоўнае меню\n"
+"\n"
+"_Няхай прыбудзе з вамі кітайская мова!_\n"
+"\n"
+"_Асабліва дзякую аўтарам бібліятэк {used_packages_exc_last} і "
+"{used_packages_last}_\n"
+
+#: shprote\bot_server.py:109
+msgid "Checking your telegram id..."
+msgstr "Правяраю ваш id у Тэлеграм..."
+
+#: shprote\routes\admin.py:52 shprote\routes\admin.py:132
+msgid "🔴 Shutdown"
+msgstr "🔴 Выключыць"
+
+#: shprote\routes\admin.py:53 shprote\routes\admin.py:137
+msgid "📜 Log"
+msgstr "📜 Логі"
+
+#: shprote\routes\admin.py:54 shprote\routes\admin.py:146
+msgid "🧮 Statistics"
+msgstr "🧮 Статыстыка"
+
+#: shprote\routes\admin.py:55 shprote\routes\admin.py:220
+msgid "📣 Message to all users"
+msgstr "📣 Паведамленне ўсім карыстальнікам"
+
+#: shprote\routes\admin.py:70
+msgid "✅ The id is correct. Now enter the password, please:"
+msgstr "✅ id быў пацверджаны. Зараз, калі ласка, напішыце пароль:"
+
+#: shprote\routes\admin.py:77
+msgid "⛔ Your id is not allowed, returning to the main menu"
+msgstr "⛔ Ваш id не быў дапушчаны, вяртаюся ў галоўнае меню"
+
+#: shprote\routes\admin.py:88
+msgid "Returning to the main menu"
+msgstr "Вяртаюся ў галоўнае меню"
+
+#: shprote\routes\admin.py:96
+msgid "⛔ The password is wrong, returning to the main menu"
+msgstr "⛔ Няправільны пароль, вяртаюся ў галоўнае меню"
+
+#: shprote\routes\admin.py:108
+msgid "Hello, admin!"
+msgstr "Добры дзень, адміністратар!"
+
+#: shprote\routes\admin.py:128
+msgid "Switching back to the menu..."
+msgstr "Вяртаюся ў галоўнае меню..."
+
+#: shprote\routes\admin.py:134
+msgid "I do hope you know what you've done..."
+msgstr "Спадзяваюся, вы ведаеце, што робіце..."
+
+#: shprote\routes\admin.py:138
+msgid "Here you are..."
+msgstr "Вось, трымайце..."
+
+#: shprote\routes\admin.py:142
+msgid "Done, no more logs left to send"
+msgstr "Зроблена, усе логі былі адасланы"
+
+#: shprote\routes\admin.py:200
+#, python-brace-format
+msgid ""
+"\n"
+"*All users:* {users_in_total} ({new_users_month} this month, "
+"{new_users_year} this year)\n"
+"*Active users this year:* {active_users_this_year} "
+"({new_active_users_this_year})\n"
+"*Active users this month:* {active_users_this_month} "
+"({new_active_users_this_month})\n"
+"        "
+msgstr ""
+"\n"
+"*Усе карыстальнікі:* {users_in_total} ({new_users_month} у гэтым месяцы, "
+"{new_users_year} у гэтым годзе)\n"
+"*Актыўных карыстальнікаў у гэтым годзе:* {active_users_this_year} "
+"({new_active_users_this_year})\n"
+"*Актыўных карыстальнікаў у гэтым месяцы:* {active_users_this_month} "
+"({new_active_users_this_month})\n"
+"        "
+
+#: shprote\routes\admin.py:227
+msgid "Write to ⚠ *all* ⚠ the registred users:"
+msgstr "Напісаць ⚠ *усім* ⚠ карыстальнікам:"
+
+#: shprote\routes\admin.py:240
+msgid "Getting back to the admin menu..."
+msgstr "Вяртаюся ў галоўнае меню..."
+
+#: shprote\routes\admin.py:261
+#, python-brace-format
+msgid "🟢 Done! {msg_count} messages sent!"
+msgstr "🟢 Зроблена! Усяго {msg_count} паведамленняў(-е)!"
+
+#: shprote\routes\common.py:36
+msgid "Choose your language, please:"
+msgstr "Калі ласка, выберыце вашу мову:"
+
+#: shprote\routes\common.py:56
+#, python-brace-format
+msgid "🔴 There is no such language: {langname}"
+msgstr "🔴 Мова не падтрымліваецца: {langname}"
+
+#: shprote\routes\common.py:71
+#, python-brace-format
+msgid ""
+"\n"
+"*Something went wrong*\n"
+"{err_name}: {err_msg}\n"
+msgstr ""
+"\n"
+"*Штосьці здарылася*\n"
+"{err_name}: {err_msg}\n"
+
+#: shprote\routes\common.py:88
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"<b>Student → teacher:</b>\n"
+"{telebot_diff}"
+msgstr ""
+"\n"
+"\n"
+"<b>Студэнт → настаўнік:</b>\n"
+"{telebot_diff}"
+
+#: shprote\routes\common.py:97
+#, python-brace-format
+msgid ""
+"<b>Your {test_type} check result is {perc}% ({phon_mistakes} phonematic "
+"mistake(s))</b>\n"
+"<i>Now you can forward all the messages with the special code to your "
+"teacher</i>{student_to_teacher}\n"
+"\n"
+"<b>Teacher's transcription:</b> {teacher_repr}\n"
+"\n"
+"<b>Student's transcription:</b> {student_repr}"
+msgstr ""
+"<b>Ваш рэзультат праверкі на {test_type}: {perc}% (колькасць фанематычных "
+"памылак: {phon_mistakes})</b>\n"
+"<i>Зараз вы можаце паслаць усе паведамленні вашаму выкладчыку</"
+"i>{student_to_teacher}\n"
+"\n"
+"<b>Транскрыпцыя таго, што сказаў выкладчык:</b> {teacher_repr}\n"
+"\n"
+"<b>Транскрыпцыя таго, што сказаў студэнт:</b> {student_repr}"
+
+#: shprote\routes\listeningchk.py:43
+msgid ""
+"The *listening* check has started. _Please, remember that you cannot use "
+"replied or forwarded messages as student's answers._ Check's special code is"
+msgstr ""
+"Праверка *аўдзіравання* пачалася. _Калі ласка, памятайце, што вы не можаце "
+"карыстацца ў якасці адказу адасланымі паведамленнямі і адказамі на тыя "
+"паведамленні, што былі раней._ Спецыяльны код праверкі"
+
+#: shprote\routes\listeningchk.py:54 shprote\routes\pronunchk.py:54
+msgid ""
+"❓ Enter or redirect teacher's text or voice message or reply to it "
+"_(redirect and reply have the highest priority of the messages you send)_:"
+msgstr ""
+"❓ Напішыце або перашліце тэкст або галасавое паведамленне выкладчыка альбо "
+"адкажыце на яго _(калі ў адказе на паведамленне будзе тэкст, то праграма "
+"прыме толькі змест паведамлення, якое пераслалі / на якое адказалі)_:"
+
+#: shprote\routes\listeningchk.py:83 shprote\routes\pronunchk.py:83
+#, python-brace-format
+msgid "*[FORWARDED FROM {usr_name}]*"
+msgstr "*[БЫЛО ПЕРАСЛАНА АД {usr_name}]*"
+
+#: shprote\routes\listeningchk.py:90 shprote\routes\pronunchk.py:90
+#, python-brace-format
+msgid "*[REPLIED TO {usr_name}]*"
+msgstr "*[АДКАЗ ДЛЯ КАРЫСТАЛЬНІКА {usr_name}]*"
+
+#: shprote\routes\listeningchk.py:93 shprote\routes\pronunchk.py:93
+msgid "*[DONE BY THE STUDENT]*"
+msgstr "*[ЗРОБЛЕНА СТУДЭНТАМ]*"
+
+#: shprote\routes\listeningchk.py:97 shprote\routes\pronunchk.py:109
+#: shprote\routes\pronunchk.py:228
+msgid "⏳ Processing the audio file, please, wait..."
+msgstr "⏳ Файл з аўдыё апрацоўваецца, калі ласка, пачакайце..."
+
+#: shprote\routes\listeningchk.py:133 shprote\routes\pronunchk.py:145
+#: shprote\routes\pronunchk.py:255
+msgid "🔴 Cannot process this file, please, try another one:"
+msgstr "🔴 Файл немагчыма апрацаваць, калі ласка, паспрабуйце іншы:"
+
+#: shprote\routes\listeningchk.py:145
+#, python-brace-format
+msgid "Teacher's signed voice message {forwarded_msg}"
+msgstr "Галасавое паведамленне выкладчыка са спецыяльным кодам {forwarded_msg}"
+
+#: shprote\routes\listeningchk.py:155 shprote\routes\pronunchk.py:171
+#, python-brace-format
+msgid ""
+"🔴 Wrong data type (\"{data_type}\"), please, send a voice message or an "
+"audio (.mp3, .ogg) file:"
+msgstr ""
+"🔴 Няправільны тып даных (\"{data_type}\"), калі ласка, пашліце галасавое "
+"паведамленне або аўдыё (.mp3, .ogg) файл:"
+
+#: shprote\routes\listeningchk.py:165
+msgid "❓ Student's answer:"
+msgstr "❓  Адказ студэнта:"
+
+#: shprote\routes\listeningchk.py:197 shprote\routes\pronunchk.py:216
+msgid ""
+"*The answer cannot be forwarded or be a reply. The test has been failed.*"
+msgstr ""
+"*Вы не можаце карыстацца ў якасці адказу перасланымі альбо адказанымі "
+"паведамленнямі. Тэст быў правалены*"
+
+#: shprote\routes\listeningchk.py:211
+#, python-brace-format
+msgid "Student wrote: {student}"
+msgstr "Студэнт напісаў: {student}"
+
+#: shprote\routes\listeningchk.py:218
+msgid "🔴 Wrong data type, please, send _text_:"
+msgstr "🔴 Няправільны тып даных, калі ласка, пашліце _тэкст_:"
+
+#: shprote\routes\listeningchk.py:225 shprote\routes\pronunchk.py:289
+msgid "Now wait a little..."
+msgstr "Зараз трохі пачакайце..."
+
+#: shprote\routes\listeningchk.py:241
+msgid "listening"
+msgstr "аўдзіраванне"
+
+#: shprote\routes\pronunchk.py:43
+msgid ""
+"The *pronunciation* check has started. _Please, remember that you cannot use "
+"replied or forwarded messages as student's answers._ Check's special code is"
+msgstr ""
+"Праверка *вымаўлення* пачалася. _Калі ласка, памятайце, што вы не можаце "
+"карыстацца ў якасці адказу адасланымі паведамленнямі і адказамі на тыя "
+"паведамленні, што былі раней._ Спецыяльны код праверкі"
+
+#: shprote\routes\pronunchk.py:100
+#, python-brace-format
+msgid "Teacher wrote {forwarded_msg}: {teacher}"
+msgstr "Выкладчык напісаў {forwarded_msg}: {teacher}"
+
+#: shprote\routes\pronunchk.py:157
+#, python-brace-format
+msgid ""
+"Teacher said {forwarded_msg}: {teacher}\n"
+"*The signed voice message itself will appear below*"
+msgstr ""
+"Настаўнік сказаў {forwarded_msg}: {teacher}\n"
+"*Падпісанае галасавое паведамленне з'явіцца ніжэй*"
+
+#: shprote\routes\pronunchk.py:165
+msgid "Teacher's signed voice message, "
+msgstr "Падпісанае галасавое паведамленне выкладчыка, "
+
+#: shprote\routes\pronunchk.py:182
+msgid "❓ Student's voice record:"
+msgstr "❓ Запіс голасу студэнта:"
+
+#: shprote\routes\pronunchk.py:265
+#, python-brace-format
+msgid ""
+"Student said: {student}\n"
+"*The signed voice message will appear below*"
+msgstr ""
+"Студеэнт сказаў: {student}\n"
+"*Падпісанае галасавое паведамленне з'явіцца ніжэй*"
+
+#: shprote\routes\pronunchk.py:274
+msgid "Student's signed voice message, "
+msgstr "Падпісанае галасавое паведамленне студэнта, "
+
+#: shprote\routes\pronunchk.py:281
+#, python-brace-format
+msgid "🔴 Wrong data type (\"{data_type}\"), please, send a _voice_ message:"
+msgstr ""
+"🔴 Няправільны тып даных (\"{data_type}\"), калі ласка, пашліце _галасавое "
+"паведамленне_:"
+
+#: shprote\routes\pronunchk.py:305
+msgid "pronunciation"
+msgstr "вымаўленне"
