@@ -10,14 +10,14 @@ from dateutil.relativedelta import *
 from sqlalchemy import extract
 from telebot.apihelper import ApiTelegramException
 
-from shprote.config import get_config, save_config
+from shprote.config import get_config, get_translator, save_config
 from shprote.db import DB_SESSION
 from shprote.db.declarations import User
 from shprote.db.management import get_user_id_list, remove_user_by_id
 
 from ..bot import bot
 from ..log import get_logger, logfile_dir
-from .common import *
+from .common import render_main_menu
 
 config = get_config()
 logger = get_logger()
@@ -86,7 +86,7 @@ def check_admin_password(message):
         bot.send_message(
             message.chat.id,
             _("Returning to the main menu"),
-            reply_markup=render_main_menu(),
+            reply_markup=render_main_menu(_),
         )
         return
 
@@ -94,7 +94,7 @@ def check_admin_password(message):
         bot.send_message(
             message.chat.id,
             _("⛔ The password is wrong, returning to the main menu"),
-            reply_markup=render_main_menu(),
+            reply_markup=render_main_menu(_),
         )
         return
 
@@ -105,7 +105,7 @@ def check_admin_password(message):
         f"Somebody has logged in the admin panel. His name is {usr.first_name} {usr.last_name} (@{usr.username}, {usr.id})"
     )
 
-    bot.send_message(message.chat.id, _("Hello, admin!"), reply_markup=render_admin())
+    bot.send_message(message.chat.id, _("Hello, admin!"), reply_markup=render_admin(_))
     bot.register_next_step_handler(message, admin_commands)
 
 
@@ -126,7 +126,7 @@ def admin_commands(message):
         bot.send_message(
             message.chat.id,
             _("Switching back to the menu..."),
-            reply_markup=render_main_menu(),
+            reply_markup=render_main_menu(_),
         )
         return
     elif message.text in ("/shutdown", _("🔴 Shutdown")):
@@ -140,7 +140,7 @@ def admin_commands(message):
         bot.send_message(
             message.chat.id,
             _("Done, no more logs left to send"),
-            reply_markup=render_admin(),
+            reply_markup=render_admin(_),
         )
         bot.register_next_step_handler(message, admin_commands)
     elif message.text in (_("🧮 Statistics"), "/stats", "/statistics"):
@@ -215,7 +215,7 @@ def admin_commands(message):
             .strip()
         )
 
-        bot.send_message(message.chat.id, STATS_MSG, reply_markup=render_admin())
+        bot.send_message(message.chat.id, STATS_MSG, reply_markup=render_admin(_))
         bot.register_next_step_handler(message, admin_commands)
     elif message.text in (_("📣 Message to all users"), "/globm"):
         markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -238,7 +238,7 @@ def global_mail(message):
         bot.send_message(
             message.chat.id,
             _("Getting back to the admin menu..."),
-            reply_markup=render_admin(),
+            reply_markup=render_admin(_),
         )
         bot.register_next_step_handler(message, admin_commands)
         return
@@ -259,6 +259,6 @@ def global_mail(message):
     bot.send_message(
         message.chat.id,
         _("🟢 Done! {msg_count} messages sent!").format(msg_count=msg_count),
-        reply_markup=render_admin(),
+        reply_markup=render_admin(_),
     )
     bot.register_next_step_handler(message, admin_commands)

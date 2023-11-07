@@ -9,9 +9,6 @@ from shprote.logics import *
 from shprote.logics import Language
 from shprote.logics.util import telebot_diff
 
-MSG_MENU = "🍱 Menu"
-MSG_STOP = "❌ Stop"
-
 
 def render_main_menu(translate_fn: Callable = lambda x: x):
     _ = translate_fn

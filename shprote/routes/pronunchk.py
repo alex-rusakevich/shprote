@@ -9,7 +9,6 @@ import telebot.types as tt
 
 from shprote.config import get_translator
 from shprote.logics import Language, get_module_by_lang
-from shprote.logics.util import telebot_diff
 from shprote.logics.voice import audio_file_to_text
 from shprote.temp import get_tmp
 
