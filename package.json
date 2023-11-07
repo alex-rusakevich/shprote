@@ -4,7 +4,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "inv compilemessages"
+      "pre-commit": "inv compilemessages && git add -A .",
+      "post-commit": "inv tag"
     }
   }
 }
