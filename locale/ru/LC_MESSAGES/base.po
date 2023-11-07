@@ -3,21 +3,54 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 02:55+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2023-11-07 12:27+0300\n"
+"PO-Revision-Date: 2023-11-07 12:34+0300\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Alexander Rusakevich <mr.alexander.rusakevich@gmail.com>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: shprote\routes\help.py:15
+#: shprote\bot_server.py:30
+#, python-brace-format
+msgid "Hello there, {name}! I'm ready to check your pronunciation! 🤓"
+msgstr "Добрый день, {name}! Я готов к проверке вашего произношения! 🤓"
+
+#: shprote\bot_server.py:44
+msgid "🎤 Check pronunciation"
+msgstr "🎤 Проверка произношения"
+
+#: shprote\bot_server.py:46
+msgid "👂 Check listening"
+msgstr "👂 Проверка аудирования"
+
+#: shprote\bot_server.py:48
+msgid "🍱 Menu"
+msgstr "🍱 Меню"
+
+#: shprote\bot_server.py:51
+msgid "Welcome to the main menu!"
+msgstr "Добро пожаловать в главное меню!"
+
+#: shprote\bot_server.py:54
+msgid "❌ Stop"
+msgstr "❌ Остановить"
+
+#: shprote\bot_server.py:57
+msgid "The check has been stopped. Getting back to the menu..."
+msgstr "Проверка остановлена. Возвращаемся в главное меню..."
+
+#: shprote\bot_server.py:60
+msgid "❓ Help"
+msgstr "❓ Помощь"
+
+#: shprote\bot_server.py:62
 #, python-brace-format
 msgid ""
 "\n"
@@ -53,3 +86,149 @@ msgstr ""
 "\n"
 "_Особая благодарность выражается авторам библиотек {used_packages_exc_last} "
 "и {used_packages_last}_\n"
+
+#: shprote\bot_server.py:108
+msgid "Checking your telegram id..."
+msgstr "Проверяю ваш id в Телеграм..."
+
+#: shprote\routes\admin.py:52 shprote\routes\admin.py:132
+msgid "🔴 Shutdown"
+msgstr "🔴 Выключить"
+
+#: shprote\routes\admin.py:53 shprote\routes\admin.py:137
+msgid "📜 Log"
+msgstr "📜 Логи"
+
+#: shprote\routes\admin.py:54 shprote\routes\admin.py:146
+msgid "🧮 Statistics"
+msgstr "🧮 Статистика"
+
+#: shprote\routes\admin.py:55 shprote\routes\admin.py:220
+msgid "📣 Message to all users"
+msgstr "📣 Сообщение всем пользователям"
+
+#: shprote\routes\admin.py:70
+msgid "✅ The id is correct. Now enter the password, please:"
+msgstr "✅ id подтвержден. Теперь, пожалуйста, введите пароль:"
+
+#: shprote\routes\admin.py:77
+msgid "⛔ Your id is not allowed, returning to the main menu"
+msgstr "⛔ Ваш id не был допущен, возвращаюсь в главное меню"
+
+#: shprote\routes\admin.py:88
+msgid "Returning to the main menu"
+msgstr "Возвращаюсь в главное меню"
+
+#: shprote\routes\admin.py:96
+msgid "⛔ The password is wrong, returning to the main menu"
+msgstr "⛔ Неправильный пароль, возвращаюсь в главное меню"
+
+#: shprote\routes\admin.py:108
+msgid "Hello, admin!"
+msgstr "Добрый день, администратор!"
+
+#: shprote\routes\admin.py:128
+msgid "Switching back to the menu..."
+msgstr "Возвращаюсь в главное меню..."
+
+#: shprote\routes\admin.py:134
+msgid "I do hope you know what you've done..."
+msgstr "Надеюсь, вы знаете, что делаете..."
+
+#: shprote\routes\admin.py:138
+msgid "Here you are..."
+msgstr "Вот, держите..."
+
+#: shprote\routes\admin.py:142
+msgid "Done, no more logs left to send"
+msgstr "Готово, все логи были отправлены"
+
+#: shprote\routes\admin.py:200
+#, python-brace-format
+msgid ""
+"\n"
+"*All users:* {users_in_total} ({new_users_month} this month, "
+"{new_users_year} this year)\n"
+"*Active users this year:* {active_users_this_year} "
+"({new_active_users_this_year})\n"
+"*Active users this month:* {active_users_this_month} "
+"({new_active_users_this_month})\n"
+"        "
+msgstr ""
+"\n"
+"*Все пользователи:* {users_in_total} ({new_users_month} в этом месяце, "
+"{new_users_year} в этом году)\n"
+"*Активных пользователей в этом году:* {active_users_this_year} "
+"({new_active_users_this_year})\n"
+"*Активных пользователей в этом месяце:* {active_users_this_month} "
+"({new_active_users_this_month})\n"
+"        "
+
+#: shprote\routes\admin.py:227
+msgid "Write to ⚠ *all* ⚠ the registred users:"
+msgstr "Написать ⚠ *всем* ⚠ пользователям:"
+
+#: shprote\routes\admin.py:240
+msgid "Getting back to the admin menu..."
+msgstr "Возвращаюсь в главное меню..."
+
+#: shprote\routes\admin.py:261
+#, python-brace-format
+msgid "🟢 Done! {msg_count} messages sent!"
+msgstr "🟢 Готово! Отправлено {msg_count} сообщения(-е)!"
+
+#: shprote\routes\common.py:40
+msgid "Choose your language, please:"
+msgstr "Пожалуйста, выберите ваш язык:"
+
+#: shprote\routes\common.py:60
+#, python-brace-format
+msgid "🔴 There is no such language: {langname}"
+msgstr "🔴 Язык не поддерживается: {langname}"
+
+#: shprote\routes\common.py:75
+#, python-brace-format
+msgid ""
+"\n"
+"*Something went wrong*\n"
+"{err_name}: {err_msg}\n"
+msgstr ""
+"\n"
+"*Что-то пошло не так*\n"
+"{err_name}: {err_msg}\n"
+
+#: shprote\routes\common.py:92
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"<b>Student → teacher:</b>\n"
+"{telebot_diff}"
+msgstr ""
+"\n"
+"\n"
+"<b>Студент → преподаватель:</b>\n"
+"{telebot_diff}"
+
+#: shprote\routes\common.py:102
+#, python-brace-format
+msgid ""
+"\n"
+"<b>Your {test_type} check result is {perc}% ({phon_mistakes} phonematic "
+"mistake(s))</b>\n"
+"<i>Now you can forward all the messages with the special code to your "
+"teacher</i>{student_to_teacher}\n"
+"\n"
+"<b>Teacher's transcription:</b> {teacher_repr}\n"
+"\n"
+"<b>Student's transcription:</b> {student_repr}\n"
+msgstr ""
+"\n"
+"<b>Ваш результат проверки на {test_type}: {perc}% (кол-во фонематических "
+"ошибок: {phon_mistakes})</b>\n"
+"<i>Теперь вы можете переслать все сообщения, помеченные специальным кодом, "
+"вашему преподавателю</i>{student_to_teacher}\n"
+"\n"
+"<b>Транскрипция сказанного преподавателем:</b> {teacher_repr}\n"
+"\n"
+"<b>Транскрипция сказанного студентом:</b> {student_repr}\n"

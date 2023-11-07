@@ -6,3 +6,4 @@ log/
 .shprote
 tests/audio/*.wav
 *.mo
+locale/base.pot

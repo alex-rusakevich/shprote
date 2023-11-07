@@ -37,7 +37,7 @@ def makemessages(command):
         Path(lc_messages).mkdir(exist_ok=True)
         Path(po_file).touch()
 
-        run(f'msgcat --use-first "{po_file}" locale/base.pot --output-file="{po_file}"')
+        run(f'msgcat --use-first locale/base.pot "{po_file}" --output-file="{po_file}"')
 
 
 @task
