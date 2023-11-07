@@ -43,11 +43,14 @@ def makemessages(command):
 @task
 def compilemessages(command):
     for folder in (f.path for f in os.scandir("locale") if f.is_dir()):
+        print(f"Compiling {folder}...", end=" ")
+
         lc_messages = os.path.join(folder, "LC_MESSAGES")
         po_file = os.path.join(lc_messages, "base.po")
         mo_file = os.path.join(lc_messages, "base.mo")
 
         run(f"msgfmt -o {mo_file} {po_file}")
+        print("OK")
 
 
 @task

@@ -5,5 +5,5 @@ config.toml
 log/
 .shprote
 tests/audio/*.wav
-*.mo
 locale/base.pot
+node_modules
