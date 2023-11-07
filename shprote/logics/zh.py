@@ -53,6 +53,7 @@ def make_repr_from_text(str_in: str) -> str:
 
     str_in = re.sub(rf"\s?([{re.escape(CHINESE_IGNORED)}])\s?", r"\1", str_in)
     str_in = re.sub(rf"\s?([{string.punctuation}])", r"\1", str_in)
+
     return str_in
 
 

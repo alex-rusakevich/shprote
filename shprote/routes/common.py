@@ -64,7 +64,7 @@ def language_handler(message, callback_fn, *callback_args, **callback_kwargs):
 
 
 def generate_final_answer(
-    test_type: str, data: dict, check_result: dict, translate_fn: Callable
+    test_type: str, data: dict, check_result: dict, translate_fn: Callable = lambda x: x
 ) -> str:
     _ = translate_fn
 
@@ -96,25 +96,20 @@ def generate_final_answer(
                 )
             )
 
-        check_result = (
-            _(
-                """
-<b>Your {test_type} check result is {perc}% ({phon_mistakes} phonematic mistake(s))</b>
+        check_result = _(
+            """<b>Your {test_type} check result is {perc}% ({phon_mistakes} phonematic mistake(s))</b>
 <i>Now you can forward all the messages with the special code to your teacher</i>{student_to_teacher}
 
 <b>Teacher's transcription:</b> {teacher_repr}
 
-<b>Student's transcription:</b> {student_repr}
-"""
-            )
-            .format(
-                perc=f"{result_total:.2f}",
-                phon_mistakes=check_result["phon-mistakes"],
-                student_to_teacher=student_to_teacher,
-                teacher_repr=check_result["teacher"]["repr"],
-                student_repr=check_result["student"]["repr"],
-            )
-            .strip()
+<b>Student's transcription:</b> {student_repr}"""
+        ).format(
+            perc=f"{result_total:.2f}",
+            phon_mistakes=check_result["phon-mistakes"],
+            student_to_teacher=student_to_teacher,
+            teacher_repr=check_result["teacher"]["repr"],
+            student_repr=check_result["student"]["repr"],
+            test_type=test_type,
         )
 
     return tf.format_text(str(check_result), tf.hcode(data["hash"]))

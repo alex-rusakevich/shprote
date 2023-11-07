@@ -75,7 +75,7 @@ def audio_file_to_text(file_path, lang) -> str:
         except:
             pass
 
-    logger.debug(f"Speech-to-text result: '{result}'")
+    logger.debug(f"Speech-to-text result: '{result.encode('utf8')}'")
     return result
 
 
