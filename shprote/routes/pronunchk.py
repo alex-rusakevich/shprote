@@ -2,10 +2,12 @@ import datetime
 import hashlib
 import os
 from time import time
+from typing import Callable
 
 import telebot.formatting as tf
 import telebot.types as tt
 
+from shprote.config import get_translator
 from shprote.logics import Language, get_module_by_lang
 from shprote.logics.util import telebot_diff
 from shprote.logics.voice import audio_file_to_text
@@ -13,20 +15,24 @@ from shprote.temp import get_tmp
 
 from ..bot import bot
 from ..log import get_logger
-from .common import *
+from .common import generate_final_answer, render_main_menu
 
 logger = get_logger()
 voice_temp_dir = get_tmp("voice")
 
 
-def render_stop_test_btn():
+def render_stop_test_btn(translate_fn: Callable = lambda x: x):
+    _ = translate_fn
+
     markup = tt.ReplyKeyboardMarkup(resize_keyboard=True)
-    stop_btn = tt.KeyboardButton(MSG_STOP)
+    stop_btn = tt.KeyboardButton(_("❌ Stop"))
     markup.add(stop_btn)
     return markup
 
 
 def start_pronun_test(message):
+    _ = get_translator(message.from_user.language_code)
+
     # User cache used to confirm results
     user_hash_seed = str(datetime.datetime.now()) + " " + message.from_user.username
     user_hash = hashlib.sha1(user_hash_seed.encode("UTF-8")).hexdigest()[:12]
@@ -34,7 +40,9 @@ def start_pronun_test(message):
     bot.send_message(
         message.chat.id,
         tf.format_text(
-            f"The *pronunciation* check has started. _Please, remember that you cannot use replied or forwarded messages as student's answers._ Check's special code is",
+            _(
+                "The *pronunciation* check has started. _Please, remember that you cannot use replied or forwarded messages as student's answers._ Check's special code is"
+            ),
             tf.mcode(user_hash),
             separator=" ",
         ),
@@ -43,8 +51,10 @@ def start_pronun_test(message):
     # Next round
     bot.send_message(
         message.chat.id,
-        "❓ Enter or redirect teacher's text or voice message or reply to it _(redirect and reply have the highest priority of the messages you send)_:",
-        reply_markup=render_stop_test_btn(),
+        _(
+            "❓ Enter or redirect teacher's text or voice message or reply to it _(redirect and reply have the highest priority of the messages you send)_:"
+        ),
+        reply_markup=render_stop_test_btn(_),
     )
     bot.register_next_step_handler(
         message, get_teacher_text_and_print_stud, user_hash=user_hash
@@ -52,11 +62,13 @@ def start_pronun_test(message):
 
 
 def get_teacher_text_and_print_stud(message, user_hash):
-    if message.text and message.text.strip() in (MSG_STOP, "/stop"):
+    _ = get_translator(message.from_user.language_code)
+
+    if message.text and message.text.strip() in (_("❌ Stop"), "/stop"):
         bot.send_message(
             message.chat.id,
-            "The check has been stopped. Getting back to the menu...",
-            reply_markup=render_main_menu(),
+            _("The check has been stopped. Getting back to the menu..."),
+            reply_markup=render_main_menu(_),
         )
         return
 
@@ -69,30 +81,33 @@ def get_teacher_text_and_print_stud(message, user_hash):
             if message.forward_from == None
             else f"@{message.forward_from.username}"
         )
-        forwarded_msg = f"*[FORWARDED FROM {usr_name}]*"
+        forwarded_msg = _("*[FORWARDED FROM {usr_name}]*").format(usr_name=usr_name)
     elif message.reply_to_message:
         usr_name = (
             None
             if not message.reply_to_message.from_user.username
             else f"@{message.reply_to_message.from_user.username}"
         )
-        forwarded_msg = f"*[REPLIED TO {usr_name}]*"
+        forwarded_msg = _("*[REPLIED TO {usr_name}]*").format(usr_name=usr_name)
         message = message.reply_to_message
     else:
-        forwarded_msg = "*[DONE BY THE STUDENT]*"
+        forwarded_msg = _("*[DONE BY THE STUDENT]*")
 
     if message.content_type == "text":
         teacher = message.text
         bot.send_message(
             message.chat.id,
             tf.format_text(
-                f"Teacher wrote {forwarded_msg}: {teacher}", tf.mcode(user_hash)
+                _("Teacher wrote {forwarded_msg}: {teacher}").format(
+                    forwarded_msg=forwarded_msg, teacher=teacher
+                ),
+                tf.mcode(user_hash),
             ),
         )
     # Teacher can send both audio and voice
     elif message.content_type in ("voice", "audio"):
         bot.send_message(
-            message.chat.id, "⏳ Processing the audio file, please, wait..."
+            message.chat.id, _("⏳ Processing the audio file, please, wait...")
         )
 
         file_info = ""
@@ -128,8 +143,8 @@ def get_teacher_text_and_print_stud(message, user_hash):
             )
             bot.send_message(
                 message.chat.id,
-                f"🔴 Cannot process this file, please, try another one:",
-                reply_markup=render_stop_test_btn(),
+                _("🔴 Cannot process this file, please, try another one:"),
+                reply_markup=render_stop_test_btn(_),
             )
             bot.register_next_step_handler(
                 message, get_teacher_text_and_print_stud, user_hash=user_hash
@@ -139,20 +154,24 @@ def get_teacher_text_and_print_stud(message, user_hash):
         bot.send_message(
             message.chat.id,
             tf.format_text(
-                f"Teacher said {forwarded_msg}: {teacher}\n*The signed voice message itself will appear below*",
+                _(
+                    "Teacher said {forwarded_msg}: {teacher}\n*The signed voice message itself will appear below*"
+                ).format(forwarded_msg=forwarded_msg, teacher=teacher),
                 tf.mcode(user_hash),
             ),
         )
         bot.send_audio(
             message.chat.id,
             file_id,
-            tf.format_text("Teacher's signed voice message, ", tf.mcode(user_hash)),
+            tf.format_text(_("Teacher's signed voice message, "), tf.mcode(user_hash)),
         )
     else:
         bot.send_message(
             message.chat.id,
-            f'🔴 Wrong data type ("{message.content_type}"), please, send a voice message or an audio (.mp3, .ogg) file:',
-            reply_markup=render_stop_test_btn(),
+            _(
+                '🔴 Wrong data type ("{data_type}"), please, send a voice message or an audio (.mp3, .ogg) file:'
+            ).format(data_type=message.content_type),
+            reply_markup=render_stop_test_btn(_),
         )
         bot.register_next_step_handler(
             message, get_teacher_text_and_print_stud, user_hash=user_hash
@@ -161,8 +180,8 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
     bot.send_message(
         message.chat.id,
-        "❓ Student's voice record:",
-        reply_markup=render_stop_test_btn(),
+        _("❓ Student's voice record:"),
+        reply_markup=render_stop_test_btn(_),
     )
     bot.register_next_step_handler(
         message,
@@ -178,11 +197,14 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
 def get_stud_and_calc_result(message, data):
     """Student recognition step"""
-    if message.text and message.text.strip() in (MSG_STOP, "/stop"):
+
+    _ = get_translator(message.from_user.language_code)
+
+    if message.text and message.text.strip() in (_("❌ Stop"), "/stop"):
         bot.send_message(
             message.chat.id,
-            "The check has been stopped. Getting back to the menu...",
-            reply_markup=render_main_menu(),
+            _("The check has been stopped. Getting back to the menu..."),
+            reply_markup=render_main_menu(_),
         )
         return
 
@@ -191,8 +213,10 @@ def get_stud_and_calc_result(message, data):
     if message.forward_date or message.reply_to_message:
         bot.send_message(
             message.chat.id,
-            "*The answer cannot be forwarded or be a reply. The test has been failed.*",
-            reply_markup=render_main_menu(),
+            _(
+                "*The answer cannot be forwarded or be a reply. The test has been failed.*"
+            ),
+            reply_markup=render_main_menu(_),
         )
         logger.info(
             f"Someone has tried to cheat: @{message.from_user.username}, id is {message.from_user.id}"
@@ -202,7 +226,7 @@ def get_stud_and_calc_result(message, data):
     # Student cannot send audio
     if message.content_type == "voice":
         bot.send_message(
-            message.chat.id, "⏳ Processing the audio file, please, wait..."
+            message.chat.id, _("⏳ Processing the audio file, please, wait...")
         )
 
         file_info = bot.get_file(message.voice.file_id)
@@ -229,8 +253,8 @@ def get_stud_and_calc_result(message, data):
             )
             bot.send_message(
                 message.chat.id,
-                f"🔴 Cannot process this file, please, try another one:",
-                reply_markup=render_stop_test_btn(),
+                _("🔴 Cannot process this file, please, try another one:"),
+                reply_markup=render_stop_test_btn(_),
             )
             bot.register_next_step_handler(message, get_stud_and_calc_result, data=data)
             return
@@ -238,26 +262,32 @@ def get_stud_and_calc_result(message, data):
         bot.send_message(
             message.chat.id,
             tf.format_text(
-                f"Student said: {student}\n*The signed voice message will appear below*",
+                _(
+                    "Student said: {student}\n*The signed voice message will appear below*"
+                ).format(student=student),
                 tf.mcode(data["hash"]),
             ),
         )
         bot.send_voice(
             message.chat.id,
             message.voice.file_id,
-            tf.format_text("Student's signed voice message, ", tf.mcode(data["hash"])),
+            tf.format_text(
+                _("Student's signed voice message, "), tf.mcode(data["hash"])
+            ),
         )
     else:
         bot.send_message(
             message.chat.id,
-            f'🔴 Wrong data type ("{message.content_type}"), please, send a _voice_ message:',
-            reply_markup=render_stop_test_btn(),
+            _(
+                '🔴 Wrong data type ("{data_type}"), please, send a _voice_ message:'
+            ).format(data_type=message.content_type),
+            reply_markup=render_stop_test_btn(_),
         )
         bot.register_next_step_handler(message, get_stud_and_calc_result, data=data)
         return
 
     bot.send_message(
-        message.chat.id, "Now wait a little...", reply_markup=render_stop_test_btn()
+        message.chat.id, _("Now wait a little..."), reply_markup=render_stop_test_btn(_)
     )
 
     data["student"]["said"] = student
@@ -270,10 +300,10 @@ def get_stud_and_calc_result(message, data):
 
     logger.debug("Pronunciation check result is " + str(check_result))
 
-    markup = render_main_menu()
+    markup = render_main_menu(_)
     bot.send_message(
         message.chat.id,
-        generate_final_answer("pronunciation", data, check_result),
+        generate_final_answer(_("pronunciation"), data, check_result, translate_fn=_),
         reply_markup=markup,
         parse_mode="HTML",
     )
