@@ -1,5 +1,6 @@
 import os
 import shutil
+import tempfile
 from pathlib import Path
 
 from invoke import run, task
@@ -11,8 +12,42 @@ os.environ["SHPROTE_TEMP"] = ".shprote"
 
 
 def prun(command, **kwargs):
-    """ Pipenv run """
+    """Pipenv run"""
     run(f"pipenv run {command}", **kwargs)
+
+
+@task
+def makemessages(command):
+    tf = tempfile.NamedTemporaryFile(delete=False)
+    tf_name = tf.name
+    tf.seek(0)
+    tf.write("\n".join((str(i) for i in Path(".").rglob("*.py"))).encode("utf-8"))
+    tf.flush()
+    tf.close()
+    print(tf_name)
+
+    run(
+        f"xgettext --verbose --from-code=utf-8 --files-from={tf_name} -o locale/base.pot"
+    )
+
+    for folder in (f.path for f in os.scandir("locale") if f.is_dir()):
+        lc_messages = os.path.join(folder, "LC_MESSAGES")
+        po_file = os.path.join(lc_messages, "base.po")
+
+        Path(lc_messages).mkdir(exist_ok=True)
+        Path(po_file).touch()
+
+        run(f'msgcat --use-first "{po_file}" locale/base.pot --output-file="{po_file}"')
+
+
+@task
+def compilemessages(command):
+    for folder in (f.path for f in os.scandir("locale") if f.is_dir()):
+        lc_messages = os.path.join(folder, "LC_MESSAGES")
+        po_file = os.path.join(lc_messages, "base.po")
+        mo_file = os.path.join(lc_messages, "base.mo")
+
+        run(f"msgfmt -o {mo_file} {po_file}")
 
 
 @task
@@ -37,10 +72,9 @@ def dev(context):
 
 @task
 def clean(context):
-    patterns = [l.strip() for l in open(
-        '.gitignore', 'r', encoding='utf8').readlines()]
-    patterns.remove('__pycache__/')
-    patterns.remove('config.toml')
+    patterns = [l.strip() for l in open(".gitignore", "r", encoding="utf8").readlines()]
+    patterns.remove("__pycache__/")
+    patterns.remove("config.toml")
 
     patterns = [p for p in patterns if os.path.exists(p.strip())]
     found_smth = False
@@ -54,12 +88,12 @@ def clean(context):
         except:
             os.remove(pattern)
 
-    if (log_files := list(Path(os.path.join(".", "log")).rglob("*.log*"))):
+    if log_files := list(Path(os.path.join(".", "log")).rglob("*.log*")):
         found_smth = True
         print("Removing logs...")
         [os.remove(p) for p in log_files]
 
-    if (pycache := list(Path('.').rglob('__pycache__'))):
+    if pycache := list(Path(".").rglob("__pycache__")):
         found_smth = True
         print("Removing python cache...")
         [shutil.rmtree(p) for p in pycache]
@@ -85,7 +119,7 @@ def cloc(context):
 
 @task
 def time(context):
-    run('git-time .')
+    run("git-time .")
 
 
 @task

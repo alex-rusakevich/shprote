@@ -1,10 +1,13 @@
+import gettext
 import os
 import shutil
 from getpass import getpass
+from typing import Callable
 
 import toml
 
 config = {}
+translators = {}
 
 
 def on_config_loaded():
@@ -51,3 +54,23 @@ if not BOT_TOKEN:
     save_config()
     BOT_TOKEN = get_config()["bot"]["token"]
 # endregion
+
+
+def load_translators() -> None:
+    global translators
+
+    for folder in (f.path for f in os.scandir("locale") if f.is_dir()):
+        lcode = os.path.basename(folder)
+
+        loc = gettext.translation("base", localedir="locale", languages=[lcode])
+        loc.install()
+        gtext = loc.gettext
+        translators[lcode] = gtext
+
+
+def get_translator(langcode: str) -> Callable:
+    global translators
+    return translators.get(langcode, gettext.gettext)
+
+
+load_translators()

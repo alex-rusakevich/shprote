@@ -19,10 +19,10 @@ expiringdict = "*"
 flask = "*"
 waitress = "*"
 pdoc = "*"
+invoke = "*"
 
 [dev-packages]
 pytest = "*"
-invoke = "*"
 watchdog = "*"
 psutil = "*"
 isort = "*"

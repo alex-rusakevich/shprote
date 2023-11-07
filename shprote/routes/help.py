@@ -1,13 +1,19 @@
+import gettext
 import os
 
 import toml
 
 from shprote import __version__
+from shprote.config import get_translator
+
+_ = get_translator("ru")
 
 pipfile = toml.load(os.path.join(".", "Pipfile"))
 used_packages = list(pipfile["packages"].keys())
 
-HELP = f"""
+HELP = (
+    _(
+        """
 *Standardized 汉语 Pronunciation TEster {__version__}*
 Created by Alexander Rusakevich (https://github.com/alex-rusakevich)
 
@@ -19,5 +25,13 @@ Created by Alexander Rusakevich (https://github.com/alex-rusakevich)
 
 _May 汉语 be with you!_
 
-_Special thanks to the authors of {", ".join(used_packages[:-1])} and {used_packages[-1]} libraries_
-""".strip()
+_Special thanks to the authors of {used_packages_exc_last} and {used_packages_last} libraries_
+"""
+    )
+    .format(
+        used_packages_exc_last=", ".join(used_packages[:-1]),
+        used_packages_last=used_packages[-1],
+        __version__=__version__,
+    )
+    .strip()
+)
