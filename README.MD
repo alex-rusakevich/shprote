@@ -17,6 +17,7 @@ Development server is started via command ```inv dev```.
 
 ```SQL
 create database shprote_db;
+alter database shprote_db character set utf8 collate utf8_general_ci;
 create user shprote_db_user@localhost;
 grant all privileges on shprote_db.* to shprote_db_user@localhost;
 alter user shprote_db_user@localhost identified by 'shprote_db_user_password';
