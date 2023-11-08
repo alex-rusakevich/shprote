@@ -69,8 +69,9 @@ def load_translators() -> None:
 
 
 def get_translator(langcode: str) -> Callable:
+    print(f"Acquired '{langcode}' translation")
     global translators
-    return translators.get(langcode, gettext.gettext)
+    return translators.get(langcode, lambda x: x)
 
 
 load_translators()
