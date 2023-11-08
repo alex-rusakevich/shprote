@@ -18,8 +18,6 @@ pypinyin = "*"
 expiringdict = "*"
 flask = "*"
 waitress = "*"
-pdoc = "*"
-invoke = "*"
 
 [dev-packages]
 pytest = "*"
@@ -27,6 +25,8 @@ watchdog = "*"
 psutil = "*"
 isort = "*"
 black = "*"
+pdoc = "*"
+invoke = "*"
 
 [requires]
 python_version = "3.11"
