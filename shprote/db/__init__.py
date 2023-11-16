@@ -19,11 +19,16 @@ db_options = {
 
 connect_args = {
     "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-    "charset": "utf8",
-    "collation": "utf8_general_ci",
+    "charset": "utf8mb4",
+    "collation": "utf8mb4_general_ci",
 }
 
-if "CLEARDB_DATABASE_URL" in os.environ:
+if "JAWSDB_URL" in os.environ:
+    DATABASE = os.environ["JAWSDB_URL"]
+    DB_ENGINE = create_engine(
+        DATABASE, echo=config["main"]["debug"], connect_args=connect_args, **db_options
+    )
+elif "CLEARDB_DATABASE_URL" in os.environ:
     DATABASE = os.environ["CLEARDB_DATABASE_URL"].replace("?reconnect=true", "")
     DB_ENGINE = create_engine(
         DATABASE, echo=config["main"]["debug"], connect_args=connect_args, **db_options
