@@ -1,8 +1,9 @@
 Standardized Hanyu PROnunciation TEster
 ===
 
-![Python version](https://badgen.net/badge/python/v3.11/blue)
-![Node.js version](https://badgen.net/badge/node.js/v20/blue)
+![GPLv3 License](https://badgen.net/badge/License/GPLv3/red)
+![Python version](https://badgen.net/badge/python/v3.11+/blue)
+![Node.js version](https://badgen.net/badge/node.js/v20+/green)
 
 This program was created in order to help MSLU students who learn Chinese improve or check their pronunciation
 
