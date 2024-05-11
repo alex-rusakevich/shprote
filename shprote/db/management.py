@@ -13,7 +13,13 @@ acitive_recently = ExpiringDict(max_len=128, max_age_seconds=28800)
 
 
 def upsert_user(user_id: int):
-    if acitive_recently.get(user_id):
+    """Update info about last active users
+
+    :param user_id: _description_
+    :type user_id: int
+    """
+
+    if acitive_recently.get(user_id):  # Using cache not to update too often
         return
     else:
         acitive_recently[user_id] = True
