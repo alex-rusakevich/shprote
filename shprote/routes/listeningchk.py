@@ -1,3 +1,19 @@
+# Shprote bot - Standardized Hanyu (Chinese) PROnunciation TEster
+# Copyright (C) 2023, 2024 Alexander Rusakevich
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import datetime
 import hashlib
 import os
@@ -77,7 +93,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     if message.forward_date:
         usr_name = (
             message.forward_sender_name
-            if message.forward_from == None
+            if message.forward_from is None
             else f"@{message.forward_from.username}"
         )
         forwarded_msg = _("*[FORWARDED FROM {usr_name}]*").format(usr_name=usr_name)
@@ -124,7 +140,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
         try:
             teacher = audio_file_to_text(save_path, Language.Chinese)
-        except:
+        except Exception:
             logger.error(
                 "Something happened while processing user's audio:", exc_info=True
             )

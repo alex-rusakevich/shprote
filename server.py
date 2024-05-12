@@ -1,3 +1,19 @@
+# Shprote bot - Standardized Hanyu (Chinese) PROnunciation TEster
+# Copyright (C) 2023, 2024 Alexander Rusakevich
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import os
 import time
 
@@ -31,7 +47,7 @@ def before_request():
             return redirect(url, code=code) """
 
 
-@app.route(WEBHOOK_URL_PATH, methods=['POST'])
+@app.route(WEBHOOK_URL_PATH, methods=["POST"])
 def get_message():
     if request.headers.get("content-type") == "application/json":
         json_string = request.get_data().decode("utf-8")
@@ -52,8 +68,10 @@ app.debug = config["main"]["debug"]
 bot.remove_webhook()
 time.sleep(1)
 
-bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
-                drop_pending_updates=config["bot"]["drop-pending"])
+bot.set_webhook(
+    url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+    drop_pending_updates=config["bot"]["drop-pending"],
+)
 
 logger.info("Running in production mode: " + str(not app.debug))
 
@@ -62,10 +80,8 @@ waitress_args = {}
 
 if os.environ.get("DYNO"):  # Expose the socket to ngnix if running on Heroku
     waitress_args["unix_socket"] = "/tmp/nginx.socket"
-    open('/tmp/app-initialized', 'w').close()
+    open("/tmp/app-initialized", "w").close()
 else:
-    waitress_args = {
-        "port": os.environ.get("PORT", 8080)
-    }
+    waitress_args = {"port": os.environ.get("PORT", 8080)}
 
 serve(app.wsgi_app, **waitress_args)
