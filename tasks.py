@@ -43,7 +43,8 @@ def makemessages(command):
     print(tf_name)
 
     run(
-        f"xgettext --verbose --from-code=utf-8 --files-from={tf_name} -o locale/base.pot"
+        "xgettext --verbose --from-code=utf-8 "
+        + f"--files-from={tf_name} -o locale/base.pot"
     )
 
     for folder in (f.path for f in os.scandir("locale") if f.is_dir()):
@@ -91,7 +92,9 @@ def dev(context):
 
 @task
 def clean(context):
-    patterns = [l.strip() for l in open(".gitignore", "r", encoding="utf8").readlines()]
+    patterns = [
+        ln.strip() for ln in open(".gitignore", "r", encoding="utf8").readlines()
+    ]
     patterns.remove("__pycache__/")
     patterns.remove("config.toml")
 
@@ -104,7 +107,7 @@ def clean(context):
         print("Removing %s" % pattern)
         try:
             shutil.rmtree(pattern)
-        except:
+        except Exception:
             os.remove(pattern)
 
     if log_files := list(Path(os.path.join(".", "log")).rglob("*.log*")):
@@ -145,4 +148,4 @@ def time(context):
 def tag(context):
     """Auto add tag to git commit depending on shprote.__version__"""
     run(f"git tag {__program_version__}")
-    run(f"git push --tags")
+    run("git push --tags")

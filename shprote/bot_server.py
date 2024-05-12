@@ -25,7 +25,7 @@ from shprote.config import get_config, get_translator
 from shprote.db.management import upsert_user
 from shprote.log import get_logger
 from shprote.routes.admin import check_tg_id
-from shprote.routes.common import *
+from shprote.routes.common import render_main_menu
 from shprote.routes.listeningchk import start_listening_test
 from shprote.routes.pronunchk import start_pronun_test
 
@@ -119,7 +119,7 @@ _Special thanks to the authors of {used_packages_exc_last} and {used_packages_la
                 "CAACAgIAAxkBAAEJAkdkZJ2OU5DV1melgSjQGkkg7O9jkQACoBwAAipooUjogwEq_q_PRy8E",
                 reply_markup=main_menu_markup,
             )
-        except:
+        except Exception:
             bot.send_message(message.chat.id, "❤️", reply_markup=main_menu_markup)
     elif message.text == "/admin":
         bot.send_message(message.chat.id, _("Checking your telegram id..."))

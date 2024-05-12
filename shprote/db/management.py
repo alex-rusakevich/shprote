@@ -25,7 +25,7 @@ from shprote.log import get_logger
 logger = get_logger()
 
 
-acitive_recently = ExpiringDict(max_len=128, max_age_seconds=28800)
+active_recently = ExpiringDict(max_len=128, max_age_seconds=28800)
 
 
 def upsert_user(user_id: int):
@@ -35,10 +35,10 @@ def upsert_user(user_id: int):
     :type user_id: int
     """
 
-    if acitive_recently.get(user_id):  # Using cache not to update too often
+    if active_recently.get(user_id):  # Using cache not to update too often
         return
     else:
-        acitive_recently[user_id] = True
+        active_recently[user_id] = True
 
     session = scoped_session(DB_SESSION_FACTORY)
 
@@ -51,10 +51,9 @@ def upsert_user(user_id: int):
 
     try:
         session.commit()
-    except:
-        logger.warning(
-            "Something went wrong while trying to upsert user visit info. Rolling back..."
-        )
+    except Exception:
+        logger.warning("Something went wrong while trying to upsert user visit info")
+        logger.warning("Rolling back...")
         session.rollback()
     finally:
         session.close()
@@ -74,10 +73,9 @@ def remove_user_by_id(user_id: int):
 
     try:
         session.commit()
-    except:
-        logger.warning(
-            "Something went wrong while trying to upsert user visit info. Rolling back..."
-        )
+    except Exception:
+        logger.warning("Something went wrong while trying to upsert user visit info")
+        logger.warning("Rolling back...")
         session.rollback()
     finally:
         session.close()

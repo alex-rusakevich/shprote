@@ -30,7 +30,7 @@ class User(DeclarativeBase):
     last_active = Column(DateTime(timezone=True), default=func.now())
 
     def __repr__(self):
-        return "".format(self.code)
+        return str(self.code)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
+import os
 
-from shprote.logics import *
-from shprote.logics.voice import *
+from shprote.logics import Language
+from shprote.logics.voice import audio_file_to_text
 from shprote.logics.zh import compare_lang_text, text_to_levenseq
 
 test_data = (

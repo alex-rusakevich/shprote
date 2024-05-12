@@ -32,7 +32,7 @@ def on_config_loaded():
 
 
 def load_config(
-    config_path=os.path.join(f".", "config.toml"),
+    config_path=os.path.join(".", "config.toml"),
     default_config_path=os.path.join(".", "default_config.toml"),
 ) -> dict[any, any]:
     global config
@@ -55,7 +55,7 @@ def get_config():
     return config
 
 
-def save_config(config_path=os.path.join(f".", "config.toml")):
+def save_config(config_path=os.path.join(".", "config.toml")):
     global config
     with open(config_path, "w", encoding="utf8") as f:
         toml.dump(config, f)

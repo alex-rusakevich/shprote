@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Callable
 
 import telebot.types as tt
-from dateutil.relativedelta import *
+from dateutil.relativedelta import relativedelta
 from sqlalchemy import extract
 from telebot.apihelper import ApiTelegramException
 

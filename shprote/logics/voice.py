@@ -22,7 +22,7 @@ import speech_recognition as sr
 from pydub import AudioSegment
 
 from shprote.log import get_logger
-from shprote.logics import *
+from shprote.logics import Language
 from shprote.temp import get_tmp
 
 logger = get_logger()
@@ -85,10 +85,10 @@ def audio_file_to_text(file_path, lang) -> str:
 
     try:
         result = rec.recognize_google(audio, language=lang)
-    except:
+    except Exception:
         try:
             result = rec.recognize_sphinx(audio, language=sphinx_lng_to_path[lang])
-        except:
+        except Exception:
             pass
 
     logger.debug(f"Speech-to-text result: '{result.encode('utf8')}'")

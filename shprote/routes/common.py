@@ -19,7 +19,6 @@ from typing import Callable
 import telebot.formatting as tf
 import telebot.types as tt
 
-from shprote.logics import *
 from shprote.logics.util import telebot_diff
 
 

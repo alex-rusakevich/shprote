@@ -20,7 +20,7 @@ from sqlalchemy import URL, create_engine
 from sqlalchemy.orm import sessionmaker
 
 from shprote.config import get_config
-from shprote.db.declarations import *
+from shprote.db.declarations import DeclarativeBase
 
 config = get_config()
 

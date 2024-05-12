@@ -93,7 +93,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
     if message.forward_date:
         usr_name = (
             message.forward_sender_name
-            if message.forward_from == None
+            if message.forward_from is None
             else f"@{message.forward_from.username}"
         )
         forwarded_msg = _("*[FORWARDED FROM {usr_name}]*").format(usr_name=usr_name)
@@ -140,7 +140,7 @@ def get_teacher_text_and_print_stud(message, user_hash):
 
         try:
             teacher = audio_file_to_text(save_path, Language.Chinese)
-        except:
+        except Exception:
             logger.error(
                 "Something happened while processing user's audio:", exc_info=True
             )
