@@ -1,10 +1,15 @@
 [flake8]
 max-line-length = 88
 ignore = 
+    # Line too long error
     E501
+    # Line break occurred before a binary operator
     W503
 exclude =
-    .venv
     .husky
+    .shprote
+    .venv
     docs
+    locale
     models
+    node_modules

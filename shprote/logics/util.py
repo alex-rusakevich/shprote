@@ -16,7 +16,7 @@
 
 import difflib
 import string
-
+from typing import Callable
 import telebot.formatting as tf
 
 from shprote.log import get_logger
@@ -32,8 +32,28 @@ purificator_tr = str.maketrans(purificator_dict)
 
 
 def telebot_diff(
-    teacher: str, student: str, new_fn=tf.hunderline, delete_fn=tf.hstrikethrough
+    teacher: str,
+    student: str,
+    new_fn: Callable = tf.hunderline,
+    delete_fn: Callable = tf.hstrikethrough,
 ) -> str:
+    """Compare Levenstein phonematic sequences and show result as text
+    ready to be sent in Telegram
+
+    :param teacher: reference phonematic sequence
+    :type teacher: str
+    :param student: user phonematic sequence
+    :type student: str
+    :param new_fn: telegrambot formatting file for new characters in user's levenseq,
+        defaults to tf.hunderline
+    :type new_fn: Callable, optional
+    :param delete_fn: telegrambot formatting file for missing characters in user's levenseq,
+        defaults to tf.hstrikethrough
+    :type delete_fn: Callable, optional
+    :return: string ready to be appended to telegrambot message
+    :rtype: str
+    """
+
     str1, str2 = student, teacher
 
     user_chars = []
