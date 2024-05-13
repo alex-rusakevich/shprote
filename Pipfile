@@ -28,6 +28,7 @@ black = "*"
 pdoc = "*"
 invoke = "*"
 flake8 = "*"
+flake8-builtins = "*"
 
 [requires]
 python_version = "3.11"
