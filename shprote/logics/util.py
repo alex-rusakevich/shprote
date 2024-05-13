@@ -17,6 +17,7 @@
 import difflib
 import string
 from typing import Callable
+
 import telebot.formatting as tf
 
 from shprote.log import get_logger

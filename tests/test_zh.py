@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import pytest
 import os
+
+import pytest
 
 from shprote.logics import Language
 from shprote.logics.voice import audio_file_to_text
