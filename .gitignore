@@ -9,3 +9,4 @@ locale/base.pot
 node_modules
 .venv/
 docs/
+.vscode/
