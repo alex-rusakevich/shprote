@@ -34,3 +34,11 @@ flush privileges;
 Make sure you have `gettext` available. It's also a part of `poedit`, add `...Poedit\GettextTools\bin` to your `PATH` and reboot.
 
 > All trees start as seeds, but only their effort determine wether they remain so
+
+### Documentation
+
+Run the command below to compile docs for the code:
+
+```sh
+inv docs
+```
