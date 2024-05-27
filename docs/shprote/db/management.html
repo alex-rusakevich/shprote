@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 14.1.0"/>
+    <meta name="generator" content="pdoc 14.4.0"/>
     <title>shprote.db.management API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -34,7 +34,7 @@
                     <a class="variable" href="#logger">logger</a>
             </li>
             <li>
-                    <a class="variable" href="#acitive_recently">acitive_recently</a>
+                    <a class="variable" href="#active_recently">active_recently</a>
             </li>
             <li>
                     <a class="function" href="#upsert_user">upsert_user</a>
@@ -66,67 +66,87 @@
 
                         <label class="view-source-button" for="mod-management-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span> <span class="nn">expiringdict</span> <span class="kn">import</span> <span class="n">ExpiringDict</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">scoped_session</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span> <span class="nn">shprote.db</span> <span class="kn">import</span> <span class="n">DB_SESSION_FACTORY</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">shprote.db.declarations</span> <span class="kn">import</span> <span class="n">User</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span> <span class="nn">shprote.log</span> <span class="kn">import</span> <span class="n">get_logger</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="c1"># Shprote bot - Standardized Hanyu (Chinese) PROnunciation TEster</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="c1"># Copyright (C) 2023, 2024 Alexander Rusakevich</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="c1"># it under the terms of the GNU General Public License as published by</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="c1"># (at your option) any later version.</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="n">acitive_recently</span> <span class="o">=</span> <span class="n">ExpiringDict</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">max_age_seconds</span><span class="o">=</span><span class="mi">28800</span><span class="p">)</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="c1"># This program is distributed in the hope that it will be useful,</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="c1"># GNU General Public License for more details.</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="k">def</span> <span class="nf">upsert_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">if</span> <span class="n">acitive_recently</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="k">return</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="n">acitive_recently</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="c1"># You should have received a copy of the GNU General Public License</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="kn">from</span> <span class="nn">expiringdict</span> <span class="kn">import</span> <span class="n">ExpiringDict</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">scoped_session</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">usr_found</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="k">if</span> <span class="n">usr_found</span><span class="p">:</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">usr_found</span><span class="o">.</span><span class="n">last_active</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="n">usr_found</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">usr_found</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="kn">from</span> <span class="nn">shprote.db</span> <span class="kn">import</span> <span class="n">DB_SESSION_FACTORY</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="kn">from</span> <span class="nn">shprote.db.declarations</span> <span class="kn">import</span> <span class="n">User</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="kn">from</span> <span class="nn">shprote.log</span> <span class="kn">import</span> <span class="n">get_logger</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="n">active_recently</span> <span class="o">=</span> <span class="n">ExpiringDict</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">max_age_seconds</span><span class="o">=</span><span class="mi">28800</span><span class="p">)</span>
 </span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>            <span class="s2">&quot;Something went wrong while trying to upsert user visit info. Rolling back...&quot;</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>        <span class="p">)</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="k">finally</span><span class="p">:</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="k">def</span> <span class="nf">get_user_id_list</span><span class="p">():</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">id_list</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="k">return</span> <span class="n">id_list</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="k">def</span> <span class="nf">remove_user_by_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>            <span class="s2">&quot;Something went wrong while trying to upsert user visit info. Rolling back...&quot;</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        <span class="p">)</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">finally</span><span class="p">:</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="k">def</span> <span class="nf">upsert_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Update info about last active users</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="sd">    :param user_id: _description_</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">    :type user_id: int</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="k">if</span> <span class="n">active_recently</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>  <span class="c1"># Using cache not to update too often</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="k">return</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>        <span class="n">active_recently</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">usr_found</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="k">if</span> <span class="n">usr_found</span><span class="p">:</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="n">usr_found</span><span class="o">.</span><span class="n">last_active</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>        <span class="n">usr_found</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">usr_found</span><span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Something went wrong while trying to upsert user visit info&quot;</span><span class="p">)</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Rolling back...&quot;</span><span class="p">)</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="k">finally</span><span class="p">:</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="k">def</span> <span class="nf">get_user_id_list</span><span class="p">():</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="n">id_list</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="k">return</span> <span class="n">id_list</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="k">def</span> <span class="nf">remove_user_by_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Something went wrong while trying to upsert user visit info&quot;</span><span class="p">)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Rolling back...&quot;</span><span class="p">)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>    <span class="k">finally</span><span class="p">:</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -143,14 +163,14 @@
     
 
                 </section>
-                <section id="acitive_recently">
+                <section id="active_recently">
                     <div class="attr variable">
-            <span class="name">acitive_recently</span>        =
+            <span class="name">active_recently</span>        =
 <span class="default_value">ExpiringDict()</span>
 
         
     </div>
-    <a class="headerlink" href="#acitive_recently"></a>
+    <a class="headerlink" href="#active_recently"></a>
     
     
 
@@ -166,34 +186,47 @@
 
     </div>
     <a class="headerlink" href="#upsert_user"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="upsert_user-16"><a href="#upsert_user-16"><span class="linenos">16</span></a><span class="k">def</span> <span class="nf">upsert_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="upsert_user-17"><a href="#upsert_user-17"><span class="linenos">17</span></a>    <span class="k">if</span> <span class="n">acitive_recently</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-</span><span id="upsert_user-18"><a href="#upsert_user-18"><span class="linenos">18</span></a>        <span class="k">return</span>
-</span><span id="upsert_user-19"><a href="#upsert_user-19"><span class="linenos">19</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="upsert_user-20"><a href="#upsert_user-20"><span class="linenos">20</span></a>        <span class="n">acitive_recently</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="upsert_user-21"><a href="#upsert_user-21"><span class="linenos">21</span></a>
-</span><span id="upsert_user-22"><a href="#upsert_user-22"><span class="linenos">22</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="upsert_user-23"><a href="#upsert_user-23"><span class="linenos">23</span></a>
-</span><span id="upsert_user-24"><a href="#upsert_user-24"><span class="linenos">24</span></a>    <span class="n">usr_found</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-</span><span id="upsert_user-25"><a href="#upsert_user-25"><span class="linenos">25</span></a>    <span class="k">if</span> <span class="n">usr_found</span><span class="p">:</span>
-</span><span id="upsert_user-26"><a href="#upsert_user-26"><span class="linenos">26</span></a>        <span class="n">usr_found</span><span class="o">.</span><span class="n">last_active</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-</span><span id="upsert_user-27"><a href="#upsert_user-27"><span class="linenos">27</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="upsert_user-28"><a href="#upsert_user-28"><span class="linenos">28</span></a>        <span class="n">usr_found</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-</span><span id="upsert_user-29"><a href="#upsert_user-29"><span class="linenos">29</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">usr_found</span><span class="p">)</span>
-</span><span id="upsert_user-30"><a href="#upsert_user-30"><span class="linenos">30</span></a>
-</span><span id="upsert_user-31"><a href="#upsert_user-31"><span class="linenos">31</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="upsert_user-32"><a href="#upsert_user-32"><span class="linenos">32</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</span><span id="upsert_user-33"><a href="#upsert_user-33"><span class="linenos">33</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="upsert_user-34"><a href="#upsert_user-34"><span class="linenos">34</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-</span><span id="upsert_user-35"><a href="#upsert_user-35"><span class="linenos">35</span></a>            <span class="s2">&quot;Something went wrong while trying to upsert user visit info. Rolling back...&quot;</span>
-</span><span id="upsert_user-36"><a href="#upsert_user-36"><span class="linenos">36</span></a>        <span class="p">)</span>
-</span><span id="upsert_user-37"><a href="#upsert_user-37"><span class="linenos">37</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-</span><span id="upsert_user-38"><a href="#upsert_user-38"><span class="linenos">38</span></a>    <span class="k">finally</span><span class="p">:</span>
-</span><span id="upsert_user-39"><a href="#upsert_user-39"><span class="linenos">39</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="upsert_user-32"><a href="#upsert_user-32"><span class="linenos">32</span></a><span class="k">def</span> <span class="nf">upsert_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="upsert_user-33"><a href="#upsert_user-33"><span class="linenos">33</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Update info about last active users</span>
+</span><span id="upsert_user-34"><a href="#upsert_user-34"><span class="linenos">34</span></a>
+</span><span id="upsert_user-35"><a href="#upsert_user-35"><span class="linenos">35</span></a><span class="sd">    :param user_id: _description_</span>
+</span><span id="upsert_user-36"><a href="#upsert_user-36"><span class="linenos">36</span></a><span class="sd">    :type user_id: int</span>
+</span><span id="upsert_user-37"><a href="#upsert_user-37"><span class="linenos">37</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="upsert_user-38"><a href="#upsert_user-38"><span class="linenos">38</span></a>
+</span><span id="upsert_user-39"><a href="#upsert_user-39"><span class="linenos">39</span></a>    <span class="k">if</span> <span class="n">active_recently</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>  <span class="c1"># Using cache not to update too often</span>
+</span><span id="upsert_user-40"><a href="#upsert_user-40"><span class="linenos">40</span></a>        <span class="k">return</span>
+</span><span id="upsert_user-41"><a href="#upsert_user-41"><span class="linenos">41</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="upsert_user-42"><a href="#upsert_user-42"><span class="linenos">42</span></a>        <span class="n">active_recently</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="upsert_user-43"><a href="#upsert_user-43"><span class="linenos">43</span></a>
+</span><span id="upsert_user-44"><a href="#upsert_user-44"><span class="linenos">44</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="upsert_user-45"><a href="#upsert_user-45"><span class="linenos">45</span></a>
+</span><span id="upsert_user-46"><a href="#upsert_user-46"><span class="linenos">46</span></a>    <span class="n">usr_found</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</span><span id="upsert_user-47"><a href="#upsert_user-47"><span class="linenos">47</span></a>    <span class="k">if</span> <span class="n">usr_found</span><span class="p">:</span>
+</span><span id="upsert_user-48"><a href="#upsert_user-48"><span class="linenos">48</span></a>        <span class="n">usr_found</span><span class="o">.</span><span class="n">last_active</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span id="upsert_user-49"><a href="#upsert_user-49"><span class="linenos">49</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="upsert_user-50"><a href="#upsert_user-50"><span class="linenos">50</span></a>        <span class="n">usr_found</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</span><span id="upsert_user-51"><a href="#upsert_user-51"><span class="linenos">51</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">usr_found</span><span class="p">)</span>
+</span><span id="upsert_user-52"><a href="#upsert_user-52"><span class="linenos">52</span></a>
+</span><span id="upsert_user-53"><a href="#upsert_user-53"><span class="linenos">53</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="upsert_user-54"><a href="#upsert_user-54"><span class="linenos">54</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="upsert_user-55"><a href="#upsert_user-55"><span class="linenos">55</span></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span><span id="upsert_user-56"><a href="#upsert_user-56"><span class="linenos">56</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Something went wrong while trying to upsert user visit info&quot;</span><span class="p">)</span>
+</span><span id="upsert_user-57"><a href="#upsert_user-57"><span class="linenos">57</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Rolling back...&quot;</span><span class="p">)</span>
+</span><span id="upsert_user-58"><a href="#upsert_user-58"><span class="linenos">58</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span><span id="upsert_user-59"><a href="#upsert_user-59"><span class="linenos">59</span></a>    <span class="k">finally</span><span class="p">:</span>
+</span><span id="upsert_user-60"><a href="#upsert_user-60"><span class="linenos">60</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Update info about last active users</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>user_id</strong>:  _description_</li>
+</ul>
+</div>
+
 
                 </section>
                 <section id="get_user_id_list">
@@ -207,11 +240,11 @@
 
     </div>
     <a class="headerlink" href="#get_user_id_list"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_user_id_list-42"><a href="#get_user_id_list-42"><span class="linenos">42</span></a><span class="k">def</span> <span class="nf">get_user_id_list</span><span class="p">():</span>
-</span><span id="get_user_id_list-43"><a href="#get_user_id_list-43"><span class="linenos">43</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="get_user_id_list-44"><a href="#get_user_id_list-44"><span class="linenos">44</span></a>    <span class="n">id_list</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
-</span><span id="get_user_id_list-45"><a href="#get_user_id_list-45"><span class="linenos">45</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="get_user_id_list-46"><a href="#get_user_id_list-46"><span class="linenos">46</span></a>    <span class="k">return</span> <span class="n">id_list</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_user_id_list-63"><a href="#get_user_id_list-63"><span class="linenos">63</span></a><span class="k">def</span> <span class="nf">get_user_id_list</span><span class="p">():</span>
+</span><span id="get_user_id_list-64"><a href="#get_user_id_list-64"><span class="linenos">64</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="get_user_id_list-65"><a href="#get_user_id_list-65"><span class="linenos">65</span></a>    <span class="n">id_list</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+</span><span id="get_user_id_list-66"><a href="#get_user_id_list-66"><span class="linenos">66</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="get_user_id_list-67"><a href="#get_user_id_list-67"><span class="linenos">67</span></a>    <span class="k">return</span> <span class="n">id_list</span>
 </span></pre></div>
 
 
@@ -229,20 +262,19 @@
 
     </div>
     <a class="headerlink" href="#remove_user_by_id"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="remove_user_by_id-49"><a href="#remove_user_by_id-49"><span class="linenos">49</span></a><span class="k">def</span> <span class="nf">remove_user_by_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-</span><span id="remove_user_by_id-50"><a href="#remove_user_by_id-50"><span class="linenos">50</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
-</span><span id="remove_user_by_id-51"><a href="#remove_user_by_id-51"><span class="linenos">51</span></a>
-</span><span id="remove_user_by_id-52"><a href="#remove_user_by_id-52"><span class="linenos">52</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</span><span id="remove_user_by_id-53"><a href="#remove_user_by_id-53"><span class="linenos">53</span></a>
-</span><span id="remove_user_by_id-54"><a href="#remove_user_by_id-54"><span class="linenos">54</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="remove_user_by_id-55"><a href="#remove_user_by_id-55"><span class="linenos">55</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</span><span id="remove_user_by_id-56"><a href="#remove_user_by_id-56"><span class="linenos">56</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="remove_user_by_id-57"><a href="#remove_user_by_id-57"><span class="linenos">57</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-</span><span id="remove_user_by_id-58"><a href="#remove_user_by_id-58"><span class="linenos">58</span></a>            <span class="s2">&quot;Something went wrong while trying to upsert user visit info. Rolling back...&quot;</span>
-</span><span id="remove_user_by_id-59"><a href="#remove_user_by_id-59"><span class="linenos">59</span></a>        <span class="p">)</span>
-</span><span id="remove_user_by_id-60"><a href="#remove_user_by_id-60"><span class="linenos">60</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-</span><span id="remove_user_by_id-61"><a href="#remove_user_by_id-61"><span class="linenos">61</span></a>    <span class="k">finally</span><span class="p">:</span>
-</span><span id="remove_user_by_id-62"><a href="#remove_user_by_id-62"><span class="linenos">62</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="remove_user_by_id-70"><a href="#remove_user_by_id-70"><span class="linenos">70</span></a><span class="k">def</span> <span class="nf">remove_user_by_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="remove_user_by_id-71"><a href="#remove_user_by_id-71"><span class="linenos">71</span></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">DB_SESSION_FACTORY</span><span class="p">)</span>
+</span><span id="remove_user_by_id-72"><a href="#remove_user_by_id-72"><span class="linenos">72</span></a>
+</span><span id="remove_user_by_id-73"><a href="#remove_user_by_id-73"><span class="linenos">73</span></a>    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</span><span id="remove_user_by_id-74"><a href="#remove_user_by_id-74"><span class="linenos">74</span></a>
+</span><span id="remove_user_by_id-75"><a href="#remove_user_by_id-75"><span class="linenos">75</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="remove_user_by_id-76"><a href="#remove_user_by_id-76"><span class="linenos">76</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="remove_user_by_id-77"><a href="#remove_user_by_id-77"><span class="linenos">77</span></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span><span id="remove_user_by_id-78"><a href="#remove_user_by_id-78"><span class="linenos">78</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Something went wrong while trying to upsert user visit info&quot;</span><span class="p">)</span>
+</span><span id="remove_user_by_id-79"><a href="#remove_user_by_id-79"><span class="linenos">79</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Rolling back...&quot;</span><span class="p">)</span>
+</span><span id="remove_user_by_id-80"><a href="#remove_user_by_id-80"><span class="linenos">80</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span><span id="remove_user_by_id-81"><a href="#remove_user_by_id-81"><span class="linenos">81</span></a>    <span class="k">finally</span><span class="p">:</span>
+</span><span id="remove_user_by_id-82"><a href="#remove_user_by_id-82"><span class="linenos">82</span></a>        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span></pre></div>
 
 
