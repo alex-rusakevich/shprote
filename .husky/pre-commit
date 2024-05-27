@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-inv compilemessages && black . && isort . && flake8 . && pdoc shprote --output-dir docs && git add -A .
+inv compilemessages && black . && isort . && flake8 . && git add -A .
