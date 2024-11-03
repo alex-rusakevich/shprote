@@ -21,9 +21,15 @@ from pathlib import Path
 import speech_recognition as sr
 from pydub import AudioSegment
 
+from shprote.config import get_config
 from shprote.log import get_logger
 from shprote.logics import Language
 from shprote.temp import get_tmp
+
+AudioSegment.ffmpeg = (
+    get_config()["ffmpeg"]["path"] or os.environ.get("FFMPEG_PATH", None)
+) or AudioSegment.ffmpeg
+
 
 logger = get_logger()
 DATA_DIR = os.path.abspath(".")

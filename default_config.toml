@@ -26,3 +26,6 @@ drop-pending = true
 maxfiles = 5
 maxsize = 5_242_880 # 5MB
 stdout = true
+
+[ffmpeg]
+path = ""
