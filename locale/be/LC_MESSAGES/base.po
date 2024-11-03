@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 14:13+0300\n"
-"PO-Revision-Date: 2024-05-11 12:31+0800\n"
+"POT-Creation-Date: 2024-11-03 23:08+0300\n"
+"PO-Revision-Date: 2024-11-03 23:13+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Alexander Rusakevich <mr.alexander.rusakevich@gmail.com>\n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: shprote\bot_server.py:30
 #, python-brace-format
@@ -185,15 +186,6 @@ msgstr "Вяртаюся ў галоўнае меню..."
 msgid "🟢 Done! {msg_count} messages sent!"
 msgstr "🟢 Зроблена! Усяго {msg_count} паведамленняў(-е)!"
 
-#: shprote\routes\common.py:36
-msgid "Choose your language, please:"
-msgstr "Калі ласка, выберыце вашу мову:"
-
-#: shprote\routes\common.py:56
-#, python-brace-format
-msgid "🔴 There is no such language: {langname}"
-msgstr "🔴 Мова не падтрымліваецца: {langname}"
-
 #: shprote\routes\common.py:71
 #, python-brace-format
 msgid ""
@@ -239,12 +231,12 @@ msgstr ""
 "\n"
 "<b>Транскрыпцыя таго, што сказаў студэнт:</b> {student_repr}"
 
-#: shprote\routes\listeningchk.py:43
+#: shprote\routes\pronunchk.py:43
 msgid ""
-"The *listening* check has started. _Please, remember that you cannot use "
+"The *pronunciation* check has started. _Please, remember that you cannot use "
 "replied or forwarded messages as student's answers._ Check's special code is"
 msgstr ""
-"Праверка *аўдзіравання* пачалася. _Калі ласка, памятайце, што вы не можаце "
+"Праверка *вымаўлення* пачалася. _Калі ласка, памятайце, што вы не можаце "
 "карыстацца ў якасці адказу адасланымі паведамленнямі і адказамі на тыя "
 "паведамленні, што былі раней._ Спецыяльны код праверкі"
 
@@ -271,6 +263,11 @@ msgstr "*[АДКАЗ ДЛЯ КАРЫСТАЛЬНІКА {usr_name}]*"
 msgid "*[DONE BY THE STUDENT]*"
 msgstr "*[ЗРОБЛЕНА СТУДЭНТАМ]*"
 
+#: shprote\routes\pronunchk.py:100
+#, python-brace-format
+msgid "Teacher wrote {forwarded_msg}: {teacher}"
+msgstr "Выкладчык напісаў {forwarded_msg}: {teacher}"
+
 #: shprote\routes\listeningchk.py:97 shprote\routes\pronunchk.py:109
 #: shprote\routes\pronunchk.py:228
 msgid "⏳ Processing the audio file, please, wait..."
@@ -280,62 +277,6 @@ msgstr "⏳ Файл з аўдыё апрацоўваецца, калі ласк
 #: shprote\routes\pronunchk.py:255
 msgid "🔴 Cannot process this file, please, try another one:"
 msgstr "🔴 Файл немагчыма апрацаваць, калі ласка, паспрабуйце іншы:"
-
-#: shprote\routes\listeningchk.py:145
-#, python-brace-format
-msgid "Teacher's signed voice message {forwarded_msg}"
-msgstr "Галасавое паведамленне выкладчыка са спецыяльным кодам {forwarded_msg}"
-
-#: shprote\routes\listeningchk.py:155 shprote\routes\pronunchk.py:171
-#, python-brace-format
-msgid ""
-"🔴 Wrong data type (\"{data_type}\"), please, send a voice message or an "
-"audio (.mp3, .ogg) file:"
-msgstr ""
-"🔴 Няправільны тып даных (\"{data_type}\"), калі ласка, пашліце галасавое "
-"паведамленне або аўдыё (.mp3, .ogg) файл:"
-
-#: shprote\routes\listeningchk.py:165
-msgid "❓ Student's answer:"
-msgstr "❓  Адказ студэнта:"
-
-#: shprote\routes\listeningchk.py:197 shprote\routes\pronunchk.py:216
-msgid ""
-"*The answer cannot be forwarded or be a reply. The test has been failed.*"
-msgstr ""
-"*Вы не можаце карыстацца ў якасці адказу перасланымі альбо адказанымі "
-"паведамленнямі. Тэст быў правалены*"
-
-#: shprote\routes\listeningchk.py:211
-#, python-brace-format
-msgid "Student wrote: {student}"
-msgstr "Студэнт напісаў: {student}"
-
-#: shprote\routes\listeningchk.py:218
-msgid "🔴 Wrong data type, please, send _text_:"
-msgstr "🔴 Няправільны тып даных, калі ласка, пашліце _тэкст_:"
-
-#: shprote\routes\listeningchk.py:225 shprote\routes\pronunchk.py:289
-msgid "Now wait a little..."
-msgstr "Зараз трохі пачакайце..."
-
-#: shprote\routes\listeningchk.py:241
-msgid "listening"
-msgstr "аўдзіраванне"
-
-#: shprote\routes\pronunchk.py:43
-msgid ""
-"The *pronunciation* check has started. _Please, remember that you cannot use "
-"replied or forwarded messages as student's answers._ Check's special code is"
-msgstr ""
-"Праверка *вымаўлення* пачалася. _Калі ласка, памятайце, што вы не можаце "
-"карыстацца ў якасці адказу адасланымі паведамленнямі і адказамі на тыя "
-"паведамленні, што былі раней._ Спецыяльны код праверкі"
-
-#: shprote\routes\pronunchk.py:100
-#, python-brace-format
-msgid "Teacher wrote {forwarded_msg}: {teacher}"
-msgstr "Выкладчык напісаў {forwarded_msg}: {teacher}"
 
 #: shprote\routes\pronunchk.py:157
 #, python-brace-format
@@ -350,9 +291,25 @@ msgstr ""
 msgid "Teacher's signed voice message, "
 msgstr "Падпісанае галасавое паведамленне выкладчыка, "
 
+#: shprote\routes\listeningchk.py:155 shprote\routes\pronunchk.py:171
+#, python-brace-format
+msgid ""
+"🔴 Wrong data type (\"{data_type}\"), please, send a voice message or an "
+"audio (.mp3, .ogg) file:"
+msgstr ""
+"🔴 Няправільны тып даных (\"{data_type}\"), калі ласка, пашліце галасавое "
+"паведамленне або аўдыё (.mp3, .ogg) файл:"
+
 #: shprote\routes\pronunchk.py:182
 msgid "❓ Student's voice record:"
 msgstr "❓ Запіс голасу студэнта:"
+
+#: shprote\routes\listeningchk.py:197 shprote\routes\pronunchk.py:216
+msgid ""
+"*The answer cannot be forwarded or be a reply. The test has been failed.*"
+msgstr ""
+"*Вы не можаце карыстацца ў якасці адказу перасланымі альбо адказанымі "
+"паведамленнямі. Тэст быў правалены*"
 
 #: shprote\routes\pronunchk.py:265
 #, python-brace-format
@@ -374,6 +331,59 @@ msgstr ""
 "🔴 Няправільны тып даных (\"{data_type}\"), калі ласка, пашліце _галасавое "
 "паведамленне_:"
 
+#: shprote\routes\listeningchk.py:225 shprote\routes\pronunchk.py:289
+msgid "Now wait a little..."
+msgstr "Зараз трохі пачакайце..."
+
 #: shprote\routes\pronunchk.py:305
 msgid "pronunciation"
 msgstr "вымаўленне"
+
+#: shprote\routes\listeningchk.py:43
+msgid ""
+"The *listening* check has started. _Please, remember that you cannot use "
+"replied or forwarded messages as student's answers._ Check's special code is"
+msgstr ""
+"Праверка *аўдзіравання* пачалася. _Калі ласка, памятайце, што вы не можаце "
+"карыстацца ў якасці адказу адасланымі паведамленнямі і адказамі на тыя "
+"паведамленні, што былі раней._ Спецыяльны код праверкі"
+
+#: shprote/routes/listeningchk.py:70
+msgid ""
+"❓ Enter or redirect teacher's audio file or voice message or reply to it "
+"_(redirect and reply have the highest priority of the messages you send)_:"
+msgstr ""
+"❓ Калі ласка, увядзіце або перанакіруйце аўдыёфайл або галасавое "
+"паведамленне выкладчыка або адкажыце на яго _(перанакіраванне і адказ маюць "
+"вышэйшы прыярытэт, чым звычайныя паведамленні)_:"
+
+#: shprote\routes\listeningchk.py:145
+#, python-brace-format
+msgid "Teacher's signed voice message {forwarded_msg}"
+msgstr "Галасавое паведамленне выкладчыка са спецыяльным кодам {forwarded_msg}"
+
+#: shprote\routes\listeningchk.py:165
+msgid "❓ Student's answer:"
+msgstr "❓  Адказ студэнта:"
+
+#: shprote\routes\listeningchk.py:211
+#, python-brace-format
+msgid "Student wrote: {student}"
+msgstr "Студэнт напісаў: {student}"
+
+#: shprote\routes\listeningchk.py:218
+msgid "🔴 Wrong data type, please, send _text_:"
+msgstr "🔴 Няправільны тып даных, калі ласка, пашліце _тэкст_:"
+
+#: shprote\routes\listeningchk.py:241
+msgid "listening"
+msgstr "аўдзіраванне"
+
+#: shprote\routes\common.py:36
+msgid "Choose your language, please:"
+msgstr "Калі ласка, выберыце вашу мову:"
+
+#: shprote\routes\common.py:56
+#, python-brace-format
+msgid "🔴 There is no such language: {langname}"
+msgstr "🔴 Мова не падтрымліваецца: {langname}"

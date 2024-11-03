@@ -34,10 +34,15 @@ def prun(command, **kwargs):
 
 @task
 def makemessages(command):
+    paths = "\n".join(
+        (str(i) for i in Path(".").rglob("*.py") if ".venv" not in str(i))
+    )
+    print(paths)
+
     tf = tempfile.NamedTemporaryFile(delete=False)
     tf_name = tf.name
     tf.seek(0)
-    tf.write("\n".join((str(i) for i in Path(".").rglob("*.py"))).encode("utf-8"))
+    tf.write(paths.encode("utf-8"))
     tf.flush()
     tf.close()
     print(tf_name)

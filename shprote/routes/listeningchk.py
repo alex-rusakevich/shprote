@@ -67,7 +67,7 @@ def start_listening_test(message):
     bot.send_message(
         message.chat.id,
         _(
-            "❓ Enter or redirect teacher's text or voice message or reply to it _(redirect and reply have the highest priority of the messages you send)_:"
+            "❓ Enter or redirect teacher's audio file or voice message or reply to it _(redirect and reply have the highest priority of the messages you send)_:"
         ),
         reply_markup=render_stop_test_btn(_),
     )
