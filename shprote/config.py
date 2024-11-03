@@ -21,6 +21,9 @@ from getpass import getpass
 from typing import Callable
 
 import toml
+from dotenv import load_dotenv
+
+load_dotenv()
 
 config = {}
 translators = {}

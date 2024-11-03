@@ -1,7 +1,8 @@
-from waitress import serve
-from shprote.wsgi import wsgi_app
 import os
 
+from waitress import serve
+
+from shprote.wsgi import wsgi_app
 
 waitress_args = {}
 

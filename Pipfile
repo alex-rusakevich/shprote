@@ -18,6 +18,7 @@ pypinyin = "*"
 expiringdict = "*"
 flask = "*"
 waitress = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"
