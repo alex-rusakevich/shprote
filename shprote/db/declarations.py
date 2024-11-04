@@ -16,10 +16,16 @@
 
 from sqlalchemy import Column, DateTime
 from sqlalchemy.dialects.mysql import BIGINT
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase as Base
 from sqlalchemy.sql import func
 
-DeclarativeBase = declarative_base()
+
+class DeclarativeBase(Base):
+    __table_prefix__ = "shprote"
+
+    def __init_subclass__(self) -> None:
+        self.__tablename__ = f"{self.__table_prefix__}__{self.__tablename__}"
+        super().__init_subclass__()
 
 
 class User(DeclarativeBase):
